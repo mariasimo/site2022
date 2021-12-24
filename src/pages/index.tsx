@@ -1,4 +1,4 @@
-import HomeView from '$/containers/Home';
+import HomeView from '$/Home';
 
 function HomePage(): JSX.Element {
   return <HomeView />;
