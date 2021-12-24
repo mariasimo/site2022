@@ -18,6 +18,8 @@ module.exports = {
         'lint',
         'package',
         ...readSubDirs('src'),
+        ...readSubDirs('src/components'),
+        ...readSubDirs('src/Home'),
         // Add any directories you'd like to be scoped
       ],
     ],
