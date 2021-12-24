@@ -1,7 +1,7 @@
 import { Container } from './styles';
 
 function HomeView(): JSX.Element {
-  return <Container>Welcome to Next.js!</Container>;
+  return <Container>Welcome!</Container>;
 }
 
 export default HomeView;
