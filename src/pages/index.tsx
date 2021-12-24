@@ -1,12 +1,7 @@
-import Header from 'components/Header';
+import HomeView from 'containers/Home';
 
 function HomePage(): JSX.Element {
-  return (
-    <div>
-      <Header />
-      Welcome to Next.js!
-    </div>
-  );
+  return <HomeView />;
 }
 
 export default HomePage;
