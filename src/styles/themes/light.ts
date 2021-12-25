@@ -3,7 +3,7 @@ import base from './base';
 const light = {
   ...base,
   colors: {
-    ink: '#101010',
+    ink: '#000000',
     paper: '#f5f5f5',
   },
 };
