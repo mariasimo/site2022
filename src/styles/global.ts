@@ -1,16 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 
-const GlobalStyle = createGlobalStyle`
+const styled = { createGlobalStyle };
+
+const GlobalStyle = styled.createGlobalStyle`
   ${normalize};
   * {
     box-sizing: border-box;
   }
   body {
-    font-family: ${({ theme }) =>
-      theme.fonts.text}, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+    font-family: ${({ theme }) => theme.fonts.text}, -apple-system,
+      BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+      'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: ${({ theme }) => theme.colors.paper};
@@ -18,14 +19,24 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
   a {
     color: ${({ theme }) => theme.colors.ink};
   }
-  
+
   #__next {
     display: flex;
     min-height: 100vh;
-    
+
     > * {
       flex: 1;
     }

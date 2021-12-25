@@ -17,6 +17,11 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
   }
+
+  p {
+    margin-block-end: 1rem;
+    max-width: 44rem;
+  }
 `;
 
 export const Badge = styled(DefaultBadge)`
