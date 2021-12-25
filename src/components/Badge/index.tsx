@@ -6,7 +6,7 @@ const Badge = ({
   className,
 }: {
   children: ReactNode;
-  className: string;
+  className?: string;
 }) => <Container className={className}>{children}</Container>;
 
 export default Badge;
