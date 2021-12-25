@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from '$/styles/global';
 import themes from '$/styles/themes';
+import '$/styles/fonts.css';
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (

@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('../assets/fonts/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('../assets/fonts/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('../assets/fonts/NeueHaasDisplay-Regular.woff2') format('woff2'),
+    url('../assets/fonts/NeueHaasDisplay-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('../assets/fonts/NeueHaasDisplay-Medium.woff2') format('woff2'),
+    url('../assets/fonts/NeueHaasDisplay-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('../assets/fonts/NeueHaasDisplay-Bold.woff2') format('woff2'),
+    url('../assets/fonts/NeueHaasDisplay-Bold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Haas Grotesk Text Pro';
+  src: url('../assets/fonts/NeueHaasText-Medium.woff2') format('woff2'),
+    url('../assets/fonts/NeueHaasText-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Text Pro';
+  src: url('../assets/fonts/NeueHaasText-Regular.woff2') format('woff2'),
+    url('../assets/fonts/NeueHaasText-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

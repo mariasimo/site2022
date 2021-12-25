@@ -7,7 +7,8 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    font-family: ${({ theme }) =>
+      theme.fonts.text}, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -15,6 +16,11 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.colors.paper};
     color: ${({ theme }) => theme.colors.ink};
   }
+
+  a {
+    color: ${({ theme }) => theme.colors.ink};
+  }
+  
   #__next {
     display: flex;
     min-height: 100vh;
