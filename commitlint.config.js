@@ -20,6 +20,7 @@ module.exports = {
         ...readSubDirs('src'),
         ...readSubDirs('src/components'),
         ...readSubDirs('src/Home'),
+        ...readSubDirs('src/lib'),
         // Add any directories you'd like to be scoped
       ],
     ],

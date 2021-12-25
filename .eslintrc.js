@@ -7,6 +7,7 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 2021,
+    sourceType: 'module',
   },
   ignorePatterns: ['!.*.js', '!.storybook'],
   overrides: [
@@ -103,6 +104,12 @@ module.exports = {
           ],
           rules: {
             '@typescript-eslint/explicit-module-boundary-types': 'off',
+          },
+        },
+        {
+          files: ['@types/generated/contentful.d.ts'],
+          rules: {
+            '@typescript-eslint/naming-convention': 'off',
           },
         },
       ],
