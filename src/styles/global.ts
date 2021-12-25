@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     background-color: ${({ theme }) => theme.colors.paper};
     color: ${({ theme }) => theme.colors.ink};
+    font-size: 16px;
   }
 
   a {

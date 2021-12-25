@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import DefaultBadge from '$/components/Badge';
 
 export const Container = styled.div`
   width: 100%;
@@ -16,4 +17,10 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
   }
+`;
+
+export const Badge = styled(DefaultBadge)`
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
 `;
