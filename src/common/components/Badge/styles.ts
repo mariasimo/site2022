@@ -10,16 +10,17 @@ export const Shine = keyframes`
 `;
 
 export const Container = styled.div`
+  align-items: center;
+  background-color: #ffbc00;
+  border-radius: 0.75rem;
+  display: inline-flex;
   font-size: 0.75rem;
   font-weight: 500;
-  background-color: #ffbc00;
-  display: inline-flex;
-  align-items: center;
   height: 1.5rem;
-  border-radius: 0.75rem;
+  overflow: hidden;
   padding: 0.3rem 0.5rem;
   position: relative;
-  overflow: hidden;
+  width: fit-content;
 
   &:after {
     /* Shine */
