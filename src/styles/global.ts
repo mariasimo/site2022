@@ -9,7 +9,7 @@ const GlobalStyle = styled.createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    font-family: ${({ theme }) => theme.fonts.text}, -apple-system,
+    font-family: 'Neue Haas Grotesk Display Pro', -apple-system,
       BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
       'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
