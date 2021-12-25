@@ -6,9 +6,7 @@
     "build": "next build && next export",
     "dev": "next dev",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --max-warnings=0",
-    "lint:fix": "yarn lint --fix",
-    "install-git-hooks": "./scripts/git-hooks/install.sh",
-    "postinstall": "yarn install-git-hooks"
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "$": "link:./src",
