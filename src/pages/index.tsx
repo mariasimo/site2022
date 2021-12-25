@@ -1,6 +1,6 @@
-import HomeView from '$/Home';
+import HomeView from '$/home';
 import type { InferGetStaticPropsType } from 'next';
-import { getAllPostsForHome } from '../lib/api';
+import { getAllPostsForHome } from '$/lib/api';
 
 function HomePage({
   allPosts,

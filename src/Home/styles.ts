@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import DefaultBadge from '$/components/Badge';
+import DefaultBadge from '$/common/components/Badge';
 
 export const Container = styled.div`
   width: 100%;
