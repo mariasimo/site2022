@@ -1,5 +1,5 @@
 import config from '$/config';
-import type { IBlogPostFields } from '../../@types/generated/contentful';
+import type { IBlogPostFields } from '$/@types/generated/contentful';
 
 const POST_GRAPHQL_FIELDS = `
     title

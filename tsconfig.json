@@ -34,7 +34,7 @@
   },
   "include": [
     "next-env.d.ts",
-    "additional.d.ts",
+    "src/@types/additional.d.ts",
     "**/*.tsx",
     "**/*.ts",
     "getContentfulEnvironment.js"

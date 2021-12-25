@@ -2,7 +2,7 @@ import { Container, Badge } from './styles';
 import Arrow from '$/assets/icons/arrow-link.svg';
 import Head from 'next/head';
 
-import type { IBlogPostFields } from '../../@types/generated/contentful';
+import type { IBlogPostFields } from '$/@types/generated/contentful';
 
 function HomeView({ posts }: { posts: IBlogPostFields[] }): JSX.Element {
   return (

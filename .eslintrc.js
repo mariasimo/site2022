@@ -107,7 +107,7 @@ module.exports = {
           },
         },
         {
-          files: ['@types/generated/contentful.d.ts'],
+          files: ['src/@types/generated/contentful.d.ts'],
           rules: {
             '@typescript-eslint/naming-convention': 'off',
           },
