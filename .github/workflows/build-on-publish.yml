@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
   repository_dispatch:
-    types: [custom_event_type]
+    types: [contentful_publish_event]
 
 jobs:
   vercel:
