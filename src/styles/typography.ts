@@ -38,7 +38,7 @@ export const HeadingMBold = styled(HeadingMBase)`
 `;
 
 const BodyLBase = styled.span`
-  font-family: ${({ theme }) => theme.fonts.display};
+  font-family: ${({ theme }) => theme.fonts.text};
   font-size: 1.25rem;
   line-height: 1.5;
 `;
@@ -52,7 +52,7 @@ export const BodyLBold = styled(BodyLBase)`
 `;
 
 const BodyMBase = styled.span`
-  font-family: ${({ theme }) => theme.fonts.display};
+  font-family: ${({ theme }) => theme.fonts.text};
   font-size: 1rem;
   line-height: 1.6;
 `;
@@ -66,7 +66,7 @@ export const BodyMBold = styled(BodyMBase)`
 `;
 
 const BodySBase = styled.span`
-  font-family: ${({ theme }) => theme.fonts.display};
+  font-family: ${({ theme }) => theme.fonts.text};
   font-size: 0.875rem;
   line-height: 1.6;
 `;
@@ -80,7 +80,7 @@ export const BodySBold = styled(BodySBase)`
 `;
 
 const BodyXSBase = styled.span`
-  font-family: ${({ theme }) => theme.fonts.display};
+  font-family: ${({ theme }) => theme.fonts.text};
   font-size: 0.75rem;
   line-height: 1.6;
 
