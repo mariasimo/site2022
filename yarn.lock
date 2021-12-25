@@ -5340,6 +5340,7 @@ __metadata:
     prettier: ^2.5.1
     react: 17.0.2
     react-dom: 17.0.2
+    simple-git-hooks: ^2.7.0
     styled-components: ^5.3.3
     styled-normalize: ^8.0.7
     typescript: ^4.5.4
@@ -6815,6 +6816,15 @@ __metadata:
   version: 3.0.6
   resolution: "signal-exit@npm:3.0.6"
   checksum: b819ac81ba757af559dad0804233ae31bf6f054591cd8a671e9cbcf09f21c72ec3076fe87d1e04861f5b33b47d63f0694b568de99c99cd733ee2060515beb6d5
+  languageName: node
+  linkType: hard
+
+"simple-git-hooks@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "simple-git-hooks@npm:2.7.0"
+  bin:
+    simple-git-hooks: cli.js
+  checksum: e7d15ec4c20d2f6c85139fb9dee2cb25be684a27ff32931459fd2e5b1ed205ab89f31fd2e0fc53fc964c1a576d33cbcfbf69611f3d694f11851152f4bc415145
   languageName: node
   linkType: hard
 
