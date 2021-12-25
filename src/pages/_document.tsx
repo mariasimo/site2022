@@ -44,6 +44,9 @@ export default class AppDocument extends Document {
     <Html lang="en">
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/icon.png" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <body>
         <Main />
