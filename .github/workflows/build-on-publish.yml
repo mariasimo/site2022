@@ -1,7 +1,9 @@
 name: Build Site on Contentful Publish Event
 on:
+  push:
+    branches: [main]
   repository_dispatch:
-    types: [publish-event]
+    types: [custom_event_type]
 
 jobs:
   vercel:
