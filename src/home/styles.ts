@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import DefaultBadge from '$/common/components/Badge';
 
 export const Container = styled.div`
-  width: 100%;
-  padding: 20px;
   line-height: 1.5;
+
+  box-sizing: content-box;
+  width: 100%;
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 1.5rem;
 
   b {
     text-rendering: optimizelegibility;
@@ -13,19 +16,12 @@ export const Container = styled.div`
     font-weight: 500;
   }
 
-  a {
-    display: flex;
-    align-items: center;
-  }
-
   p {
-    margin-block-end: 1rem;
     max-width: 44rem;
   }
 `;
 
-export const Badge = styled(DefaultBadge)`
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
+export const ArrowLink = styled.a`
+  display: flex;
+  align-items: center;
 `;

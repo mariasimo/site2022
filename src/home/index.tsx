@@ -1,4 +1,4 @@
-import { Container, Badge } from './styles';
+import { Container, ArrowLink } from './styles';
 import {
   BodyL,
   BodyLBold,
@@ -17,6 +17,7 @@ import Arrow from '$/assets/icons/arrow-link.svg';
 import Head from 'next/head';
 
 import type { IBlogPostFields } from '$/@types/generated/contentful';
+import Header from '$/common/components/Header';
 
 function HomeView({ posts }: { posts: IBlogPostFields[] }): JSX.Element {
   return (
@@ -24,16 +25,16 @@ function HomeView({ posts }: { posts: IBlogPostFields[] }): JSX.Element {
       <Head>
         <title>María Simó Front—End Developer</title>
       </Head>
-      <Badge>Building in public</Badge>
+      <Header />
 
       <b>Coming soon</b>
       <p>
-        <a href="https://twitter.com/mariasimocodes" target="_blank">
+        <ArrowLink href="https://twitter.com/mariasimocodes" target="_blank">
           twitter.com/mariasimocodes <Arrow />
-        </a>
-        <a href="https://github.com/mariasimo" target="_blank">
+        </ArrowLink>
+        <ArrowLink href="https://github.com/mariasimo" target="_blank">
           github.com/mariasimo <Arrow />
-        </a>
+        </ArrowLink>
       </p>
       <p>{posts.map((p) => p.title)}</p>
 
