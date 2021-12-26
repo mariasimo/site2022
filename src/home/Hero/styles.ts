@@ -9,7 +9,7 @@ import {
 import { from } from '$/styles/responsive';
 
 export const Container = styled.section`
-  padding-block: 6rem 8rem;
+  padding-block: 6.5rem 8rem;
 `;
 
 export const Lead = styled(HeadingL).attrs({ as: 'h1' })`
@@ -17,7 +17,7 @@ export const Lead = styled(HeadingL).attrs({ as: 'h1' })`
   margin-block-end: 3.5rem;
 
   ${from.tabletPortrait} {
-    margin-block-end: 2rem;
+    margin-block-end: 2.6rem;
   }
 `;
 
