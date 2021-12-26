@@ -1,7 +1,5 @@
 name: Build Site on Contentful Publish Event
 on:
-  push:
-    branches: [main]
   repository_dispatch:
     types: [contentful_publish_event]
 

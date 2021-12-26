@@ -1,4 +1,4 @@
-import { Container, ArrowLink } from './styles';
+import { Container } from './styles';
 import {
   BodyL,
   BodyLBold,
@@ -13,7 +13,6 @@ import {
   HeadingM,
   HeadingMBold,
 } from '$/styles/typography';
-import Arrow from '$/assets/icons/arrow-link.svg';
 import Head from 'next/head';
 
 import type { IBlogPostFields } from '$/@types/generated/contentful';

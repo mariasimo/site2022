@@ -1,11 +1,11 @@
-name: deploy mariasimo-site-2022 to vercel
+name: Deploy mariasimo-site-2022 to vercel
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   vercel:
