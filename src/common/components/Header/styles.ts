@@ -5,9 +5,7 @@ import { Breakpoint, from, showFromMixin } from '$/styles/responsive';
 
 export const Container = styled.header`
   border-block-start: 1px solid ${({ theme }) => theme.colors.ink}75;
-  margin-block-end: 2rem;
   padding-block: 0.75rem;
-
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 1rem;
@@ -59,4 +57,5 @@ export const Column = styled.div<{ $showFrom?: Breakpoint }>`
 
 export const ThemeSwitcher = styled(Dot)`
   margin-block-start: 0.25rem;
+  flex-shrink: 0;
 `;

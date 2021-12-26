@@ -7,6 +7,10 @@ const HeadingLBase = styled.span`
   line-height: 1.4;
 
   ${from.mobile} {
+    font-size: 1.8rem;
+  }
+
+  ${from.tabletPortrait} {
     font-size: 2.625rem;
   }
 `;
@@ -38,7 +42,7 @@ export const HeadingMBold = styled(HeadingMBase)`
 `;
 
 const BodyLBase = styled.span`
-  font-family: ${({ theme }) => theme.fonts.text};
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 1.25rem;
   line-height: 1.5;
 `;

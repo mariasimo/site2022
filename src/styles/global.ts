@@ -27,6 +27,7 @@ const GlobalStyle = styled.createGlobalStyle`
   h6,
   p {
     margin: 0;
+    padding: 0;
   }
 
   a {

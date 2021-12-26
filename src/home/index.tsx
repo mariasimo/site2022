@@ -18,6 +18,7 @@ import Head from 'next/head';
 
 import type { IBlogPostFields } from '$/@types/generated/contentful';
 import Header from '$/common/components/Header';
+import { Hero } from './Hero';
 
 function HomeView({ posts }: { posts: IBlogPostFields[] }): JSX.Element {
   return (
@@ -26,6 +27,7 @@ function HomeView({ posts }: { posts: IBlogPostFields[] }): JSX.Element {
         <title>María Simó Front—End Developer</title>
       </Head>
       <Header />
+      <Hero />
 
       <b>Coming soon</b>
       <p>
