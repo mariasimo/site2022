@@ -9,13 +9,6 @@ export const Container = styled.div`
   margin: 0 auto;
   padding: 1.5rem;
 
-  b {
-    text-rendering: optimizelegibility;
-    -webkit-font-smoothing: subpixel-antialiased;
-    letter-spacing: 0.02rem;
-    font-weight: 500;
-  }
-
   p {
     max-width: 44rem;
   }

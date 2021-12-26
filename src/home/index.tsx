@@ -29,15 +29,6 @@ function HomeView({ posts }: { posts: IBlogPostFields[] }): JSX.Element {
       <Header />
       <Hero />
 
-      <b>Coming soon</b>
-      <p>
-        <ArrowLink href="https://twitter.com/mariasimocodes" target="_blank">
-          twitter.com/mariasimocodes <Arrow />
-        </ArrowLink>
-        <ArrowLink href="https://github.com/mariasimo" target="_blank">
-          github.com/mariasimo <Arrow />
-        </ArrowLink>
-      </p>
       <p>{posts.map((p) => p.title)}</p>
 
       <br />
