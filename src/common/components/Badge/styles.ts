@@ -22,6 +22,10 @@ export const Container = styled.div`
   position: relative;
   width: fit-content;
 
+  > a {
+    text-decoration: none;
+  }
+
   &:after {
     /* Shine */
     content: '';
