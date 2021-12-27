@@ -17,4 +17,5 @@ export const Arrow = styled(DefaultArrow)`
   margin-inline-start: -0.35rem;
   margin-inline-end: 0.5rem;
   margin-block-start: 0.1rem;
+  flex-shrink: 0;
 `;
