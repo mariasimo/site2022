@@ -3,48 +3,12 @@
 import { Asset, Entry } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
-export interface IAuthorFields {
-  /** Photo */
-  photo: Asset;
-
-  /** Full Name */
-  fullName: string;
-
-  /** handle */
-  handle: string;
-
-  /** Biography */
-  biography: string;
-
-  /** Twitter */
-  twitter?: string | undefined;
-
-  /** LinkedIn */
-  linkedIn?: string | undefined;
-}
-
-/** Plant entry creator */
-
-export interface IAuthor extends Entry<IAuthorFields> {
-  sys: {
-    id: string;
-    type: string;
-    createdAt: string;
-    updatedAt: string;
-    locale: string;
-    contentType: {
-      sys: {
-        id: 'author';
-        linkType: 'ContentType';
-        type: 'Link';
-      };
-    };
-  };
-}
-
 export interface IBlogPostFields {
   /** Title */
   title: string;
+
+  /** Date */
+  date: string;
 
   /** Slug */
   slug: string;
@@ -56,10 +20,10 @@ export interface IBlogPostFields {
   content: Document;
 
   /** Featured Image */
-  featuredImage: Asset;
+  featuredImage?: Asset | undefined;
 
   /** Category */
-  category: Entry<{ [fieldId: string]: unknown }>[];
+  category?: ICategory[] | undefined;
 }
 
 export interface IBlogPost extends Entry<IBlogPostFields> {
@@ -110,27 +74,17 @@ export interface ICategory extends Entry<ICategoryFields> {
   };
 }
 
-export interface IPlantFields {
-  /** Plant name */
-  plantName: string;
+export interface ILearningInPublicFields {
+  /** current */
+  current?: Document | undefined;
 
-  /** Slug */
-  slug: string;
-
-  /** Description */
-  description: Document;
-
-  /** Image */
-  image: Asset;
-
-  /** Category */
-  category: ICategory;
-
-  /** Author */
-  author: IAuthor;
+  /** next */
+  next?: Document | undefined;
 }
 
-export interface IPlant extends Entry<IPlantFields> {
+/** What I'm learning now. What I want to learn next */
+
+export interface ILearningInPublic extends Entry<ILearningInPublicFields> {
   sys: {
     id: string;
     type: string;
@@ -139,7 +93,7 @@ export interface IPlant extends Entry<IPlantFields> {
     locale: string;
     contentType: {
       sys: {
-        id: 'plant';
+        id: 'learningInPublic';
         linkType: 'ContentType';
         type: 'Link';
       };
@@ -147,7 +101,7 @@ export interface IPlant extends Entry<IPlantFields> {
   };
 }
 
-export type CONTENT_TYPE = 'author' | 'blogPost' | 'category' | 'plant';
+export type CONTENT_TYPE = 'blogPost' | 'category' | 'learningInPublic';
 
 export type LOCALE_CODE = 'en-US' | 'es';
 

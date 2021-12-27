@@ -42,6 +42,16 @@ const GlobalStyle = styled.createGlobalStyle`
       flex: 1;
     }
   }
+
+  ::-moz-selection {
+    color: #555;
+    background: #ccc;
+  }
+
+  ::selection {
+    color: #555;
+    background: #ccc;
+  }
 `;
 
 export default GlobalStyle;

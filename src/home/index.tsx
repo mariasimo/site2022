@@ -15,11 +15,19 @@ import {
 } from '$/styles/typography';
 import Head from 'next/head';
 
-import type { IBlogPostFields } from '$/@types/generated/contentful';
 import Header from '$/common/components/Header';
 import { Hero } from './Hero';
+import BlogSection from './BlogSection';
+import type { BlogPost } from '$/lib/api/posts';
+import type { LearningInPublicNode } from '$/lib/api/learningInPublic';
 
-function HomeView({ posts }: { posts: IBlogPostFields[] }): JSX.Element {
+function HomeView({
+  posts,
+  learningInPublic,
+}: {
+  posts: BlogPost[];
+  learningInPublic: LearningInPublicNode;
+}): JSX.Element {
   return (
     <Container>
       <Head>
@@ -27,8 +35,7 @@ function HomeView({ posts }: { posts: IBlogPostFields[] }): JSX.Element {
       </Head>
       <Header />
       <Hero />
-
-      <p>{posts.map((p) => p.title)}</p>
+      <BlogSection posts={posts} learningInPublic={learningInPublic} />
 
       <br />
       <br />

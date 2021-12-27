@@ -75,6 +75,12 @@ module.exports = {
         // components don't accept spread props should therefore be done at the
         // pull request review layer.
         'react/jsx-props-no-spreading': 'off',
+        // I prefer use functions (with hoisting) and define functions in the order they are invoked
+        // improving legibility
+        '@typescript-eslint/no-use-before-define': [
+          'error',
+          { functions: false },
+        ],
       },
       overrides: [
         // Always prefer default exports, except in files where typically we'd

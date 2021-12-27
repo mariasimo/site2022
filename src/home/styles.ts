@@ -13,8 +13,3 @@ export const Container = styled.div`
     max-width: 44rem;
   }
 `;
-
-export const ArrowLink = styled.a`
-  display: flex;
-  align-items: center;
-`;
