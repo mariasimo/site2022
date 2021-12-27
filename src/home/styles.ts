@@ -8,8 +8,4 @@ export const Container = styled.div`
   max-width: 75rem;
   margin: 0 auto;
   padding: 1.5rem;
-
-  p {
-    max-width: 44rem;
-  }
 `;
