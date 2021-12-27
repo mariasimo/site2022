@@ -1,5 +1,4 @@
 import React from 'react';
-import Badge from '$/common/components/Badge';
 import {
   Container,
   Row,
@@ -8,6 +7,8 @@ import {
   Text,
   ThemeSwitcher,
   Link,
+  Badge,
+  ColumnsContainer,
 } from './styles';
 
 const Header = () => (
@@ -18,28 +19,30 @@ const Header = () => (
         <Bold>María Simó</Bold> Front—end developer
       </Text>
     </Row>
-    <Column $showFrom="tabletLandscape">
-      <Text>Currently Based in Madrid</Text>
-      <Text>Made in Murcia</Text>
-      <Text>holasoymariasimo@gmail.com</Text>
-    </Column>
-    <Column $showFrom="tabletPortrait">
-      <Text>Also find me at</Text>
-      <Link as="a" href="https://github.com/mariasimo" target="_blank">
-        github.com/mariasimo
-      </Link>
-      <Text>
-        in{' '}
+    <ColumnsContainer>
+      <Column $showFrom="tabletPortrait">
+        <Text>Currently Based in Madrid</Text>
+        <Text>Made in Murcia</Text>
+        <Text>holasoymariasimo@gmail.com</Text>
+      </Column>
+      <Column $showFrom="mobile">
+        <Text>Also find me at</Text>
         <Link as="a" href="https://github.com/mariasimo" target="_blank">
-          @mariasimo
-        </Link>{' '}
-        tw{' '}
-        <Link as="a" href="https://github.com/mariasimo" target="_blank">
-          @mariasimocodes
+          github.com/mariasimo
         </Link>
-      </Text>
-    </Column>
-    <Badge>Building in public</Badge>
+        <Text>
+          in{' '}
+          <Link as="a" href="https://github.com/mariasimo" target="_blank">
+            @mariasimo
+          </Link>{' '}
+          tw{' '}
+          <Link as="a" href="https://github.com/mariasimo" target="_blank">
+            @mariasimocodes
+          </Link>
+        </Text>
+      </Column>
+      <Badge>Building in public</Badge>
+    </ColumnsContainer>
   </Container>
 );
 
