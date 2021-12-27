@@ -26,10 +26,10 @@ export const HeadingLBold = styled(HeadingLBase)`
 const HeadingMBase = styled.span`
   font-family: ${({ theme }) => theme.fonts.display};
   font-size: 1.3125rem;
-  line-height: 1.5;
+  line-height: 1.2;
 
   ${from.mobile} {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -67,6 +67,8 @@ export const BodyM = styled(BodyMBase)`
 
 export const BodyMBold = styled(BodyMBase)`
   font-weight: 500;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 `;
 
 const BodySBase = styled.span`
@@ -81,6 +83,8 @@ export const BodyS = styled(BodySBase)`
 
 export const BodySBold = styled(BodySBase)`
   font-weight: 500;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 `;
 
 const BodyXSBase = styled.span`
