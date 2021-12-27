@@ -145,7 +145,7 @@ const talks: Section = {
       links: [
         {
           label:
-            'HYCW: Tus primero 100 días como Career Changer | Ironhack & Z1 | September, 2021',
+            'HYCW: Tus primeros 100 días como Career Changer | Ironhack & Z1 | September, 2021',
           link: 'https://www.meetup.com/es-ES/ironhack-madrid/events/280962161/',
         },
         {
