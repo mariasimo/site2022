@@ -13,12 +13,15 @@ export const Container = styled.div`
 export const Section = styled.section`
   display: grid;
   grid-template-columns: 1fr;
-  margin-block-end: 5.5rem;
   gap: 1.5rem;
 
   ${from.tabletPortrait} {
     gap: 3rem;
     grid-template-columns: repeat(8, 1fr);
+  }
+
+  &:not(:last-child) {
+    margin-block-end: 5.5rem;
   }
 `;
 

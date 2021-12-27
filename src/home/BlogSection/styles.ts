@@ -9,6 +9,7 @@ export const Container = styled.section`
   padding-block: 1.5rem;
 
   ${from.tabletPortrait} {
+    padding-block: 0;
     grid-template-columns: repeat(8, 1fr);
   }
 `;
