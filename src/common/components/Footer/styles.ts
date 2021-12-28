@@ -46,11 +46,12 @@ export const Bold = styled(BodySBold).attrs({ as: 'span' })``;
 
 export const Link = styled(Bold).attrs({ as: 'a' })`
   text-decoration: none;
-  transition: color 300ms ease-out;
   display: inline;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.ink};
 
   &:hover {
-    color: blue;
+    transition: color 300ms ease-out;
+    color: ${({ theme }) => theme.colors.interactive};
   }
 `;
