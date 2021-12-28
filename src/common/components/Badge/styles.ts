@@ -18,4 +18,5 @@ export const Container = styled.div`
 
 export const Link = styled(BodyXXSBold)`
   color: var(--theme-ink);
+  transition: none;
 `;
