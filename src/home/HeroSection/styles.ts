@@ -43,10 +43,10 @@ export const Text = styled(BodyS).attrs({ as: 'p' })``;
 
 export const Link = styled(BodyS)`
   text-decoration: none;
-  transition: color 300ms ease-out;
   display: inline;
 
   &:hover {
+    transition: color 300ms ease-out;
     color: #ccc;
   }
 `;

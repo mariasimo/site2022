@@ -1,5 +1,9 @@
 import React, { ReactNode } from 'react';
-import { Container } from './styles';
+import { useTheme } from '$/common/hooks/ThemeContext';
+import { Container, Link } from './styles';
+
+const TWEET_BUILDING_IN_PUBLIC =
+  'https://twitter.com/mariasimocodes/status/1474701212578717698';
 
 const Badge = ({
   children,
@@ -9,12 +13,9 @@ const Badge = ({
   className?: string;
 }) => (
   <Container className={className}>
-    <a
-      href="https://twitter.com/mariasimocodes/status/1474701212578717698"
-      target="_blank"
-    >
+    <Link as="a" href={TWEET_BUILDING_IN_PUBLIC} target="_blank">
       {children}
-    </a>
+    </Link>
   </Container>
 );
 
