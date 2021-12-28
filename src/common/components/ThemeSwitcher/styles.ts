@@ -11,7 +11,7 @@ export const Container = styled.div`
 `;
 
 export const Circle = styled.div`
-  background-color: ${({ theme }) => theme.colors.ink};
+  background-color: var(--theme-ink);
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -26,7 +26,7 @@ export const Mask = styled.div<{ $isLightTheme: boolean }>`
   top: 0rem;
   right: -0.2rem;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.paper};
+  background-color: var(--theme-paper);
 
   ${({ $isLightTheme }) =>
     $isLightTheme

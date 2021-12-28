@@ -8,7 +8,7 @@ export const Container = styled.section`
   grid-template-columns: 1fr;
   gap: 3rem;
   padding-block: 1.5rem;
-  fill: ${({ theme }) => theme.colors.ink};
+  fill: var(--theme-ink);
 
   ${from.tabletPortrait} {
     padding-block: 0;

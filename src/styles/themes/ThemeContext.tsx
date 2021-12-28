@@ -5,21 +5,24 @@ import {
   useEffect,
   useState,
 } from 'react';
-import {
-  ThemeProvider as StyledThemeProvider,
-  ThemeContext,
-} from 'styled-components';
-import themes, { ThemeKey } from '$/styles/themes';
 
-const ThemeUpdateContext = createContext<
-  ((themeName: ThemeKey) => void) | null
->(null);
+import type { ThemeKey } from '$/styles/themes';
+
+const ThemeUpdateContext = createContext<{
+  themeName: ThemeKey;
+  setThemeName: (value: 'light' | 'dark') => void;
+}>({ themeName: 'light', setThemeName: () => null });
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [themeName, rawSetThemeName] = useState<ThemeKey>('light');
 
   useEffect(() => {
-    rawSetThemeName(getInitialColorMode() as ThemeKey);
+    const initialValue = getInitialColorMode() as ThemeKey;
+    if (initialValue === 'dark') {
+      document.querySelector('html')?.classList.add('dark');
+    } else {
+      document.querySelector('html')?.classList.remove('dark');
+    }
   }, []);
 
   const setThemeName = (value: ThemeKey) => {
@@ -27,27 +30,30 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('theme', value);
   };
 
-  const theme = themes[themeName];
-
   return (
-    <ThemeUpdateContext.Provider value={setThemeName}>
-      <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+    <ThemeUpdateContext.Provider value={{ themeName, setThemeName }}>
+      {children}
     </ThemeUpdateContext.Provider>
   );
 };
 
 const useTheme = () => {
-  const theme = useContext(ThemeContext);
-  const setThemeName = useContext(ThemeUpdateContext);
+  const { themeName, setThemeName } = useContext(ThemeUpdateContext);
 
   const toggleTheme = () => {
     if (setThemeName) {
-      const newValue: ThemeKey = theme.name === 'light' ? 'dark' : 'light';
+      const newValue: ThemeKey = themeName === 'light' ? 'dark' : 'light';
       setThemeName(newValue);
+
+      if (newValue === 'dark') {
+        document.querySelector('html')?.classList.add('dark');
+      } else {
+        document.querySelector('html')?.classList.remove('dark');
+      }
     }
   };
 
-  return { theme, toggleTheme };
+  return { themeName, toggleTheme };
 };
 
 export { ThemeProvider, useTheme };
