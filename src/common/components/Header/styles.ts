@@ -96,21 +96,12 @@ export const Row = styled.div`
 
 export const Column = styled.div<{ $showFrom?: Breakpoint }>`
   flex-direction: column;
+  flex: 1 1 0px;
+
   ${({ $showFrom }) => showFromMixin($showFrom)}
 
   ${Text} {
     line-height: 1.4;
-  }
-`;
-
-export const Link = styled(BodyS)`
-  text-decoration: none;
-  display: inline;
-  color: ${({ theme }) => theme.colors.ink};
-  transition: color 300ms ease-in-out 200ms;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.interactive};
   }
 `;
 

@@ -1,12 +1,12 @@
+import SocialBlock from '$/common/components/SocialBlock';
+import ContactBlock from '$/common/components/ContactBlock';
 import {
   Container,
   Lead,
   LeadBold,
-  Text,
   Summary,
   SummaryBold,
-  ContactBlock,
-  Link,
+  Column,
 } from './styles';
 
 export default function HeroSection() {
@@ -27,27 +27,12 @@ export default function HeroSection() {
         with. As a <SummaryBold>woman</SummaryBold>, I want to inspire others to
         follow a career in tech and explore new ways of leadership.
       </Summary>
-      <ContactBlock>
-        <Text>Currently Based in Madrid</Text>
-        <Text>Made in Murcia</Text>
-        <Text>holasoymariasimo@gmail.com</Text>
-      </ContactBlock>
-      <ContactBlock>
-        <Text>Also find me at</Text>
-        <Link as="a" href="https://github.com/mariasimo" target="_blank">
-          github.com/mariasimo
-        </Link>
-        <Text>
-          in{' '}
-          <Link as="a" href="https://github.com/mariasimo" target="_blank">
-            @mariasimo
-          </Link>{' '}
-          tw{' '}
-          <Link as="a" href="https://github.com/mariasimo" target="_blank">
-            @mariasimocodes
-          </Link>
-        </Text>
-      </ContactBlock>
+      <Column>
+        <ContactBlock />
+      </Column>
+      <Column>
+        <SocialBlock />
+      </Column>
     </Container>
   );
 }

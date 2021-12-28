@@ -1,8 +1,6 @@
 import React, { ReactNode } from 'react';
+import { externalLinks } from '../../utils/links';
 import { Container, Link } from './styles';
-
-const TWEET_BUILDING_IN_PUBLIC =
-  'https://twitter.com/mariasimocodes/status/1474701212578717698';
 
 const Badge = ({
   children,
@@ -12,7 +10,7 @@ const Badge = ({
   className?: string;
 }) => (
   <Container className={className}>
-    <Link as="a" href={TWEET_BUILDING_IN_PUBLIC} target="_blank">
+    <Link as="a" href={externalLinks.tweetBuildInPublic} target="_blank">
       {children}
     </Link>
   </Container>

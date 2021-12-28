@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app';
 
 import GlobalStyle from '$/styles/global';
 import '$/styles/fonts.css';
-import { ThemeProvider } from '$/common/hooks/ThemeContext';
+import { ThemeProvider } from '$/styles/themes/ThemeContext';
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (

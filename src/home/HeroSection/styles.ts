@@ -1,11 +1,5 @@
 import styled from 'styled-components';
-import {
-  BodyL,
-  BodyLBold,
-  HeadingL,
-  HeadingLBold,
-  BodyS,
-} from '$/styles/typography';
+import { BodyL, BodyLBold, HeadingL, HeadingLBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
 
 export const Container = styled.section`
@@ -39,19 +33,7 @@ export const Summary = styled(BodyL).attrs({ as: 'p' })`
 
 export const SummaryBold = styled(BodyLBold).attrs({ as: 'span' })``;
 
-export const Text = styled(BodyS).attrs({ as: 'p' })``;
-
-export const Link = styled(BodyS)`
-  text-decoration: none;
-  display: inline;
-
-  &:hover {
-    transition: color 300ms ease-out;
-    color: #ccc;
-  }
-`;
-
-export const ContactBlock = styled.div`
+export const Column = styled.div`
   display: block;
 
   ${from.tabletPortrait} {
