@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { useTheme } from '$/common/hooks/ThemeContext';
 import { Container, Link } from './styles';
 
 const TWEET_BUILDING_IN_PUBLIC =
