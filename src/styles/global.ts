@@ -1,37 +1,12 @@
-import { createGlobalStyle, css } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
-import themes from './themes';
+import { Theming } from './themes';
 
 const styled = { createGlobalStyle };
 
-const Theming = css`
-  :root {
-    --theme-font-display: 'Neue Haas Grotesk Display Pro';
-    --theme-font-text: 'Neue Haas Grotesk Text Pro';
-    --theme-line: ${themes.light.colors.line};
-    --theme-ink: ${themes.light.colors.ink};
-    --theme-paper: ${themes.light.colors.paper};
-    --theme-accent: ${themes.light.colors.accent};
-    --theme-interactive: ${themes.light.colors.interactive};
-    --theme-selectedText: ${themes.light.colors.selectedText};
-    --theme-selectedTextBg: ${themes.light.colors.selectedTextBg};
-  }
-
-  html.dark {
-    --theme-ink: ${themes.dark.colors.ink};
-    --theme-line: ${themes.dark.colors.line};
-    --theme-paper: ${themes.dark.colors.paper};
-    --theme-accent: ${themes.dark.colors.accent};
-    --theme-interactive: ${themes.dark.colors.interactive};
-    --theme-selectedText: ${themes.dark.colors.selectedText};
-    --theme-selectedTextBg: ${themes.dark.colors.selectedTextBg};
-  }
-`;
-
 const GlobalStyle = styled.createGlobalStyle`
   ${normalize};
-
-  ${Theming};
+  /* ${Theming}; */
 
   * {
     box-sizing: border-box;
@@ -44,10 +19,20 @@ const GlobalStyle = styled.createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
 
     font-size: 16px;
-    transition: background-color 300ms ease-out, color 300ms ease-in-out 200ms;
-
+    transition: background-color 100ms ease-out;
     background: var(--theme-paper);
     color: var(--theme-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a {
+    transition: color 100ms ease-out 200ms;
   }
 
   h1,
