@@ -1,7 +1,9 @@
 import light from './light';
+import dark from './dark';
 
 const untypedThemes = {
   light,
+  dark,
 };
 
 export type Theme = typeof light;

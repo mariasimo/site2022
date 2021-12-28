@@ -17,6 +17,8 @@ const GlobalStyle = styled.createGlobalStyle`
     background-color: ${({ theme }) => theme.colors.paper};
     color: ${({ theme }) => theme.colors.ink};
     font-size: 16px;
+    transition: background-color 300ms ease-in-out,
+      color 300ms ease-in-out 200ms;
   }
 
   h1,
@@ -31,7 +33,7 @@ const GlobalStyle = styled.createGlobalStyle`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.ink};
+    text-decoration: none;
   }
 
   #__next {
@@ -44,13 +46,13 @@ const GlobalStyle = styled.createGlobalStyle`
   }
 
   ::-moz-selection {
-    color: #555;
-    background: #ccc;
+    color: ${({ theme }) => theme.colors.selectedText};
+    background: ${({ theme }) => theme.colors.selectedTextBg};
   }
 
   ::selection {
-    color: #555;
-    background: #ccc;
+    color: ${({ theme }) => theme.colors.selectedText};
+    background: ${({ theme }) => theme.colors.selectedTextBg};
   }
 `;
 

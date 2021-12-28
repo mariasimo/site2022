@@ -1,18 +1,59 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { BodyS, BodySBold } from '$/styles/typography';
-import Dot from '$/assets/icons/dot.svg';
 import { Breakpoint, from, showFromMixin } from '$/styles/responsive';
 import DefaultBadge from '$/common/components/Badge';
+import DefaultThemeSwitcher from '$/common/components/ThemeSwitcher';
+
+const Translate = keyframes`
+ 0% {
+    transform: scaleX(100%);
+  }
+  100% {
+    transform:  scaleX(100%) translateX(100%) ;
+  }
+`;
 
 export const Container = styled.header`
-  border-block-start: 1px solid ${({ theme }) => theme.colors.ink}75;
   padding-block: 0.75rem;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+`;
+
+export const AnimatedBorder = styled.div<{ $isLightTheme: boolean }>`
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
 
   ${from.tabletPortrait} {
     gap: 3rem;
+  }
+
+  &:after {
+    content: '';
+    height: 1px;
+    position: absolute;
+    transition: all 1s ease-in-out 0s;
+    left: 0;
+    background-color: ${({ theme }) => theme.colors.paper};
+    width: 100%;
+    transform-origin: 0%;
+    z-index: 1;
+    top: 0;
+    animation: ${Translate} 600ms ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+  &:before {
+    content: '';
+    height: 1px;
+    position: absolute;
+    left: 0;
+    background-color: ${({ theme }) => theme.colors.ink};
+    width: 100%;
   }
 `;
 
@@ -64,11 +105,12 @@ export const Column = styled.div<{ $showFrom?: Breakpoint }>`
 
 export const Link = styled(BodyS)`
   text-decoration: none;
-  transition: color 300ms ease-out;
   display: inline;
+  color: ${({ theme }) => theme.colors.ink};
+  transition: color 300ms ease-in-out 200ms;
 
   &:hover {
-    color: blue;
+    color: ${({ theme }) => theme.colors.interactive};
   }
 `;
 
@@ -76,7 +118,7 @@ export const Bold = styled(BodySBold).attrs({ as: 'span' })`
   display: block;
 `;
 
-export const ThemeSwitcher = styled(Dot)`
+export const ThemeSwitcher = styled(DefaultThemeSwitcher)`
   margin-block-start: 0.25rem;
   flex-shrink: 0;
 `;
