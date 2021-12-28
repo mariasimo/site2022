@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import { BodyMBold, BodyS, BodySBold, HeadingMBold } from '$/styles/typography';
-import { from } from '../../styles/responsive';
+import { from } from '$/styles/responsive';
+import DefaultBookOpen from '$/assets/icons/book-open.svg';
 
 export const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
   padding-block: 1.5rem;
+  fill: ${({ theme }) => theme.colors.ink};
 
   ${from.tabletPortrait} {
     padding-block: 0;
@@ -56,3 +58,6 @@ export const LearningContainer = styled(BodyS).attrs({ as: 'div' })`
 `;
 
 export const Bold = styled(BodySBold)``;
+export const BookOpen = styled(DefaultBookOpen)`
+  flex-shrink: 0;
+`;

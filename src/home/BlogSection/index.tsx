@@ -7,11 +7,11 @@ import {
   Title,
   LearningContainer,
   Bold,
+  BookOpen,
 } from './styles';
 import { BlogCard } from './BlogPost';
 import type { LearningInPublicNode } from '$/lib/api/learningInPublic';
 import RichTextRenderer from '$/common/components/RichTextRenderer';
-import BookOpen from '$/assets/icons/book-open.svg';
 
 export default function BlogSection({
   posts,
