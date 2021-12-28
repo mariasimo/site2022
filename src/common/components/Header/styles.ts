@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { BodyS, BodySBold } from '$/styles/typography';
 import { Breakpoint, from, showFromMixin } from '$/styles/responsive';
 import DefaultBadge from '$/common/components/Badge';
@@ -22,7 +22,7 @@ export const Container = styled.header`
   overflow: hidden;
 `;
 
-export const AnimatedBorder = styled.div<{ $isLightTheme: boolean }>`
+export const AnimatedBorder = styled.div`
   position: absolute;
   left: 0;
   right: 0;
