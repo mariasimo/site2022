@@ -1,46 +1,25 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useEffect } from 'react';
 import {
   ThemeProvider as StyledThemeProvider,
   ThemeContext,
 } from 'styled-components';
 import themes, { ThemeKey } from '$/styles/themes';
-import useLocalStorage from '../../common/hooks/useLocalStorage';
+import useLocalStorage from '$/common/hooks/useLocalStorage';
+import useMatchMedia from '$/common/hooks/useMatchMedia';
 
 const ThemeUpdateContext = createContext<
   ((themeName: ThemeKey) => void) | null
 >(null);
 
-const useMatchMedia = () => {
-  const [colorScheme, setColorScheme] = useState<ThemeKey>('light');
-  useEffect(() => {
-    const mql = window.matchMedia('(prefers-color-scheme: dark)');
-    const hasMediaQueryPreference = typeof mql.matches === 'boolean';
-
-    if (hasMediaQueryPreference) {
-      setColorScheme(mql.matches ? 'dark' : 'light');
-    } else {
-      // If they are using a browser/OS that doesn't support
-      // color themes, let's default to 'light'.
-      setColorScheme('light');
-    }
-  }, [setColorScheme]);
-
-  return colorScheme;
-};
-
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const initialValue = useMatchMedia();
-  const [themeName, setThemeName] = useLocalStorage<ThemeKey>(
-    'theme',
-    initialValue,
-  );
+  const colorModePreference = useMatchMedia();
+  const [themeName, setThemeName] = useLocalStorage<ThemeKey>('theme', 'light');
+
   const theme = themes[themeName];
+
+  useEffect(() => {
+    setThemeName(colorModePreference);
+  }, [setThemeName, colorModePreference]);
 
   return (
     <ThemeUpdateContext.Provider value={setThemeName}>
