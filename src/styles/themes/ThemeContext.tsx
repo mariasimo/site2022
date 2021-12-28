@@ -1,25 +1,33 @@
-import { createContext, ReactNode, useContext, useEffect } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import {
   ThemeProvider as StyledThemeProvider,
   ThemeContext,
 } from 'styled-components';
 import themes, { ThemeKey } from '$/styles/themes';
-import useLocalStorage from '$/common/hooks/useLocalStorage';
-import useMatchMedia from '$/common/hooks/useMatchMedia';
 
 const ThemeUpdateContext = createContext<
   ((themeName: ThemeKey) => void) | null
 >(null);
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const colorModePreference = useMatchMedia();
-  const [themeName, setThemeName] = useLocalStorage<ThemeKey>('theme', 'light');
-
-  const theme = themes[themeName];
+  const [themeName, rawSetThemeName] = useState<ThemeKey>('light');
 
   useEffect(() => {
-    setThemeName(colorModePreference);
-  }, [setThemeName, colorModePreference]);
+    rawSetThemeName(getInitialColorMode() as ThemeKey);
+  }, []);
+
+  const setThemeName = (value: ThemeKey) => {
+    rawSetThemeName(value);
+    localStorage.setItem('theme', value);
+  };
+
+  const theme = themes[themeName];
 
   return (
     <ThemeUpdateContext.Provider value={setThemeName}>
@@ -43,3 +51,18 @@ const useTheme = () => {
 };
 
 export { ThemeProvider, useTheme };
+
+function getInitialColorMode() {
+  const persistedColorPreference = window.localStorage.getItem('theme');
+  const hasPersistedPreference = typeof persistedColorPreference === 'string';
+
+  if (hasPersistedPreference) {
+    return persistedColorPreference;
+  }
+  const mql = window.matchMedia('(prefers-color-scheme: dark)');
+  const hasMediaQueryPreference = typeof mql.matches === 'boolean';
+  if (hasMediaQueryPreference) {
+    return mql.matches ? 'dark' : 'light';
+  }
+  return 'light';
+}
