@@ -104,3 +104,17 @@ export const BodyXS = styled(BodyXSBase)`
 export const BodyXSBold = styled(BodyXSBase)`
   font-weight: 500;
 `;
+
+const BodyXXSBase = styled.span`
+  font-family: ${({ theme }) => theme.fonts.text};
+  font-size: 0.75rem;
+  line-height: 1;
+`;
+
+export const BodyXXS = styled(BodyXXSBase)`
+  font-weight: 400;
+`;
+
+export const BodyXXSBold = styled(BodyXXSBase)`
+  font-weight: 500;
+`;
