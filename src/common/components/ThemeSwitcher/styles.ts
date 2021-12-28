@@ -1,13 +1,22 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isLightTheme: boolean }>`
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
-  transition: transform 300ms ease-in-out;
+  transition: transform 600ms ease-in-out;
   cursor: pointer;
+
+  ${({ $isLightTheme }) =>
+    $isLightTheme
+      ? css`
+          transform: rotate(50deg);
+        `
+      : css`
+          transform: rotate(-20deg);
+        `};
 `;
 
 export const Circle = styled.div`
@@ -34,6 +43,6 @@ export const Mask = styled.div<{ $isLightTheme: boolean }>`
           transform: scale(3) translate(6.25rem, 0px);
         `
       : css`
-          transform: scale(1) rotate(0);
+          transform: scale(1);
         `};
 `;

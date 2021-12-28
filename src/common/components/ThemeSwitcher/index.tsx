@@ -10,7 +10,11 @@ export default function ThemeSwitcher({
   handleClick: () => void;
 }) {
   return (
-    <Container onClick={handleClick} className={className}>
+    <Container
+      onClick={handleClick}
+      $isLightTheme={theme === 'light'}
+      className={className}
+    >
       <Circle />
       <Mask $isLightTheme={theme === 'light'} />
     </Container>
