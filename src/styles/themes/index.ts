@@ -41,7 +41,12 @@ function setColorsByTheme() {
     const hasPersistedPreference = typeof persistedColorPreference === 'string';
 
     if (hasPersistedPreference) {
-      return persistedColorPreference as ThemeKey;
+      // eslint-disable-next-line no-console
+      console.log(
+        persistedColorPreference,
+        JSON.parse(persistedColorPreference),
+      );
+      return JSON.parse(persistedColorPreference) as ThemeKey;
     }
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const hasMediaQueryPreference = typeof mql.matches === 'boolean';
