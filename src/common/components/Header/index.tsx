@@ -15,14 +15,14 @@ import ContactBlock from '$/common/components/ContactBlock';
 import SocialBlock from '$/common/components/SocialBlock';
 
 const Header = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { themeName, toggleTheme } = useTheme();
 
   return (
     <Container>
-      {theme.name === 'light' && <AnimatedBorder />}
-      {theme.name !== 'light' && <AnimatedBorder />}
+      {themeName === 'light' && <AnimatedBorder />}
+      {themeName !== 'light' && <AnimatedBorder />}
       <Row>
-        <ThemeSwitcher handleClick={toggleTheme} theme={theme} />
+        <ThemeSwitcher handleClick={toggleTheme} themeName={themeName} />
         <Text>
           <Bold>María Simó</Bold> Front—end developer
         </Text>

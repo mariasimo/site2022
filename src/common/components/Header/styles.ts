@@ -19,7 +19,6 @@ export const Container = styled.header`
   grid-template-columns: repeat(8, 1fr);
   gap: 1.5rem;
   position: relative;
-  overflow: hidden;
 `;
 
 export const AnimatedBorder = styled.div`
@@ -38,7 +37,7 @@ export const AnimatedBorder = styled.div`
     position: absolute;
     transition: all 1s ease-in-out 0s;
     left: 0;
-    background-color: ${({ theme }) => theme.colors.paper};
+    background-color: var(--theme-paper);
     width: 100%;
     transform-origin: 0%;
     z-index: 1;
@@ -52,7 +51,7 @@ export const AnimatedBorder = styled.div`
     height: 1px;
     position: absolute;
     left: 0;
-    background-color: ${({ theme }) => theme.colors.ink};
+    background-color: var(--theme-ink);
     width: 100%;
   }
 `;
