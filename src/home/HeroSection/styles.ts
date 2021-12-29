@@ -14,6 +14,7 @@ export const Container = styled.section`
 export const Lead = styled(HeadingL).attrs({ as: 'h1' })`
   max-width: 60rem;
   margin-block-end: 3.5rem;
+  line-height: 1.2;
 
   ${from.tabletPortrait} {
     margin-block-end: 2.6rem;
