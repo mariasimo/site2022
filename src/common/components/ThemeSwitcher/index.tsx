@@ -1,22 +1,23 @@
+import type { ThemeKey } from '$/styles/themes';
 import { Container, Circle, Mask } from './styles';
 
 export default function ThemeSwitcher({
   className,
-  theme,
+  themeName,
   handleClick,
 }: {
   className?: string;
-  theme: string;
+  themeName: ThemeKey;
   handleClick: () => void;
 }) {
   return (
     <Container
       onClick={handleClick}
-      $isLightTheme={theme === 'light'}
+      $isLightTheme={themeName === 'light'}
       className={className}
     >
       <Circle />
-      <Mask $isLightTheme={theme === 'light'} />
+      <Mask $isLightTheme={themeName === 'light'} />
     </Container>
   );
 }
