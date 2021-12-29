@@ -8,7 +8,6 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
-import { loadTheme } from '$/styles/themes';
 
 const fontsAssets = [
   'NeueHaasDisplay-Regular.woff2',
@@ -69,8 +68,6 @@ export default class AppDocument extends Document {
             type="font/woff2"
           />
         ))}
-
-        <script dangerouslySetInnerHTML={{ __html: loadTheme }} />
       </Head>
       <body>
         <Main />
