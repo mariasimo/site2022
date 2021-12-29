@@ -54,6 +54,9 @@ function setColorsByTheme() {
   const root = document.documentElement;
   const colors = themesKey[colorMode]?.colors;
 
+  // eslint-disable-next-line no-console
+  console.log(themesKey, colorMode, colors);
+
   if (typeof colors !== 'undefined') {
     Object.entries(colors).forEach(([label, value]) => {
       const cssVarName = '--theme-' + label;
