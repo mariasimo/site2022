@@ -5,7 +5,6 @@ const styled = { createGlobalStyle };
 
 const GlobalStyle = styled.createGlobalStyle`
   ${normalize};
-
   * {
     box-sizing: border-box;
   }
@@ -15,22 +14,11 @@ const GlobalStyle = styled.createGlobalStyle`
       'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
+    background-color: ${({ theme }) => theme.colors.paper};
+    color: ${({ theme }) => theme.colors.ink};
     font-size: 16px;
-    transition: background-color 100ms ease-out;
-    background: var(--theme-paper);
-    color: var(--theme-ink);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  a {
-    transition: color 100ms ease-out 200ms;
+    transition: background-color 300ms ease-in-out,
+      color 300ms ease-in-out 200ms;
   }
 
   h1,
@@ -58,13 +46,13 @@ const GlobalStyle = styled.createGlobalStyle`
   }
 
   ::-moz-selection {
-    background: var(--theme-selectedTextBg);
-    color: var(--theme-selectedText);
+    color: ${({ theme }) => theme.colors.selectedText};
+    background: ${({ theme }) => theme.colors.selectedTextBg};
   }
 
   ::selection {
-    background: var(--theme-selectedTextBg);
-    color: var(--theme-selectedText);
+    color: ${({ theme }) => theme.colors.selectedText};
+    background: ${({ theme }) => theme.colors.selectedTextBg};
   }
 `;
 

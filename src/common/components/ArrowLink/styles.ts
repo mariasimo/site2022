@@ -5,13 +5,13 @@ export const Link = styled.a`
   text-decoration: none;
   display: flex;
   align-items: flex-start;
-  fill: var(--theme-ink);
-  color: var(--theme-ink);
+  fill: ${({ theme }) => theme.colors.ink};
+  color: ${({ theme }) => theme.colors.ink};
 
   &:hover {
     transition: color 300ms ease-out, fill 300ms ease-out;
-    color: var(--theme-interactive);
-    fill: var(--theme-interactive);
+    color: ${({ theme }) => theme.colors.interactive};
+    fill: ${({ theme }) => theme.colors.interactive};
   }
 `;
 
