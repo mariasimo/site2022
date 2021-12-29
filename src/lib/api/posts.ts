@@ -1,5 +1,5 @@
 import type { IBlogPost, IBlogPostFields } from '$/@types/generated/contentful';
-import { formatDate } from '../dates';
+import { formatDate } from '$/lib/dates';
 import { fetchGraphQL } from '.';
 
 const POST_GRAPHQL_FIELDS = `
