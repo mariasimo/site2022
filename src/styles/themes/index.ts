@@ -64,4 +64,3 @@ function setColorsByTheme() {
 
   root.style.setProperty('--initial-color-mode', colorMode);
 }
-
