@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   createContext,
   ReactNode,
@@ -21,7 +20,6 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initialThemeValue = getInitialValue();
     rawSetThemeName(initialThemeValue);
-    console.log({ initialThemeValue });
 
     setThemeSetVars(initialThemeValue);
   }, []);
@@ -29,7 +27,6 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const setTheme = (theme: ThemeKey) => {
     rawSetThemeName(theme);
     localStorage.setItem('theme', theme);
-    console.log({ theme });
     setThemeSetVars(theme);
   };
 
@@ -58,7 +55,6 @@ export { ThemeProvider, useTheme };
 function setThemeSetVars(theme: ThemeKey) {
   const root = window.document.documentElement;
 
-  console.log(themes, theme);
   const themeColors = themes[theme].colors;
 
   Object.entries(themeColors).forEach(([label, value]) => {
