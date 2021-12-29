@@ -41,7 +41,7 @@ function setColorsByTheme() {
     const hasPersistedPreference = typeof persistedColorPreference === 'string';
 
     if (hasPersistedPreference) {
-      return JSON.parse(persistedColorPreference) as ThemeKey;
+      return persistedColorPreference as ThemeKey;
     }
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const hasMediaQueryPreference = typeof mql.matches === 'boolean';
