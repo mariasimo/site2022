@@ -53,12 +53,14 @@ function setColorsByTheme() {
   }
   const colorMode: ThemeKey = getInitialColorMode();
   const root = document.documentElement;
-  const colors = themesKey[colorMode].colors;
+  const colors = themesKey[colorMode]?.colors;
 
-  Object.entries(colors).forEach(([label, value]) => {
-    const cssVarName = '--theme-' + label;
-    root.style.setProperty(cssVarName, value);
-  });
+  if (typeof colors !== 'undefined') {
+    Object.entries(colors).forEach(([label, value]) => {
+      const cssVarName = '--theme-' + label;
+      root.style.setProperty(cssVarName, value);
+    });
+  }
 
   root.style.setProperty('--initial-color-mode', colorMode);
 }
