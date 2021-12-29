@@ -19,7 +19,6 @@ export const Container = styled.header`
   grid-template-columns: repeat(8, 1fr);
   gap: 1.5rem;
   position: relative;
-  overflow: hidden;
 `;
 
 export const AnimatedBorder = styled.div`

@@ -22,7 +22,7 @@ const Header = () => {
       {themeName === 'light' && <AnimatedBorder />}
       {themeName !== 'light' && <AnimatedBorder />}
       <Row>
-        <ThemeSwitcher handleClick={toggleTheme} theme={themeName} />
+        <ThemeSwitcher handleClick={toggleTheme} themeName={themeName} />
         <Text>
           <Bold>María Simó</Bold> Front—end developer
         </Text>
