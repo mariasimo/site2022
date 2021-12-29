@@ -7,49 +7,42 @@ import {
 } from 'react';
 
 import type { ThemeKey } from '$/styles/themes';
+import themes from '$/styles/themes';
 
 const ThemeUpdateContext = createContext<{
   themeName: ThemeKey;
-  setThemeName: (value: 'light' | 'dark') => void;
-}>({ themeName: 'light', setThemeName: () => null });
+  setTheme: (value: 'light' | 'dark') => void;
+}>({ themeName: 'light', setTheme: () => null });
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [themeName, rawSetThemeName] = useState<ThemeKey>('light');
 
   useEffect(() => {
-    const initialValue = getInitialColorMode() as ThemeKey;
-    if (initialValue === 'dark') {
-      document.querySelector('html')?.classList.add('dark');
-    } else {
-      document.querySelector('html')?.classList.remove('dark');
-    }
+    const initialThemeValue = getInitialValue();
+    rawSetThemeName(initialThemeValue);
+    setThemeSetVars(initialThemeValue);
   }, []);
 
-  const setThemeName = (value: ThemeKey) => {
-    rawSetThemeName(value);
-    localStorage.setItem('theme', value);
+  const setTheme = (theme: ThemeKey) => {
+    rawSetThemeName(theme);
+    localStorage.setItem('theme', theme);
+    setThemeSetVars(theme);
   };
 
   return (
-    <ThemeUpdateContext.Provider value={{ themeName, setThemeName }}>
+    <ThemeUpdateContext.Provider value={{ themeName, setTheme }}>
       {children}
     </ThemeUpdateContext.Provider>
   );
 };
 
 const useTheme = () => {
-  const { themeName, setThemeName } = useContext(ThemeUpdateContext);
+  const { themeName, setTheme } = useContext(ThemeUpdateContext);
 
   const toggleTheme = () => {
-    if (setThemeName) {
+    if (setTheme) {
       const newValue: ThemeKey = themeName === 'light' ? 'dark' : 'light';
-      setThemeName(newValue);
-
-      if (newValue === 'dark') {
-        document.querySelector('html')?.classList.add('dark');
-      } else {
-        document.querySelector('html')?.classList.remove('dark');
-      }
+      setTheme(newValue);
     }
   };
 
@@ -58,17 +51,21 @@ const useTheme = () => {
 
 export { ThemeProvider, useTheme };
 
-function getInitialColorMode() {
-  const persistedColorPreference = window.localStorage.getItem('theme');
-  const hasPersistedPreference = typeof persistedColorPreference === 'string';
+function setThemeSetVars(theme: ThemeKey) {
+  const root = window.document.documentElement;
+  const themeColors = themes[theme].colors;
 
-  if (hasPersistedPreference) {
-    return persistedColorPreference;
-  }
-  const mql = window.matchMedia('(prefers-color-scheme: dark)');
-  const hasMediaQueryPreference = typeof mql.matches === 'boolean';
-  if (hasMediaQueryPreference) {
-    return mql.matches ? 'dark' : 'light';
-  }
-  return 'light';
+  Object.entries(themeColors).forEach(([label, value]) => {
+    const cssVarName = '--theme-' + label;
+    root.style.setProperty(cssVarName, value);
+  });
+}
+
+function getInitialValue() {
+  const root = window.document.documentElement;
+  const initialThemeValue = root.style.getPropertyValue(
+    '--initial-color-mode',
+  ) as ThemeKey;
+
+  return initialThemeValue;
 }

@@ -1,6 +1,5 @@
 import light from './light';
 import dark from './dark';
-import { css } from 'styled-components';
 
 const untypedThemes = {
   light,
@@ -22,29 +21,18 @@ declare module 'styled-components' {
   /* eslint-enable @typescript-eslint/no-empty-interface */
 }
 
-const parseThemeCssVariables = (theme: Theme) =>
-  Object.entries(theme.colors).map(
-    ([name, value]) => `--theme-${name}: ${value}`,
-  );
+// LoadTheme function
+// This function is injected at head scripts (at document)
+// Is used to check theme user preferences and load proper css variables
+// Before actually loading the site
+// Via https://www.joshwcomeau.com/react/dark-mode/#our-first-hurdle
 
-const lightColorsVariables = css`
-  ${parseThemeCssVariables(themes.light).join(';')}
-`;
-const darkColorsVariables = css`
-  ${parseThemeCssVariables(themes.dark).join(';')}
-`;
+const boundFn = String(setColorsByTheme).replace(
+  "'🌈'",
+  JSON.stringify(themes),
+);
 
-export const Theming = css`
-  :root {
-    --theme-font-display: 'Neue Haas Grotesk Display Pro';
-    --theme-font-text: 'Neue Haas Grotesk Text Pro';
-    ${lightColorsVariables};
-  }
-
-  html.dark {
-    ${darkColorsVariables};
-  }
-`;
+export const loadTheme = `(${boundFn})()`;
 
 function setColorsByTheme() {
   const themesKey = '🌈' as unknown as { [name: string]: Theme };
@@ -65,7 +53,6 @@ function setColorsByTheme() {
   }
   const colorMode: ThemeKey = getInitialColorMode();
   const root = document.documentElement;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const colors = themesKey[colorMode].colors;
 
   Object.entries(colors).forEach(([label, value]) => {
@@ -75,10 +62,3 @@ function setColorsByTheme() {
 
   root.style.setProperty('--initial-color-mode', colorMode);
 }
-
-const boundFn = String(setColorsByTheme).replace(
-  "'🌈'",
-  JSON.stringify(themes),
-);
-
-export const loadTheme = `(${boundFn})()`;
