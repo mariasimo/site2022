@@ -5,10 +5,10 @@ export const Text = styled(BodyS).attrs({ as: 'p' })``;
 
 export const Link = styled(BodyS)`
   display: inline;
-  color: ${({ theme }) => theme.colors.ink};
-  transition: color 300ms ease-in-out 200ms;
+  color: var(--theme-ink);
 
   &:hover {
-    color: ${({ theme }) => theme.colors.interactive};
+    transition: color 300ms ease-in-out;
+    color: var(--theme-interactive);
   }
 `;
