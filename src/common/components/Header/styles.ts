@@ -3,6 +3,7 @@ import { BodyS, BodySBold } from '$/styles/typography';
 import { Breakpoint, from, showFromMixin } from '$/styles/responsive';
 import DefaultBadge from '$/common/components/Badge';
 import DefaultThemeSwitcher from '$/common/components/ThemeSwitcher';
+import FadeInBlock from '../FadeInBlock';
 
 const Translate = keyframes`
  0% {
@@ -36,14 +37,13 @@ export const AnimatedBorder = styled.div`
     content: '';
     height: 1px;
     position: absolute;
-    transition: all 1s ease-in-out 0s;
     left: 0;
     background-color: var(--theme-paper);
     width: 100%;
     transform-origin: 0%;
     z-index: 1;
     top: 0;
-    animation: ${Translate} 600ms ease-in-out;
+    animation: ${Translate} 1300ms ease-in-out 200ms;
     animation-fill-mode: forwards;
   }
 
@@ -75,7 +75,7 @@ export const ColumnsContainer = styled.div`
   }
 `;
 
-export const Row = styled.div`
+export const Row = styled(FadeInBlock)`
   gap: 1rem;
   display: flex;
   align-items: flex-start;
