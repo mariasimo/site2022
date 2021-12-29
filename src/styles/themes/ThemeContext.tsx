@@ -20,13 +20,12 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initialThemeValue = getInitialValue();
     rawSetThemeName(initialThemeValue);
-
     setThemeSetVars(initialThemeValue);
   }, []);
 
   const setTheme = (theme: ThemeKey) => {
     rawSetThemeName(theme);
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('theme', JSON.stringify(theme));
     setThemeSetVars(theme);
   };
 
@@ -54,7 +53,6 @@ export { ThemeProvider, useTheme };
 
 function setThemeSetVars(theme: ThemeKey) {
   const root = window.document.documentElement;
-
   const themeColors = themes[theme].colors;
 
   Object.entries(themeColors).forEach(([label, value]) => {
