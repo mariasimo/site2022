@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { externalLinks } from '../../utils/links';
+import { externalLinks } from '$/common/utils/links';
 import { Container, Link } from './styles';
 
 const Badge = ({
