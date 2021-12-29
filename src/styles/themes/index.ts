@@ -41,11 +41,6 @@ function setColorsByTheme() {
     const hasPersistedPreference = typeof persistedColorPreference === 'string';
 
     if (hasPersistedPreference) {
-      // eslint-disable-next-line no-console
-      console.log(
-        persistedColorPreference,
-        JSON.parse(persistedColorPreference),
-      );
       return JSON.parse(persistedColorPreference) as ThemeKey;
     }
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
@@ -58,9 +53,6 @@ function setColorsByTheme() {
   const colorMode: ThemeKey = getInitialColorMode();
   const root = document.documentElement;
   const colors = themesKey[colorMode]?.colors;
-
-  // eslint-disable-next-line no-console
-  console.log(themesKey, colorMode, colors);
 
   if (typeof colors !== 'undefined') {
     Object.entries(colors).forEach(([label, value]) => {
