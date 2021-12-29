@@ -1,12 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
-import { Theming } from './themes';
 
 const styled = { createGlobalStyle };
 
 const GlobalStyle = styled.createGlobalStyle`
   ${normalize};
-  /* ${Theming}; */
 
   * {
     box-sizing: border-box;
@@ -60,13 +58,13 @@ const GlobalStyle = styled.createGlobalStyle`
   }
 
   ::-moz-selection {
-    background: var(--theme-selectedText);
-    color: var(--theme-selectedTextBg);
+    background: var(--theme-selectedTextBg);
+    color: var(--theme-selectedText);
   }
 
   ::selection {
-    background: var(--theme-selectedText);
-    color: var(--theme-selectedTextBg);
+    background: var(--theme-selectedTextBg);
+    color: var(--theme-selectedText);
   }
 `;
 
