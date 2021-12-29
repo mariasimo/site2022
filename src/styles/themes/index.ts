@@ -36,7 +36,6 @@ export const loadTheme = `(${boundFn})()`;
 
 function setColorsByTheme() {
   const themesKey = '🌈' as unknown as { [name: string]: Theme };
-
   function getInitialColorMode(): ThemeKey {
     const persistedColorPreference = window.localStorage.getItem('theme');
     const hasPersistedPreference = typeof persistedColorPreference === 'string';
@@ -64,4 +63,3 @@ function setColorsByTheme() {
 
   root.style.setProperty('--initial-color-mode', colorMode);
 }
-

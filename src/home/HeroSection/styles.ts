@@ -4,7 +4,7 @@ import { from } from '$/styles/responsive';
 
 export const Container = styled.section`
   padding-block: 6.5rem 8rem;
-  border-block-end: 1px solid ${({ theme }) => theme.colors.ink}60;
+  border-block-end: 1px solid var(--theme-line);
 
   ${from.tabletPortrait} {
     border-block-end: none;

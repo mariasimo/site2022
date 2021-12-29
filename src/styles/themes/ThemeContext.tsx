@@ -1,45 +1,77 @@
-import { createContext, ReactNode, useContext, useEffect } from 'react';
+/* eslint-disable no-console */
 import {
-  ThemeProvider as StyledThemeProvider,
-  ThemeContext,
-} from 'styled-components';
-import themes, { ThemeKey } from '$/styles/themes';
-import useLocalStorage from '$/common/hooks/useLocalStorage';
-import useMatchMedia from '$/common/hooks/useMatchMedia';
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
-const ThemeUpdateContext = createContext<
-  ((themeName: ThemeKey) => void) | null
->(null);
+import type { ThemeKey } from '$/styles/themes';
+import themes from '$/styles/themes';
+
+const ThemeUpdateContext = createContext<{
+  themeName: ThemeKey;
+  setTheme: (value: 'light' | 'dark') => void;
+}>({ themeName: 'light', setTheme: () => null });
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const colorModePreference = useMatchMedia();
-  const [themeName, setThemeName] = useLocalStorage<ThemeKey>('theme', 'light');
-
-  const theme = themes[themeName];
+  const [themeName, rawSetThemeName] = useState<ThemeKey>('light');
 
   useEffect(() => {
-    setThemeName(colorModePreference);
-  }, [setThemeName, colorModePreference]);
+    const initialThemeValue = getInitialValue();
+    rawSetThemeName(initialThemeValue);
+    console.log({ initialThemeValue });
+
+    setThemeSetVars(initialThemeValue);
+  }, []);
+
+  const setTheme = (theme: ThemeKey) => {
+    rawSetThemeName(theme);
+    localStorage.setItem('theme', theme);
+    console.log({ theme });
+    setThemeSetVars(theme);
+  };
 
   return (
-    <ThemeUpdateContext.Provider value={setThemeName}>
-      <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+    <ThemeUpdateContext.Provider value={{ themeName, setTheme }}>
+      {children}
     </ThemeUpdateContext.Provider>
   );
 };
 
 const useTheme = () => {
-  const theme = useContext(ThemeContext);
-  const setThemeName = useContext(ThemeUpdateContext);
+  const { themeName, setTheme } = useContext(ThemeUpdateContext);
 
   const toggleTheme = () => {
-    if (setThemeName) {
-      const newValue: ThemeKey = theme.name === 'light' ? 'dark' : 'light';
-      setThemeName(newValue);
+    if (setTheme) {
+      const newValue: ThemeKey = themeName === 'light' ? 'dark' : 'light';
+      setTheme(newValue);
     }
   };
 
-  return { theme, toggleTheme };
+  return { themeName, toggleTheme };
 };
 
 export { ThemeProvider, useTheme };
+
+function setThemeSetVars(theme: ThemeKey) {
+  const root = window.document.documentElement;
+
+  console.log(themes, theme);
+  const themeColors = themes[theme].colors;
+
+  Object.entries(themeColors).forEach(([label, value]) => {
+    const cssVarName = '--theme-' + label;
+    root.style.setProperty(cssVarName, value);
+  });
+}
+
+function getInitialValue() {
+  const root = window.document.documentElement;
+  const initialThemeValue = root.style.getPropertyValue(
+    '--initial-color-mode',
+  ) as ThemeKey;
+
+  return initialThemeValue;
+}
