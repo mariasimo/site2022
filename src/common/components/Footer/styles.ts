@@ -3,7 +3,7 @@ import { BodyS, BodySBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
 
 export const Container = styled.footer`
-  border-block-start: 1px solid ${({ theme }) => theme.colors.ink}75;
+  border-block-start: 1px solid var(--theme-line);
   padding-block: 1rem;
   display: grid;
   gap: 1rem;
@@ -48,10 +48,10 @@ export const Link = styled(Bold).attrs({ as: 'a' })`
   text-decoration: none;
   display: inline;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.ink};
+  color: var(--theme-ink);
 
   &:hover {
     transition: color 300ms ease-out;
-    color: ${({ theme }) => theme.colors.interactive};
+    color: var(--theme-interactive);
   }
 `;
