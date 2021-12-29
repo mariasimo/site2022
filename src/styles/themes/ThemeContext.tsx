@@ -25,7 +25,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   const setTheme = (theme: ThemeKey) => {
     rawSetThemeName(theme);
-    localStorage.setItem('theme', JSON.stringify(theme));
+    localStorage.setItem('theme', theme);
     setThemeSetVars(theme);
   };
 
