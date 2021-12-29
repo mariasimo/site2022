@@ -13,6 +13,7 @@ import {
 } from './styles';
 import ContactBlock from '$/common/components/ContactBlock';
 import SocialBlock from '$/common/components/SocialBlock';
+import FadeInBlock from '../FadeInBlock';
 
 const Header = () => {
   const { themeName, toggleTheme } = useTheme();
@@ -29,12 +30,18 @@ const Header = () => {
       </Row>
       <ColumnsContainer>
         <Column $showFrom="tabletPortrait">
-          <ContactBlock />
+          <FadeInBlock>
+            <ContactBlock />
+          </FadeInBlock>
         </Column>
         <Column $showFrom="mobile">
-          <SocialBlock />
+          <FadeInBlock>
+            <SocialBlock />
+          </FadeInBlock>
         </Column>
-        <Badge>Building in public</Badge>
+        <FadeInBlock>
+          <Badge>Building in public</Badge>
+        </FadeInBlock>
       </ColumnsContainer>
     </Container>
   );
