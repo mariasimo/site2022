@@ -1,35 +1,19 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.button<{ $isLightTheme: boolean }>`
-  width: 1.1rem;
-  height: 1.1rem;
+export const Container = styled.div`
+  width: 1.2rem;
+  height: 1.2rem;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
-  transition: transform 600ms ease-in-out;
+  transition: transform 300ms ease-in-out;
   cursor: pointer;
-  border: none;
-  padding: 0;
-  margin: 0;
-
-  &:hover {
-    transform: scale(1.2);
-  }
-
-  ${({ $isLightTheme }) =>
-    $isLightTheme
-      ? css`
-          transform: rotate(50deg);
-        `
-      : css`
-          transform: rotate(-20deg);
-        `};
 `;
 
 export const Circle = styled.div`
-  background-color: var(--theme-ink);
-  width: 98%;
-  height: 98%;
+  background-color: ${({ theme }) => theme.colors.ink};
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
 `;
 
@@ -42,7 +26,7 @@ export const Mask = styled.div<{ $isLightTheme: boolean }>`
   top: 0rem;
   right: -0.2rem;
   border-radius: 50%;
-  background-color: var(--theme-paper);
+  background-color: ${({ theme }) => theme.colors.paper};
 
   ${({ $isLightTheme }) =>
     $isLightTheme
@@ -50,6 +34,6 @@ export const Mask = styled.div<{ $isLightTheme: boolean }>`
           transform: scale(3) translate(6.25rem, 0px);
         `
       : css`
-          transform: scale(1);
+          transform: scale(1) rotate(0);
         `};
 `;

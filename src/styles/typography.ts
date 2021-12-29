@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { from } from './responsive';
 
 const HeadingLBase = styled.span`
-  font-family: var(--theme-font-display);
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 1.3125rem;
   line-height: 1.4;
 
@@ -24,7 +24,7 @@ export const HeadingLBold = styled(HeadingLBase)`
 `;
 
 const HeadingMBase = styled.span`
-  font-family: var(--theme-font-display);
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 1.3125rem;
   line-height: 1.2;
 
@@ -42,7 +42,7 @@ export const HeadingMBold = styled(HeadingMBase)`
 `;
 
 const BodyLBase = styled.span`
-  font-family: var(--theme-font-display);
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 1.25rem;
   line-height: 1.5;
 `;
@@ -56,7 +56,7 @@ export const BodyLBold = styled(BodyLBase)`
 `;
 
 const BodyMBase = styled.span`
-  font-family: var(--theme-font-display);
+  font-family: ${({ theme }) => theme.fonts.text};
   font-size: 1rem;
   line-height: 1.6;
 `;
@@ -72,7 +72,7 @@ export const BodyMBold = styled(BodyMBase)`
 `;
 
 const BodySBase = styled.span`
-  font-family: var(--theme-font-display);
+  font-family: ${({ theme }) => theme.fonts.text};
   font-size: 0.875rem;
   line-height: 1.6;
 `;
@@ -88,7 +88,7 @@ export const BodySBold = styled(BodySBase)`
 `;
 
 const BodyXSBase = styled.span`
-  font-family: var(--theme-font-display);
+  font-family: ${({ theme }) => theme.fonts.text};
   font-size: 0.75rem;
   line-height: 1.6;
 
@@ -106,7 +106,7 @@ export const BodyXSBold = styled(BodyXSBase)`
 `;
 
 const BodyXXSBase = styled.span`
-  font-family: var(--theme-font-display);
+  font-family: ${({ theme }) => theme.fonts.text};
   font-size: 0.75rem;
   line-height: 1;
 `;
