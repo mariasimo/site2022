@@ -3,7 +3,7 @@ import { BodyS, BodySBold } from '$/styles/typography';
 import { Breakpoint, from, showFromMixin } from '$/styles/responsive';
 import DefaultBadge from '$/common/components/Badge';
 import DefaultThemeSwitcher from '$/common/components/ThemeSwitcher';
-import FadeInBlock from '../FadeInBlock';
+import FadeInBlock from '$/common/components/FadeInBlock';
 
 const Translate = keyframes`
  0% {
@@ -15,7 +15,7 @@ const Translate = keyframes`
 `;
 
 export const Container = styled.header`
-  padding-block: 0.75rem;
+  padding-block: 1rem;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 1.5rem;
@@ -99,10 +99,6 @@ export const Column = styled.div<{ $showFrom?: Breakpoint }>`
   flex: 1 1 0px;
 
   ${({ $showFrom }) => showFromMixin($showFrom)}
-
-  ${Text} {
-    line-height: 1.4;
-  }
 `;
 
 export const Bold = styled(BodySBold).attrs({ as: 'span' })`

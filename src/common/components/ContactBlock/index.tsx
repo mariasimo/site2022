@@ -6,9 +6,11 @@ export default function ContactBlock() {
     <>
       <Text>Currently Based in Madrid</Text>
       <Text>Made in Murcia</Text>
-      <Link as="a" href={externalLinks.mail} target="_blank">
-        holasoymariasimo@gmail.com
-      </Link>
+      <Text>
+        <Link as="a" href={externalLinks.mail} target="_blank">
+          holasoymariasimo@gmail.com
+        </Link>
+      </Text>
     </>
   );
 }
