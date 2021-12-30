@@ -32,7 +32,7 @@ const container = {
   },
 };
 
-export default function HeroSection() {
+export default function HomeHero() {
   return (
     <Container>
       <motion.div initial="hidden" animate="visible" variants={container}>

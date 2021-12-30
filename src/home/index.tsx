@@ -1,13 +1,9 @@
-import { Container } from './styles';
-import Head from 'next/head';
-
-import Header from '$/common/components/Header';
-import Footer from '$/common/components/Footer';
-import HeroSection from './HeroSection';
-import ResumeSection from './ResumeSection';
-import BlogSection from './BlogSection';
+import Hero from './HomeHero';
+import Resume from './Resume';
+import Blog from './Blog';
 import type { BlogPost } from '$/lib/api/posts';
 import type { LearningInPublicNode } from '$/lib/api/learningInPublic';
+import Layout from '$/common/layouts/Main';
 
 function HomeView({
   posts,
@@ -17,16 +13,11 @@ function HomeView({
   learningInPublic: LearningInPublicNode;
 }): JSX.Element {
   return (
-    <Container>
-      <Head>
-        <title>María Simó Front—End Developer</title>
-      </Head>
-      <Header />
-      <HeroSection />
-      <BlogSection posts={posts} learningInPublic={learningInPublic} />
-      <ResumeSection />
-      <Footer />
-    </Container>
+    <Layout title="María Simó Front—End Developer">
+      <Hero />
+      <Blog posts={posts} learningInPublic={learningInPublic} />
+      <Resume />
+    </Layout>
   );
 }
 

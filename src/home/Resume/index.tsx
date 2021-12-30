@@ -12,7 +12,7 @@ import ArrowLink from '$/common/components/ArrowLink';
 
 import sections from './data';
 
-export default function ResumeSection() {
+export default function Resume() {
   return (
     <Container>
       {sections.map(({ title, content }) => (

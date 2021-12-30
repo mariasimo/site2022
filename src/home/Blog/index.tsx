@@ -13,7 +13,7 @@ import { BlogCard } from './BlogPost';
 import type { LearningInPublicNode } from '$/lib/api/learningInPublic';
 import RichTextRenderer from '$/common/components/RichTextRenderer';
 
-export default function BlogSection({
+export default function Blog({
   posts,
   learningInPublic,
 }: {
