@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import { BodyL, BodyXS, HeadingLBold } from '$/styles/typography';
-import { isText } from '@contentful/rich-text-types/dist/types/helpers';
 
 export const Container = styled.section`
   height: 100vh;
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
-  border-block-end: 1px solid var(--theme-ink);
+  border-block-end: 1px solid var(--theme-line);
 `;
 
 export const Title = styled(HeadingLBold).attrs({ as: 'h1' })`
