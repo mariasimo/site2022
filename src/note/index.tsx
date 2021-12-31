@@ -15,21 +15,26 @@ import {
   ChatHeart,
   Text,
 } from './styles';
+import { useRef } from 'react';
 
 function BlogEntryPage({ note }: { note?: BlogPost }): JSX.Element | null {
+  const contentRef = useRef<HTMLDivElement>(null);
   if (!note) return null;
 
   const { title, summary, content, references, backlinks } = note;
+  const sections = note.content
+    .split('##')
+    .map((el) => (el.includes('\n') ? el.split('\n')[0].trim() : ''))
+    .filter(Boolean);
 
   return (
-    <Layout title={'Title'}>
-      <Hero title={title} summary={summary} />
-      <Container>
+    <Layout title={`${title}| María Simó Front—End Developer`}>
+      <Hero title={title} summary={summary} contentRef={contentRef} />
+      <Container ref={contentRef}>
         <Contents>
           <Content children={content} />
         </Contents>
-
-        <TableOfContents />
+        <TableOfContents sections={sections} />
       </Container>
       {references.length || backlinks.length ? (
         <LinksSection>

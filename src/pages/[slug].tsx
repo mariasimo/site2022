@@ -18,14 +18,11 @@ export function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
-  try {
-    const note = (await getPostBySlug(false, params?.slug as string)) ?? [];
+  const note = (await getPostBySlug(false, params?.slug as string)) ?? [];
 
-    if (note) {
-      return { props: { note } };
-    }
-  } catch (err) {
-    return { props: { err } };
+  if (note) {
+    return { props: { note } };
   }
+
   return { props: {} };
 }
