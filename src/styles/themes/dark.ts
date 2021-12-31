@@ -11,6 +11,8 @@ const light = {
     line: '#707070',
     selectedText: '#afafaf',
     selectedTextBg: '#2a2a2a',
+    blockquoteLine: '#c5c5c5',
+    blockquoteBg: '#2a2a2a',
   },
 };
 
