@@ -13,17 +13,20 @@ export interface IBlogPostFields {
   /** Slug */
   slug: string;
 
-  /** Summary */
-  summary: Document;
-
   /** Content */
   content: Document;
+
+  /** MarkdownContent */
+  markdownContent?: string | undefined;
 
   /** Featured Image */
   featuredImage?: Asset | undefined;
 
   /** Category */
   category?: ICategory[] | undefined;
+
+  /** Summary */
+  summary?: string | undefined;
 }
 
 export interface IBlogPost extends Entry<IBlogPostFields> {
@@ -75,6 +78,9 @@ export interface ICategory extends Entry<ICategoryFields> {
 }
 
 export interface ILearningInPublicFields {
+  /** Title */
+  title?: string | undefined;
+
   /** current */
   current?: Document | undefined;
 

@@ -11,7 +11,7 @@ import {
 } from './styles';
 import InfoIcon from '$/assets/icons/info.svg';
 
-export default function HeroSection({
+export default function NoteHero({
   title,
   summary,
 }: {
