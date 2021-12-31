@@ -8,6 +8,7 @@ export const Container = styled.aside`
   top: 2.5rem;
   display: flex;
   flex-direction: column;
+  margin-block-end: 5rem;
 `;
 
 export const Title = styled(BodyMBold).attrs({ as: 'p' })`

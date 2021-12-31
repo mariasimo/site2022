@@ -30,7 +30,9 @@ export const Block = styled.div`
 `;
 
 export const DateInfo = styled(Block)``;
-export const StatusInfo = styled(Block)``;
+export const StatusInfo = styled(Block)`
+  fill: var(--theme-ink);
+`;
 
 export const Text = styled(BodyXS).attrs({ as: 'p' })``;
 
