@@ -41,9 +41,7 @@ type RawBlogPost = IBlogPost &
 export async function getAllPostsForHome(preview: boolean) {
   const entries = (await fetchGraphQL(
     `query {
-      blogPostCollection(where: { slug: "authn-authz-the-good-the-bad-and-the-ugly" }, preview: ${
-        preview ? 'true' : 'false'
-      }) {
+      blogPostCollection(preview: ${preview ? 'true' : 'false'}) {
             items {
               ${POST_GRAPHQL_FIELDS}
             }
@@ -95,7 +93,7 @@ function normalizePost(post: RawBlogPost) {
     slug: post.slug,
     summary: post.summary,
     content: post.markdownContent ?? '',
-    references: post.references.links,
+    references: post.references?.links ?? [],
     backlinks: post.linkedFrom.entryCollection.items,
   };
 }

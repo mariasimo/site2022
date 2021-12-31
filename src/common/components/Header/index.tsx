@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTheme } from '$/styles/themes/ThemeContext';
+import NextLink from 'next/link';
 import {
   Container,
   Row,
@@ -24,9 +25,11 @@ const Header = () => {
       {themeName !== 'light' && <AnimatedBorder />}
       <Row>
         <ThemeSwitcher handleClick={toggleTheme} themeName={themeName} />
-        <Text>
-          <Bold>María Simó</Bold> Front—end developer
-        </Text>
+        <NextLink href="/" passHref>
+          <Text as="a">
+            <Bold>María Simó</Bold> Front—end developer
+          </Text>
+        </NextLink>
       </Row>
       <ColumnsContainer>
         <Column $showFrom="tabletPortrait">

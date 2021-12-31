@@ -22,7 +22,7 @@ export default function TableOfContents({
       ) : null}
       <Links>
         <ArrowLink label="Go to Top" link="#" />
-        <ArrowLink label="Go Home" link="#" />
+        <ArrowLink label="Go Home" link="/" />
       </Links>
     </Container>
   );

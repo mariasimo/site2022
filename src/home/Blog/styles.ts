@@ -9,6 +9,7 @@ export const Container = styled.section`
   gap: 3rem;
   padding-block: 1.5rem;
   fill: var(--theme-ink);
+  min-height: 60vh;
 
   ${from.tabletPortrait} {
     padding-block: 0;

@@ -1,5 +1,17 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { BodyL, BodyXS, HeadingLBold } from '$/styles/typography';
+import { from } from '$/styles/responsive';
+
+const Scroll = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(-0.625rem);
+  }
+  100% {
+     opacity: 0;
+    transform: translateY(0.625rem);
+  }
+`;
 
 export const Container = styled.section`
   height: 100vh;
@@ -9,14 +21,57 @@ export const Container = styled.section`
   border-block-end: 1px solid var(--theme-line);
 `;
 
+export const Cover = styled.div`
+  position: relative;
+  margin-block-end: 6rem;
+`;
+
+export const ScrollButtonContainer = styled.div`
+  margin-left: auto;
+  margin-top: -4rem;
+  display: none;
+  width: min-content;
+  align-items: center;
+
+  ${from.tabletPortrait} {
+    display: flex;
+  }
+`;
+
+export const ScrollButton = styled.button`
+  border: 1px solid var(--theme-line);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-inline-start: 1rem;
+
+  &:after {
+    content: '';
+    border-radius: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--theme-ink);
+    display: flex;
+  }
+
+  &:hover {
+    &:after {
+      animation: ${Scroll} 1.2s ease infinite;
+    }
+  }
+`;
+
 export const Title = styled(HeadingLBold).attrs({ as: 'h1' })`
-  max-width: 36rem;
   margin-block-end: 3rem;
+  max-width: 36rem;
 `;
 
 export const Summary = styled(BodyL).attrs({ as: 'p' })`
   max-width: 36rem;
-  margin-block-end: 4.5rem;
 `;
 
 export const Meta = styled.div`
@@ -26,7 +81,11 @@ export const Meta = styled.div`
 `;
 
 export const Block = styled.div`
-  grid-column: span 2;
+  grid-column: span 4;
+
+  ${from.mobile} {
+    grid-column: span 2;
+  }
 `;
 
 export const DateInfo = styled(Block)``;
@@ -34,7 +93,9 @@ export const StatusInfo = styled(Block)`
   fill: var(--theme-ink);
 `;
 
-export const Text = styled(BodyXS).attrs({ as: 'p' })``;
+export const Text = styled(BodyXS).attrs({ as: 'p' })`
+  white-space: nowrap;
+`;
 
 export const Status = styled(Text)`
   display: flex;

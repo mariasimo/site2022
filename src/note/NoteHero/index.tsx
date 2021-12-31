@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { MutableRefObject, ReactNode } from 'react';
 import {
   Container,
   Title,
@@ -8,20 +8,31 @@ import {
   DateInfo,
   Text,
   Status,
+  Cover,
+  ScrollButton,
+  ScrollButtonContainer,
 } from './styles';
 import InfoIcon from '$/assets/icons/info.svg';
 
 export default function NoteHero({
   title,
   summary,
+  contentRef,
 }: {
   title: ReactNode;
   summary: ReactNode;
+  contentRef: MutableRefObject<HTMLDivElement | null>;
 }) {
   return (
     <Container>
-      <Title>{title}</Title>
-      <Summary>{summary}</Summary>
+      <Cover>
+        <Title>{title}</Title>
+        <Summary>{summary}</Summary>
+        <ScrollButtonContainer>
+          <Text>Scroll to Content</Text>
+          <ScrollButton onClick={() => scrollToContent(contentRef)} />
+        </ScrollButtonContainer>
+      </Cover>
       <Meta>
         <DateInfo>
           <Text>Created 2 months ago</Text> <Text>Updated yesterday</Text>
@@ -35,4 +46,10 @@ export default function NoteHero({
       </Meta>
     </Container>
   );
+}
+
+function scrollToContent(contentRef: MutableRefObject<HTMLDivElement | null>) {
+  if (contentRef?.current) {
+    contentRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
 }

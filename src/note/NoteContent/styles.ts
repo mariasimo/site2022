@@ -1,17 +1,27 @@
 import styled from 'styled-components';
 import { BodyM, BodySBold } from '$/styles/typography';
+import { from } from '$/styles/responsive';
 
 export const Container = styled.article`
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   position: relative;
-  margin-block-end: 5rem;
+  margin-block-end: 2rem;
+
+  ${from.tabletPortrait} {
+    margin-block-end: 5rem;
+  }
 
   section.footnotes {
     position: absolute;
     grid-column: 1/3;
     padding-inline-end: 3.5rem;
     bottom: 0;
+    display: none;
+
+    ${from.tabletPortrait} {
+      display: block;
+    }
 
     hr {
       display: none;
@@ -45,25 +55,27 @@ export const Container = styled.article`
 `;
 
 export const Title = styled.h2`
-  grid-column: 1/3;
-`;
+  grid-column: 1/7;
+  margin-bottom: 2rem;
 
-export const Text = styled(BodyM).attrs({ as: 'p' })`
-  grid-column: 3/7;
-
-  margin-block-end: 2rem;
-  padding-inline-end: 3.5rem;
-  font-size: 1.1rem;
-
-  + p {
-    margin-block-end: 0;
+  ${from.tabletPortrait} {
+    grid-column: 1/3;
   }
 `;
 
 export const Blockquote = styled(BodyM).attrs({ as: 'blockquote' })`
-  grid-column: 2/7;
-  padding-block: 4rem;
-  margin-inline-end: 3.5rem;
+  grid-column: 1/7;
+  padding-block: 2rem 4rem;
+  margin: 0;
+
+  ${from.mobile} {
+    margin: 1rem 2.5rem;
+  }
+
+  ${from.tabletPortrait} {
+    margin-inline-end: 3.5rem;
+    grid-column: 2/7;
+  }
 
   > p {
     padding: 2rem;
@@ -75,15 +87,18 @@ export const Blockquote = styled(BodyM).attrs({ as: 'blockquote' })`
 
 export const CodeContainer = styled.div`
   grid-column: 1/7;
-  padding-block: 3.5rem;
+  padding-block: 2rem 4rem;
   font-size: 0.85rem;
-  padding-inline-end: 3.5rem;
   width: 100%;
+
+  ${from.tabletPortrait} {
+    padding-inline-end: 3.5rem;
+  }
 `;
 
 export const Divider = styled.hr`
   grid-column: 1/7;
-  margin-block: 5rem 2.5rem;
+  margin-block: 2rem;
   width: 100%;
   border: none;
 
@@ -97,9 +112,16 @@ export const Divider = styled.hr`
 
 export const ImageContainer = styled.div`
   grid-column: 1/7;
-  padding-inline-end: 3.5rem;
-  padding-block: 3.5rem;
+  padding-block: 0 2rem;
   width: 100%;
+
+  ${from.mobile} {
+    padding-block: 2rem 4rem;
+  }
+
+  ${from.tabletPortrait} {
+    padding-inline-end: 3.5rem;
+  }
 `;
 
 export const Image = styled.img`
@@ -108,6 +130,17 @@ export const Image = styled.img`
 
 export const Caption = styled(BodySBold).attrs({ as: 'p' })`
   max-width: 26.25rem;
-  margin-block: 2rem 3.5rem;
+  margin-block-start: 2rem;
   display: flex;
+`;
+
+export const Text = styled(BodyM).attrs({ as: 'p' })`
+  grid-column: 1/7;
+  margin-block-end: 2rem;
+  font-size: 1.1rem;
+
+  ${from.tabletPortrait} {
+    padding-inline-end: 3.5rem;
+    grid-column: 3/7;
+  }
 `;

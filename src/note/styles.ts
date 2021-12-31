@@ -3,16 +3,22 @@ import { BodyLBold, BodyS, BodySBold } from '$/styles/typography';
 import DefaultTableOfContents from './TableOfContents';
 import DefaultArrowLink from '$/common/components/ArrowLink';
 import DefaultChatHeart from '$/assets/icons/chat-heart.svg';
+import { from } from '$/styles/responsive';
 
 export const Container = styled.div`
   display: flex;
   position: relative;
-  padding-block: 2.5rem;
+  padding-block-start: 2.5rem;
 `;
 
 export const TableOfContents = styled(DefaultTableOfContents)`
   width: 25%;
   flex-shrink: 0;
+  display: none;
+
+  ${from.tabletLandscape} {
+    display: flex;
+  }
 `;
 
 export const Contents = styled.div`
