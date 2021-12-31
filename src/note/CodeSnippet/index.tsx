@@ -16,6 +16,7 @@ export default function CodeSnippet({
       children={String(children).replace(/\n$/, '')}
       language={match?.length ? match[1] : 'javascript'}
       style={nord}
+      showLineNumbers
     />
   );
 }
