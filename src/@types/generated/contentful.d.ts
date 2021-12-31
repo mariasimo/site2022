@@ -13,20 +13,21 @@ export interface IBlogPostFields {
   /** Slug */
   slug: string;
 
+  /** Summary */
+  summary?: string | undefined;
+
   /** Content */
-  content: Document;
-
-  /** MarkdownContent */
-  markdownContent?: string | undefined;
-
-  /** Featured Image */
-  featuredImage?: Asset | undefined;
+  markdownContent: string;
 
   /** Category */
   category?: ICategory[] | undefined;
 
-  /** Summary */
-  summary?: string | undefined;
+  /** Inner Links */
+  innerLinks?: Entry<{ [fieldId: string]: unknown }>[] | undefined;
+
+  /** References */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  references?: Record<string, any> | undefined;
 }
 
 export interface IBlogPost extends Entry<IBlogPostFields> {

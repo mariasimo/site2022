@@ -12,10 +12,17 @@ const POST_GRAPHQL_FIELDS = `
   slug
   summary
   markdownContent
-  featuredImage {
-    url
-    description
-  }     
+  linkedFrom {
+    entryCollection {
+      items {
+        ... on BlogPost {
+          title
+          slug
+        }
+      }
+    }
+  }
+  references    
 `;
 
 type RawBlogPostCollection = {
@@ -23,7 +30,13 @@ type RawBlogPostCollection = {
 };
 
 type RawBlogPost = IBlogPost &
-  IBlogPostFields & { sys: { firstPublishedAt: string; publishedAt: string } };
+  IBlogPostFields & {
+    sys: { firstPublishedAt: string; publishedAt: string };
+    references: { links: { [key: string]: string }[] };
+    linkedFrom: {
+      entryCollection: { items: { title: string; slug: string }[] };
+    };
+  };
 
 export async function getAllPostsForHome(preview: boolean) {
   const entries = (await fetchGraphQL(
@@ -82,6 +95,8 @@ function normalizePost(post: RawBlogPost) {
     slug: post.slug,
     summary: post.summary,
     content: post.markdownContent ?? '',
+    references: post.references.links,
+    backlinks: post.linkedFrom.entryCollection.items,
   };
 }
 
