@@ -8,6 +8,7 @@ const light = {
     ink: '#e1e1e1',
     accent: 'blue',
     interactive: '#ffbc00',
+    line: '#707070',
     selectedText: '#afafaf',
     selectedTextBg: '#2a2a2a',
   },

@@ -13,28 +13,35 @@ import {
 } from './styles';
 import ContactBlock from '$/common/components/ContactBlock';
 import SocialBlock from '$/common/components/SocialBlock';
+import FadeInBlock from '../FadeInBlock';
 
 const Header = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { themeName, toggleTheme } = useTheme();
 
   return (
     <Container>
-      {theme.name === 'light' && <AnimatedBorder />}
-      {theme.name !== 'light' && <AnimatedBorder />}
+      {themeName === 'light' && <AnimatedBorder />}
+      {themeName !== 'light' && <AnimatedBorder />}
       <Row>
-        <ThemeSwitcher handleClick={toggleTheme} theme={theme} />
+        <ThemeSwitcher handleClick={toggleTheme} themeName={themeName} />
         <Text>
           <Bold>María Simó</Bold> Front—end developer
         </Text>
       </Row>
       <ColumnsContainer>
         <Column $showFrom="tabletPortrait">
-          <ContactBlock />
+          <FadeInBlock>
+            <ContactBlock />
+          </FadeInBlock>
         </Column>
         <Column $showFrom="mobile">
-          <SocialBlock />
+          <FadeInBlock>
+            <SocialBlock />
+          </FadeInBlock>
         </Column>
-        <Badge>Building in public</Badge>
+        <FadeInBlock>
+          <Badge>Building in public</Badge>
+        </FadeInBlock>
       </ColumnsContainer>
     </Container>
   );

@@ -4,10 +4,10 @@ import DefaultArrow from '$/assets/icons/arrow-link.svg';
 
 export const Container = styled.article`
   padding-block: 1.5rem 2.75rem;
-  border-block-end: 1px solid ${({ theme }) => theme.colors.ink}60;
+  border-block-end: 1px solid var(--theme-line);
 
   &:first-child {
-    border-block-start: 1px solid ${({ theme }) => theme.colors.ink}60;
+    border-block-start: 1px solid var(--theme-line);
   }
 `;
 
