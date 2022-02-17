@@ -9,12 +9,7 @@ const POST_GRAPHQL_FIELDS = `
   }
   title
   slug
-  summary {
-    json
-  }
-  content {
-    json
-  }
+  summary
 `;
 
 type RawBlogPostCollection = {
@@ -27,12 +22,12 @@ type RawBlogPost = IBlogPost &
 export async function getAllPostsForHome(preview: boolean) {
   const entries = (await fetchGraphQL(
     `query {
-        blogPostCollection(preview: ${preview ? 'true' : 'false'}) {
-            items {
-            ${POST_GRAPHQL_FIELDS}
-            }
-        }
-        }`,
+      blogPostCollection(preview: ${preview ? 'true' : 'false'}) {
+          items {
+          ${POST_GRAPHQL_FIELDS}
+          }
+      }
+    }`,
     preview,
   )) as RawBlogPostCollection;
 
@@ -40,8 +35,8 @@ export async function getAllPostsForHome(preview: boolean) {
 }
 
 function extractPostEntries(fetchResponse: RawBlogPostCollection) {
-  const { items } = fetchResponse?.data.blogPostCollection;
-  const posts = items.map((p) => normalizePost(p));
+  const data = fetchResponse?.data?.blogPostCollection;
+  const posts = data?.items?.map((p) => normalizePost(p));
 
   return posts;
 }
