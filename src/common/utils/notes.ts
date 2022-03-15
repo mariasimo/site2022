@@ -7,6 +7,8 @@ export type Note = {
   title: string;
   published: string;
   lastUpdated: string | null;
+  tags: string[];
+  comingSoon: boolean | null;
   status: string;
   slug: string;
   summary: string;
@@ -29,13 +31,22 @@ export function getNotesCards() {
     return {
       slug,
       title: frontmatter.title as string,
+      tags: (frontmatter.tags ?? []) as string[],
+      comingSoon: (frontmatter.comingSoon ?? false) as boolean,
     };
   });
 }
 
 export function listNotes() {
   const notesList = getLatestFilesFromDirectory(contentConfig.notesDirectory);
-  return notesList.map((fileName) => fileName.replace('.md', ''));
+
+  return notesList
+    .filter((fileName) => {
+      const readFile = fs.readFileSync(`content/notes/${fileName}`, 'utf-8');
+      const { data: frontmatter } = matter(readFile);
+      return !frontmatter.comingSoon;
+    })
+    .map((fileName) => fileName.replace('.md', ''));
 }
 
 export function getNote(slug: string): Note | undefined {
@@ -54,6 +65,8 @@ export function getNote(slug: string): Note | undefined {
   const note: Note = {
     title: frontmatter.title as string,
     summary: excerpt ?? '',
+    comingSoon: (frontmatter.comingSoon ?? false) as boolean,
+    tags: (frontmatter.tags ?? []) as string[],
     published: frontmatter.published as string,
     lastUpdated: frontmatter?.lastUpdated
       ? (frontmatter.lastUpdated as string)
