@@ -22,33 +22,44 @@ const item = {
   hidden: {
     y: 70,
   },
-  visible: {
+  visible: ({ duration }: { duration: number }) => ({
     y: 0,
-    transition: { ease: [0.455, 0.03, 0.515, 0.955], duration: 1 },
-  },
+    transition: { ease: [0.455, 0.03, 0.515, 0.955], duration },
+  }),
 };
 
 const container = {
-  visible: {
+  visible: ({ staggerWords }: { staggerWords: number }) => ({
     transition: {
-      staggerChildren: 0.01,
+      staggerChildren: staggerWords,
     },
-  },
+  }),
 };
 
 const RevealedText = ({
   content,
+  duration = 0.8,
+  staggerWords = 0.01,
 }: {
   content: { style?: ComponentType; text: string };
+  duration?: number;
+  staggerWords?: number;
 }) => {
   const Style = content.style;
 
   const words = content.text.split(' ').map((w) => `${w} `);
   return (
-    <Container initial="hidden" animate="visible" variants={container}>
+    <Container
+      initial="hidden"
+      animate="visible"
+      variants={container}
+      custom={{ staggerWords }}
+    >
       {words.map((word, index) => (
         <WordMask key={`${word}+${index}`}>
-          <Word variants={item}>{Style ? <Style>{word}</Style> : word}</Word>
+          <Word variants={item} custom={{ duration }}>
+            {Style ? <Style>{word}</Style> : word}
+          </Word>
         </WordMask>
       ))}
     </Container>
