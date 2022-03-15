@@ -1,19 +1,23 @@
-import { Container, Title, DateText, Header, Arrow } from './styles';
+import type { Note } from '$/common/utils/notes';
+import { Container, Title, Details, Header, Arrow } from './styles';
+import NextLink from 'next/link';
 
 export default function NoteCard({
   note,
 }: {
-  note: { slug: string; title: string };
+  note: Pick<Note, 'slug' | 'title' | 'comingSoon' | 'tags'>;
 }) {
-  const { title } = note;
+  const { title, comingSoon, tags, slug } = note;
 
   return (
-    <Container>
-      <Header>
-        <Title>{title}</Title>
-        <Arrow />
-      </Header>
-      <DateText>Coming soon</DateText>
-    </Container>
+    <NextLink href={slug}>
+      <Container $disabled={comingSoon ?? false}>
+        <Header>
+          <Title>{title}</Title>
+          <Arrow />
+        </Header>
+        <Details>{comingSoon ? 'Coming Soon' : tags?.join(', ')}</Details>
+      </Container>
+    </NextLink>
   );
 }
