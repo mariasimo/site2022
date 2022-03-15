@@ -57,7 +57,9 @@ export const AnimatedBorder = styled.div`
   }
 `;
 
-export const Text = styled(BodyS).attrs({ as: 'p' })``;
+export const Text = styled(BodyS).attrs({ as: 'p' })`
+  cursor: pointer;
+`;
 
 export const ColumnsContainer = styled.div`
   display: flex;

@@ -17,11 +17,12 @@ const experience: Section = {
     {
       description: (
         <p>
-          <Bold>Since March 2021 I’m working at Z1</Bold>, a sevillian digital
-          product agency. I work with NextJS, TypeScript, Apollo and GraphQL
-          cratfing beautiful web apps – sometimes in squad and others solo—, in
-          an remote and international context. I team up with backenders,
-          product people, designers and clients in an agile environment.
+          <Bold>Since March 2021 I've been working at Z1</Bold>, a sevillian
+          digital product agency. I work with NextJS, TypeScript, Apollo and
+          GraphQL crafting beautiful web apps – sometimes in squad and others
+          solo—, in a remote and international context. I team up with
+          backenders, product people, designers and clients in an agile
+          environment.
         </p>
       ),
       links: [
@@ -38,7 +39,7 @@ const experience: Section = {
           my first opportunity as a developer. There I learned the ways and
           rituals involved in manufacturing digital products. I worked with
           Gatsby and Framer Motion to create some cool animations and
-          interactions for griddo.io, web of which I was the main contributor.
+          interactions for griddo.io.
         </p>
       ),
       links: [
@@ -55,7 +56,7 @@ const experience: Section = {
     {
       description: (
         <p>
-          <Bold>In early 2020 I was Teacher Assistant at Ironhack</Bold>, for
+          <Bold>In early 2020 I was a Teacher Assistant at Ironhack</Bold>, for
           the Full-Time Web Dev Bootcamp. My role there was to provide the
           students with complementary information, guide them through the
           exercises and tasks and, from a more large perspective, through the
@@ -78,7 +79,7 @@ const education: Section = {
     {
       description: (
         <p>
-          <Bold>At October 2019 my life changed when I joined Ironhack</Bold> as
+          <Bold>In October 2019 my life changed when I joined Ironhack</Bold> as
           a student. For nine weeks I took in the fundamentals, the current
           practices and tools of contemporary web development. It was a
           thrilling, empowering experience on many levels. I approached learning
@@ -91,23 +92,21 @@ const education: Section = {
         <p>
           <Bold>From 2015 to 2019 I managed Copón Studio</Bold> along with my
           partner, where we learned everything by doing it. For almost five
-          years, I was entrepeneur, graphic and ui designer, marketing
-          strategist, business manager, sales agent and accounting
-          administrative at a local scale. This is the most important
-          educational experience I’ve ever had.
+          years, I was an entrepreneur, graphic and ui designer, marketing
+          strategist, business manager, sales agent and accounting administrator
+          at a local scale. This is the most important educational experience
+          I’ve ever had.
         </p>
       ),
     },
     {
       description: (
         <p>
-          <Bold>
-            Once upon a time, I studied Arts at the University of Granada
-          </Bold>
-          . I also took a couple of web dev and graphic design courses. I
-          painted for many many years, I was an illustrator for children books
+          <Bold>Once upon a time, I studied Arts</Bold> at the University of
+          Granada. I also took a couple of web dev and graphic design courses. I
+          painted for many many years, I was an illustrator for children's books
           and I briefly worked as a concept artist for theme parks, but that was
-          a lot of time ago.
+          a long time ago.
         </p>
       ),
     },
@@ -120,8 +119,8 @@ const skills: Section = {
     {
       description: (
         <p>
-          ES6 Javascript, React, Typescript, NextJS, Gatsby, GraphQL, Apollo,
-          CSS, Styled Components, Accesible & Semantic HTML, Storybook, Webpack,
+          Javascript, React, Typescript, NextJS, Gatsby, GraphQL, Apollo, CSS,
+          Styled Components, Accessible & Semantic HTML, Storybook, Webpack,
           EsLint, Prettier, Jira, Terminal, Version Control, Figma and Adobe CC.
         </p>
       ),

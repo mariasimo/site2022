@@ -13,6 +13,7 @@ const light = {
     selectedTextBg: '#2a2a2a',
     blockquoteLine: '#c5c5c5',
     blockquoteBg: '#2a2a2a',
+    disabledText: '#888',
   },
 };
 

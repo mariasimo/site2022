@@ -1,23 +1,34 @@
 import HomeView from '$/home';
 import type { InferGetStaticPropsType } from 'next';
-import { getAllPostsForHome } from '$/lib/api/posts';
-import { getLearningInPublicNode } from '$/lib/api/learningInPublic';
+import content from '../../content.config';
+
+import fs from 'fs';
+import matter from 'gray-matter';
+import { getNotesCards } from '$/common/utils/notes';
 
 function HomePage({
-  allPosts,
-  learningInPublicNode,
+  notes,
+  learningInPublic,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  return <HomeView posts={allPosts} learningInPublic={learningInPublicNode} />;
+  return (
+    <HomeView
+      notes={notes}
+      learningInPublic={learningInPublic as { current: string; next: string }}
+    />
+  );
 }
 
 export default HomePage;
 
-export async function getStaticProps({ preview = false }) {
-  const allPosts = (await getAllPostsForHome(preview)) ?? [];
-
-  const learningInPublicNode = (await getLearningInPublicNode(preview)) ?? [];
+export function getStaticProps({ preview = false }) {
+  const readLearningInPublicFile = fs.readFileSync(
+    content.learningInPublicFile,
+    'utf-8',
+  );
+  const { data: learningInPublic } = matter(readLearningInPublicFile);
+  const notes = getNotesCards();
 
   return {
-    props: { preview, allPosts, learningInPublicNode },
+    props: { preview, notes, learningInPublic },
   };
 }

@@ -35,6 +35,16 @@ const GlobalStyle = styled.createGlobalStyle`
 
   a {
     text-decoration: none;
+    transition: color ease-in-out 0.25s;
+
+    &[href]:hover {
+      color: var(--theme-interactive);
+    }
+
+    &:visited,
+    &:active {
+      color: var(--theme-ink);
+    }
   }
 
   #__next {

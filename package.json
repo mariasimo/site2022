@@ -7,17 +7,14 @@
     "dev": "next dev",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --max-warnings=0",
     "lint:fix": "yarn lint --fix",
-    "codegen": "contentful-typescript-codegen --output src/@types/generated/contentful.d.ts",
-    "postinstall": "npx simple-git-hooks"
+    "postinstall": "npx simple-git-hooks",
+    "serve": "npx serve out"
   },
   "dependencies": {
     "$": "link:./src",
-    "@contentful/rich-text-react-renderer": "^15.11.0",
-    "@contentful/rich-text-types": "^15.11.0",
-    "@types/react-syntax-highlighter": "^13.5.2",
-    "contentful-management": "^7.47.2",
     "eslint-config-prettier": "^8.3.0",
     "framer-motion": "^5.5.5",
+    "gray-matter": "^4.0.3",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -37,7 +34,6 @@
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "babel-plugin-styled-components": "^2.0.2",
-    "contentful-typescript-codegen": "^3.2.3",
     "dotenv": "^10.0.0",
     "eslint": "^8.5.0",
     "eslint-config-airbnb-typescript": "^16.1.0",

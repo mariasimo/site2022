@@ -22,10 +22,29 @@ export const Section = styled(BodyS).attrs({ as: 'p' })`
   :first-of-type {
     border-block-start: 1px solid var(--theme-line);
   }
+
+  a {
+    color: var(--theme-ink);
+  }
 `;
 
 export const Links = styled.div`
   display: flex;
   gap: 2rem;
   margin-block-start: auto;
+`;
+
+export const AnchorLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+  transition: color ease-in-out 0.25s;
+
+  &:hover {
+    color: var(--theme-interactive);
+  }
+
+  &:visited,
+  &:active {
+    color: var(--theme-ink);
+  }
 `;

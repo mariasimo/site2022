@@ -10,7 +10,13 @@ const container = {
       opacity: 0,
     };
   },
-  visible: ({ from }: { from: SlidePosition['from'] }) => {
+  visible: ({
+    from,
+    delay,
+  }: {
+    from: SlidePosition['from'];
+    delay: number;
+  }) => {
     const finalPos = getPosition({ slideValue: 0, from });
 
     return {
@@ -19,7 +25,7 @@ const container = {
       transition: {
         duration: 0.8,
         ease: 'easeOut',
-        delay: 1.2,
+        delay,
       },
     };
   },
@@ -29,6 +35,7 @@ const FadeInBlock = ({
   children,
   slideValue = 0,
   from = 'top',
+  delay = 0,
   className,
 }: Props) => (
   <Mask>
@@ -36,7 +43,7 @@ const FadeInBlock = ({
       initial="hidden"
       animate="visible"
       variants={container}
-      custom={{ slideValue, from }}
+      custom={{ slideValue, from, delay }}
       className={className}
     >
       {children}

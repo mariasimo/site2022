@@ -1,7 +1,7 @@
 import Layout from '$/common/layouts/Main';
-import type { BlogPost } from '$/lib/api/posts';
-import Hero from './NoteHero';
-import Content from './NoteContent';
+import Hero from './Hero';
+import Content from './Content';
+import NoteLinks from './LinkList';
 import {
   Container,
   Contents,
@@ -9,49 +9,65 @@ import {
   LinksSection,
   Item,
   Title,
-  ArrowLink,
   ContactSection,
   Bold,
   ChatHeart,
   Text,
 } from './styles';
 import { useRef } from 'react';
+import type { Note } from '$/common/utils/notes';
+import { externalLinks } from '$/common/utils/links';
 
-function BlogEntryPage({ note }: { note?: BlogPost }): JSX.Element | null {
+function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
   const contentRef = useRef<HTMLDivElement>(null);
   if (!note) return null;
 
-  const { title, summary, content, references, backlinks } = note;
+  const {
+    title,
+    summary,
+    content,
+    references,
+    backlinks,
+    published,
+    lastUpdated,
+    status,
+  } = note;
+
   const sections = note.content
-    .split('##')
-    .map((el) => (el.includes('\n') ? el.split('\n')[0].trim() : ''))
+    .split('\n## ')
+    .map((el) =>
+      el.includes('\n') ? el.split('\n')[0].replace(/#/g, '').trim() : '',
+    )
     .filter(Boolean);
 
   return (
     <Layout title={`${title}| María Simó Front—End Developer`}>
-      <Hero title={title} summary={summary} contentRef={contentRef} />
+      <Hero
+        title={title}
+        summary={summary}
+        contentRef={contentRef}
+        published={published}
+        lastUpdated={lastUpdated}
+        status={status}
+      />
       <Container ref={contentRef}>
         <Contents>
           <Content children={content} />
         </Contents>
-        <TableOfContents sections={sections} />
+        <TableOfContents sections={sections} contentRef={contentRef} />
       </Container>
-      {references.length || backlinks.length ? (
+      {references || backlinks ? (
         <LinksSection>
-          {references.length ? (
+          {references ? (
             <Item>
               <Title>References and further reading</Title>
-              {references.map(({ label, value }) => (
-                <ArrowLink key={value} label={label} link={value} />
-              ))}
+              <NoteLinks children={references} />
             </Item>
           ) : null}
-          {backlinks.length ? (
+          {backlinks ? (
             <Item>
               <Title>Backlinks</Title>
-              {backlinks?.map(({ title: backlinkTitle, slug }) => (
-                <ArrowLink key={slug} label={backlinkTitle} link={slug} />
-              ))}
+              <NoteLinks children={backlinks} />
             </Item>
           ) : null}
         </LinksSection>
@@ -66,7 +82,11 @@ function BlogEntryPage({ note }: { note?: BlogPost }): JSX.Element | null {
             Would you like to invite me to give a talk about this at your event?
             Is there some topic of your interest you want me to write about?
           </Text>
-          <Bold>Drop me a message</Bold>
+          <Bold>
+            <a href={externalLinks.sendDM} target="_blank">
+              Drop me a message
+            </a>
+          </Bold>
         </Item>
       </ContactSection>
     </Layout>

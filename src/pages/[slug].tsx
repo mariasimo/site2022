@@ -1,6 +1,6 @@
 import NoteView from '$/note';
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
-import { getPostBySlug } from '$/lib/api/posts';
+import { getNote, listNotes } from '../common/utils/notes';
 
 function NotePage({
   note,
@@ -11,14 +11,21 @@ function NotePage({
 export default NotePage;
 
 export function getStaticPaths() {
+  const notes = listNotes();
+
   return {
-    paths: [{ params: { slug: '/authn-authz-the-good-the-bad-and-the-ugly' } }],
-    fallback: true,
+    paths: notes.map((note) => ({
+      params: {
+        slug: note,
+      },
+    })),
+    fallback: false,
   };
 }
 
-export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const note = (await getPostBySlug(false, params?.slug as string)) ?? [];
+export function getStaticProps({ params }: GetStaticPropsContext) {
+  const slug = params?.slug as string;
+  const note = getNote(slug);
 
   if (note) {
     return { props: { note } };
