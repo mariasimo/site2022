@@ -3,8 +3,8 @@ title: 'Clean Writing'
 metatitle: 'Clean Writing'
 metadescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 socialImage: ''
-published: '14/02/2022'
-lastUpdated: '14/02/2022'
+published: '13/02/2022'
+lastUpdated: '13/03/2022'
 status: 'draft'
 comingSoon: true
 tags:

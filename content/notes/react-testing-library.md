@@ -4,14 +4,15 @@ metatitle: 'First steps with React Testing Library'
 metadescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 socialImage: ''
 published: '14/02/2022'
-lastUpdated: '14/02/2022'
 status: 'draft'
 comingSoon: true
 tags:
   - technicalWriting
 ---
 
-# First steps with React Testing Library
+My excerpt
+
+---
 
 ## First section
 

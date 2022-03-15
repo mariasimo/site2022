@@ -11,7 +11,9 @@ tags:
   - technicalWriting
 ---
 
-# Authentication in NextJs with Auth0 and Apollo
+My excerpt
+
+---
 
 ## First section
 
