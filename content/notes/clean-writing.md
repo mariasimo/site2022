@@ -2,16 +2,15 @@
 title: 'Clean Writing'
 metatitle: 'Clean Writing'
 metadescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+summary: 'Having good documentation in hand the moment you need it is a dream, but writing it is the nightmare of many. This is the problem with technical documentation. Everybody needs it. Nobody wants to write it. Writing might be the most underappreciated skill for programmers. Though in a wider sense, all we do is write.'
 socialImage: ''
-created: '14/02/2022'
-updated: '14/02/2022'
+published: '14/02/2022'
+lastUpdated: '14/02/2022'
 status: 'draft'
 comingSoon: true
 tags:
   - technicalWriting
 ---
-
-# Clean Writing
 
 ## First section
 
@@ -57,8 +56,10 @@ Nulla facilisi. Pellentesque vel placerat enim, ut auctor leo [^2]. Vestibulum a
 [^1]: This is the first footnote.
 [^2]: Pellentesque in tincidunt quam. Sed aliquam lectus at nibh placerat, eu auctor sem fringilla.
 
----
+## References
 
-Inner links
-References
-Check with Figma
+- [Some link](http://somelink.com)
+
+## BackLinks
+
+- [Some internal link](/react-testing-library)

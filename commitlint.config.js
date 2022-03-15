@@ -23,7 +23,6 @@ module.exports = {
         ...readSubDirs('src/common/components'),
         ...readSubDirs('src/home'),
         ...readSubDirs('src/note'),
-        ...readSubDirs('src/lib'),
         // Add any directories you'd like to be scoped
       ],
     ],

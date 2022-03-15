@@ -1,7 +1,7 @@
 import Layout from '$/common/layouts/Main';
-import type { BlogPost } from '$/lib/api/posts';
-import Hero from './NoteHero';
-import Content from './NoteContent';
+import Hero from './Hero';
+import Content from './Content';
+import NoteLinks from './LinkList';
 import {
   Container,
   Contents,
@@ -9,15 +9,15 @@ import {
   LinksSection,
   Item,
   Title,
-  ArrowLink,
   ContactSection,
   Bold,
   ChatHeart,
   Text,
 } from './styles';
 import { useRef } from 'react';
+import type { Note } from '../pages/[slug]';
 
-function BlogEntryPage({ note }: { note?: BlogPost }): JSX.Element | null {
+function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
   const contentRef = useRef<HTMLDivElement>(null);
   if (!note) return null;
 
@@ -40,20 +40,16 @@ function BlogEntryPage({ note }: { note?: BlogPost }): JSX.Element | null {
       </Container>
       {references.length || backlinks.length ? (
         <LinksSection>
-          {references.length ? (
+          {references ? (
             <Item>
               <Title>References and further reading</Title>
-              {references.map(({ label, value }) => (
-                <ArrowLink key={value} label={label} link={value} />
-              ))}
+              <NoteLinks children={references} />
             </Item>
           ) : null}
-          {backlinks.length ? (
+          {backlinks ? (
             <Item>
               <Title>Backlinks</Title>
-              {backlinks?.map(({ title: backlinkTitle, slug }) => (
-                <ArrowLink key={slug} label={backlinkTitle} link={slug} />
-              ))}
+              <NoteLinks children={backlinks} />
             </Item>
           ) : null}
         </LinksSection>

@@ -45,6 +45,8 @@ const BodyLBase = styled.span`
   font-family: var(--theme-font-display);
   font-size: 1.25rem;
   line-height: 1.5;
+  letter-spacing: 0.015rem;
+  word-spacing: 0.0625rem;
 `;
 
 export const BodyL = styled(BodyLBase)`

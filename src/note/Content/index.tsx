@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import ReactMarkdown from 'react-markdown';
 import type { Element } from 'hast';
 import {
   Blockquote,
@@ -15,10 +14,9 @@ import {
   Title3,
   Title4,
 } from './styles';
-import remarkUnwrapImages from 'remark-unwrap-images';
 import CodeSnippet from '$/note/CodeSnippet';
-import remarkGfm from 'remark-gfm';
 import { formatSectionTitleId } from '../utils';
+import MarkdownParser from '../../common/components/MarkdownParser';
 
 const blogEntryStyledComponents = {
   h2: RenderTitleWithLine,
@@ -40,22 +38,6 @@ export default function NoteContent({ children }: { children: string }) {
         components={blogEntryStyledComponents}
       />
     </Container>
-  );
-}
-
-function MarkdownParser({
-  children,
-  components,
-}: {
-  children: string;
-  components?: { [tag: string]: ReactNode };
-}) {
-  return (
-    <ReactMarkdown
-      children={children}
-      components={components}
-      remarkPlugins={[remarkUnwrapImages, remarkGfm]}
-    />
   );
 }
 
