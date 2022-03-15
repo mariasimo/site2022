@@ -74,17 +74,19 @@ export function getNotesCards(): NoteCard[] {
     4,
   );
 
-  return latestNotesList.map((fileName) => {
-    const slug = fileName.replace('.md', '');
-    const note = getNote(slug);
+  return latestNotesList
+    .map((fileName) => {
+      const slug = fileName.replace('.md', '');
+      const note = getNote(slug);
 
-    return {
-      title: note?.title ?? '',
-      slug: slug,
-      tags: note?.tags,
-      comingSoon: note?.comingSoon,
-    };
-  });
+      return {
+        title: note?.title ?? '',
+        slug: slug,
+        tags: note?.tags,
+        comingSoon: note?.comingSoon,
+      };
+    })
+    .sort((prev) => (!prev?.comingSoon ? -1 : 1));
 }
 
 function extractReferencesAndBacklinks(content: string) {
