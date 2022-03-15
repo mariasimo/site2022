@@ -1,8 +1,11 @@
-import type { BlogPost } from '$/lib/api/posts';
 import { Container, Title, DateText, Header, Arrow } from './styles';
 
-export function BlogCard({ post }: { post: BlogPost }) {
-  const { title } = post;
+export default function NoteCard({
+  note,
+}: {
+  note: { slug: string; title: string };
+}) {
+  const { title } = note;
 
   return (
     <Container>
