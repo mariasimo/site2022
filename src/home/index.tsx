@@ -1,21 +1,19 @@
-import Hero from './HomeHero';
+import Hero from './Hero';
 import Resume from './Resume';
-import Blog from './Blog';
-import type { BlogPost } from '$/lib/api/posts';
-import type { LearningInPublicNode } from '$/lib/api/learningInPublic';
+import LatestNotes from './LatestNotes';
 import Layout from '$/common/layouts/Main';
 
 function HomeView({
-  posts,
+  notes,
   learningInPublic,
 }: {
-  posts: BlogPost[];
-  learningInPublic: LearningInPublicNode;
+  notes: { slug: string; title: string }[];
+  learningInPublic: { current: string; next: string };
 }): JSX.Element {
   return (
     <Layout title="María Simó Front—End Developer">
       <Hero />
-      <Blog posts={posts} learningInPublic={learningInPublic} />
+      <LatestNotes notes={notes} learningInPublic={learningInPublic} />
       <Resume />
     </Layout>
   );
