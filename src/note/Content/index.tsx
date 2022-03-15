@@ -49,7 +49,7 @@ function RenderTitleWithLine({
   children: ReactNode;
 }): JSX.Element {
   const isFirstTitleInArticle =
-    node?.position?.start.line === 1 && node?.position.end.line === 1;
+    node?.position?.start.line === 3 && node?.position.end.line === 3;
   const titleId = formatSectionTitleId(node);
 
   if (isFirstTitleInArticle) {
