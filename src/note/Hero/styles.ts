@@ -48,6 +48,7 @@ export const ScrollButton = styled.button`
   justify-content: center;
   flex-shrink: 0;
   margin-inline-start: 1rem;
+  background-color: transparent;
 
   &:after {
     content: '';
