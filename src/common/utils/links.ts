@@ -6,4 +6,5 @@ export const externalLinks: { [key: string]: string } = {
   linkedin: 'https://www.linkedin.com/in/maria-simo/',
   tweetBuildInPublic:
     'https://twitter.com/mariasimocodes/status/1474701212578717698',
+  sendDM: 'https://twitter.com/messages/compose?recipient_id=mariasimocodes',
 };

@@ -16,6 +16,7 @@ import {
 } from './styles';
 import { useRef } from 'react';
 import type { Note } from '$/common/utils/notes';
+import { externalLinks } from '$/common/utils/links';
 
 function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -53,7 +54,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
         <Contents>
           <Content children={content} />
         </Contents>
-        <TableOfContents sections={sections} />
+        <TableOfContents sections={sections} contentRef={contentRef} />
       </Container>
       {references || backlinks ? (
         <LinksSection>
@@ -81,7 +82,11 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
             Would you like to invite me to give a talk about this at your event?
             Is there some topic of your interest you want me to write about?
           </Text>
-          <Bold>Drop me a message</Bold>
+          <Bold>
+            <a href={externalLinks.sendDM} target="_blank">
+              Drop me a message
+            </a>
+          </Bold>
         </Item>
       </ContactSection>
     </Layout>

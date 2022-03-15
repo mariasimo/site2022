@@ -56,7 +56,7 @@ export const Container = styled.article`
 
 export const Title2 = styled.h2`
   grid-column: 1/7;
-  margin-bottom: 2rem;
+  padding-block: 2rem;
 
   ${from.tabletPortrait} {
     grid-column: 1/3;
@@ -98,7 +98,7 @@ export const CodeContainer = styled.div`
 
 export const Divider = styled.hr`
   grid-column: 1/7;
-  margin-block: 2rem;
+  margin-block-start: 2rem;
   width: 100%;
   border: none;
 
@@ -146,7 +146,7 @@ const ContentStyles = css`
 export const Text = styled(BodyM).attrs({ as: 'p' })`
   ${ContentStyles}
   font-size: 1.1rem;
-  margin-block-end: 2rem;
+  margin-block: 2rem;
 `;
 
 export const OrderedList = styled(BodyM).attrs({ as: 'ol' })`

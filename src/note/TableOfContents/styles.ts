@@ -33,3 +33,18 @@ export const Links = styled.div`
   gap: 2rem;
   margin-block-start: auto;
 `;
+
+export const AnchorLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+  transition: color ease-in-out 0.25s;
+
+  &:hover {
+    color: var(--theme-interactive);
+  }
+
+  &:visited,
+  &:active {
+    color: var(--theme-ink);
+  }
+`;
