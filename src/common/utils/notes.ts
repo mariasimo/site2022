@@ -1,15 +1,16 @@
-import fs from 'fs';
-import matter from 'gray-matter';
-import getLatestFilesFromDirectory from './getFiles';
+import { getLatestFilesFromDirectory, getMarkdownContents } from './getFiles';
 import contentConfig from '../../../content.config';
 
-export type Note = {
+type NoteFrontmatter = {
   title: string;
   published: string;
-  lastUpdated: string | null;
-  tags: string[];
-  comingSoon: boolean | null;
-  status: string;
+  lastUpdated: string;
+  tags?: string[];
+  comingSoon?: boolean;
+  status: 'draft' | 'inProgress' | 'completed';
+};
+
+export type Note = NoteFrontmatter & {
   slug: string;
   summary: string;
   content: string;
@@ -17,45 +18,33 @@ export type Note = {
   backlinks: string | null;
 };
 
-export function getNotesCards() {
-  const latestNotesList = getLatestFilesFromDirectory(
-    contentConfig.notesDirectory,
-    4,
-  );
-
-  return latestNotesList.map((fileName) => {
-    const slug = fileName.replace('.md', '');
-    const readFile = fs.readFileSync(`content/notes/${fileName}`, 'utf-8');
-    const { data: frontmatter } = matter(readFile);
-
-    return {
-      slug,
-      title: frontmatter.title as string,
-      tags: (frontmatter.tags ?? []) as string[],
-      comingSoon: (frontmatter.comingSoon ?? false) as boolean,
-    };
-  });
-}
+export type NoteCard = Pick<Note, 'slug' | 'title' | 'comingSoon' | 'tags'>;
 
 export function listNotes() {
   const notesList = getLatestFilesFromDirectory(contentConfig.notesDirectory);
 
   return notesList
-    .filter((fileName) => {
-      const readFile = fs.readFileSync(`content/notes/${fileName}`, 'utf-8');
-      const { data: frontmatter } = matter(readFile);
+    .map((fileName) => fileName.replace('.md', ''))
+    .filter((slug) => {
+      const { data: frontmatter } = getMarkdownContents(
+        contentConfig.notesDirectory,
+        slug,
+      );
+
       return !frontmatter.comingSoon;
-    })
-    .map((fileName) => fileName.replace('.md', ''));
+    });
 }
 
 export function getNote(slug: string): Note | undefined {
-  const fileName = fs.readFileSync(`content/notes/${slug}.md`, 'utf-8');
   const {
-    data: frontmatter,
+    data,
     content: rawContent,
     excerpt,
-  } = matter(fileName, { excerpt: true });
+  } = getMarkdownContents(contentConfig.notesDirectory, slug);
+
+  // Right now only casting is posible to type frontmatter
+  // https://github.com/jonschlinkert/gray-matter/issues/135
+  const frontmatter = data as NoteFrontmatter;
 
   // Get content from excerpt to references links, excluding both
   const content = rawContent.split('---')[1].split('\n## References')[0];
@@ -63,22 +52,39 @@ export function getNote(slug: string): Note | undefined {
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
   const note: Note = {
-    title: frontmatter.title as string,
+    title: frontmatter.title,
     summary: excerpt ?? '',
-    comingSoon: (frontmatter.comingSoon ?? false) as boolean,
-    tags: (frontmatter.tags ?? []) as string[],
-    published: frontmatter.published as string,
-    lastUpdated: frontmatter?.lastUpdated
-      ? (frontmatter.lastUpdated as string)
-      : null,
-    status: frontmatter.status as string,
+    comingSoon: frontmatter.comingSoon ?? false,
+    tags: frontmatter.tags ?? [],
+    published: frontmatter.published ?? '',
+    lastUpdated: frontmatter?.lastUpdated ?? '',
+    status: frontmatter?.status ?? 'draft',
     slug,
     content,
-    references: references ? references : null,
-    backlinks: backlinks ? backlinks : null,
+    references: references,
+    backlinks: backlinks,
   };
 
-  return fileName ? note : undefined;
+  return slug ? note : undefined;
+}
+
+export function getNotesCards(): NoteCard[] {
+  const latestNotesList = getLatestFilesFromDirectory(
+    contentConfig.notesDirectory,
+    4,
+  );
+
+  return latestNotesList.map((fileName) => {
+    const slug = fileName.replace('.md', '');
+    const note = getNote(slug);
+
+    return {
+      title: note?.title ?? '',
+      slug: slug,
+      tags: note?.tags,
+      comingSoon: note?.comingSoon,
+    };
+  });
 }
 
 function extractReferencesAndBacklinks(content: string) {

@@ -2,12 +2,13 @@ import Hero from './Hero';
 import Resume from './Resume';
 import LatestNotes from './LatestNotes';
 import Layout from '$/common/layouts/Main';
+import type { NoteCard } from '$/common/utils/notes';
 
 function HomeView({
   notes,
   learningInPublic,
 }: {
-  notes: { slug: string; title: string }[];
+  notes: NoteCard[];
   learningInPublic: { current: string; next: string };
 }): JSX.Element {
   return (

@@ -9,12 +9,13 @@ import {
   BookOpen,
 } from './styles';
 import NoteCard from './NoteCard';
+import type { NoteCard as NoteCardType } from '$/common/utils/notes';
 
 export default function Blog({
   notes,
   learningInPublic,
 }: {
-  notes: { slug: string; title: string }[];
+  notes: NoteCardType[];
   learningInPublic: { current: string; next: string };
 }) {
   const { current, next } = learningInPublic;

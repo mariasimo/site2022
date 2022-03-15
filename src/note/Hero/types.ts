@@ -5,6 +5,6 @@ export type Props = {
   summary: ReactNode;
   contentRef: MutableRefObject<HTMLDivElement | null>;
   published: string;
-  lastUpdated?: string;
+  lastUpdated: string | null;
   status: string;
 };

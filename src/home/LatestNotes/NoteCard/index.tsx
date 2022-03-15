@@ -1,12 +1,8 @@
-import type { Note } from '$/common/utils/notes';
+import type { NoteCard as NoteCardType } from '$/common/utils/notes';
 import { Container, Title, Details, Header, Arrow } from './styles';
 import NextLink from 'next/link';
 
-export default function NoteCard({
-  note,
-}: {
-  note: Pick<Note, 'slug' | 'title' | 'comingSoon' | 'tags'>;
-}) {
+export default function NoteCard({ note }: { note: NoteCardType }) {
   const { title, comingSoon, tags, slug } = note;
 
   return (
