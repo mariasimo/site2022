@@ -15,7 +15,7 @@ import {
   Text,
 } from './styles';
 import { useRef } from 'react';
-import type { Note } from '../pages/[slug]';
+import type { Note } from '$/common/utils/notes';
 
 function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -38,7 +38,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
         </Contents>
         <TableOfContents sections={sections} />
       </Container>
-      {references.length || backlinks.length ? (
+      {references || backlinks ? (
         <LinksSection>
           {references ? (
             <Item>
