@@ -6,9 +6,9 @@ socialImage: ''
 published: '13/02/2022'
 lastUpdated: '13/03/2022'
 status: 'draft'
-comingSoon: true
 tags:
-  - technicalWriting
+  - 'Technical writing'
+  - 'Thoughts'
 ---
 
 Having good documentation in hand the moment you need it is a dream, but writing it is the nightmare of many. This is the problem with technical documentation. Everybody needs it. Nobody wants to write it. Writing might be the most underappreciated skill for programmers. Though in a wider sense, all we do is write.
