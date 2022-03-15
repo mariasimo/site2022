@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BodyLBold, BodyM } from '$/styles/typography';
+import { BodyM } from '$/styles/typography';
 
 export const Container = styled.article`
   grid-column: span 6;
