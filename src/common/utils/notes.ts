@@ -6,7 +6,7 @@ import contentConfig from '../../../content.config';
 export type Note = {
   title: string;
   published: string;
-  lastUpdated: string;
+  lastUpdated: string | null;
   status: string;
   slug: string;
   summary: string;
@@ -45,15 +45,20 @@ export function getNote(slug: string): Note | undefined {
     content: rawContent,
     excerpt,
   } = matter(fileName, { excerpt: true });
-  const content = rawContent.split('\n## References')[0];
+
+  // Get content from excerpt to references links, excluding both
+  const content = rawContent.split('---')[1].split('\n## References')[0];
+
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
   const note: Note = {
     title: frontmatter.title as string,
     summary: excerpt ?? '',
     published: frontmatter.published as string,
-    lastUpdated: frontmatter.lastUpdated as string,
-    status: frontmatter.lastUpdated as string,
+    lastUpdated: frontmatter?.lastUpdated
+      ? (frontmatter.lastUpdated as string)
+      : null,
+    status: frontmatter.status as string,
     slug,
     content,
     references: references ? references : null,
