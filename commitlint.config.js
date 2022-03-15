@@ -17,6 +17,7 @@ module.exports = {
         'deps-dev',
         'lint',
         'package',
+        'content',
         ...readSubDirs('src'),
         ...readSubDirs('src/common'),
         ...readSubDirs('src/common/components'),

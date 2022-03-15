@@ -1,23 +1,61 @@
 import HomeView from '$/home';
 import type { InferGetStaticPropsType } from 'next';
-import { getAllPostsForHome } from '$/lib/api/posts';
-import { getLearningInPublicNode } from '$/lib/api/learningInPublic';
+
+import fs from 'fs';
+import matter from 'gray-matter';
 
 function HomePage({
-  allPosts,
-  learningInPublicNode,
+  notes,
+  learningInPublic,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  return <HomeView posts={allPosts} learningInPublic={learningInPublicNode} />;
+  return (
+    <HomeView
+      notes={notes}
+      learningInPublic={learningInPublic as { current: string; next: string }}
+    />
+  );
 }
 
 export default HomePage;
 
-export async function getStaticProps({ preview = false }) {
-  const allPosts = (await getAllPostsForHome(preview)) ?? [];
+export function getStaticProps({ preview = false }) {
+  const notesDirectory = 'content/notes/';
+  const learningInPublicFile = 'content/learning-in-public.md';
 
-  const learningInPublicNode = (await getLearningInPublicNode(preview)) ?? [];
+  const readLearningInPublicFile = fs.readFileSync(
+    learningInPublicFile,
+    'utf-8',
+  );
+  const { data: learningInPublic } = matter(readLearningInPublicFile);
+
+  const latestNotesList = getLatestFilesFromDirectory(notesDirectory, 4);
+  const notes = parseNotes(latestNotesList);
 
   return {
-    props: { preview, allPosts, learningInPublicNode },
+    props: { preview, notes, learningInPublic },
   };
+}
+
+function getLatestFilesFromDirectory(dir: string, num: number) {
+  const files = fs.readdirSync(dir).sort(function (a, b) {
+    return (
+      fs.statSync(dir + b).mtime.getTime() -
+      fs.statSync(dir + a).mtime.getTime()
+    );
+  });
+
+  return files.slice(0, num);
+}
+
+function parseNotes(notesList: string[]) {
+  return notesList.map((fileName) => {
+    const slug = fileName.replace('.md', '');
+    const readFile = fs.readFileSync(`content/notes/${fileName}`, 'utf-8');
+    const { data: frontmatter } = matter(readFile);
+
+    return {
+      slug,
+      title: frontmatter.title as string,
+    };
+  });
 }
