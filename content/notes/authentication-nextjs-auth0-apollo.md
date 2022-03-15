@@ -3,8 +3,8 @@ title: 'Authentication in NextJs with Auth0 and Apollo'
 metatitle: 'Authentication in NextJs with Auth0 and Apollo'
 metadescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 socialImage: ''
-created: '14/02/2022'
-updated: '14/02/2022'
+published: '14/02/2022'
+lastUpdated: '14/02/2022'
 status: 'draft'
 comingSoon: true
 tags:

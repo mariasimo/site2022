@@ -2,7 +2,6 @@
 title: 'Clean Writing'
 metatitle: 'Clean Writing'
 metadescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
-summary: 'Having good documentation in hand the moment you need it is a dream, but writing it is the nightmare of many. This is the problem with technical documentation. Everybody needs it. Nobody wants to write it. Writing might be the most underappreciated skill for programmers. Though in a wider sense, all we do is write.'
 socialImage: ''
 published: '14/02/2022'
 lastUpdated: '14/02/2022'
@@ -10,6 +9,10 @@ status: 'draft'
 comingSoon: true
 tags:
   - technicalWriting
+---
+
+Having good documentation in hand the moment you need it is a dream, but writing it is the nightmare of many. This is the problem with technical documentation. Everybody needs it. Nobody wants to write it. Writing might be the most underappreciated skill for programmers. Though in a wider sense, all we do is write.
+
 ---
 
 ## First section
