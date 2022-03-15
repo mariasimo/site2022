@@ -13,6 +13,7 @@ import {
   ScrollButtonContainer,
 } from './styles';
 import InfoIcon from '$/assets/icons/info.svg';
+import scrollToContent from '$/common/utils/scrollToContent';
 
 export default function NoteHero({
   title,
@@ -46,10 +47,4 @@ export default function NoteHero({
       </Meta>
     </Container>
   );
-}
-
-function scrollToContent(contentRef: MutableRefObject<HTMLDivElement | null>) {
-  if (contentRef?.current) {
-    contentRef.current.scrollIntoView({ behavior: 'smooth' });
-  }
 }

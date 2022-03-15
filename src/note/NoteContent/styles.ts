@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { BodyM, BodySBold } from '$/styles/typography';
+import styled, { css } from 'styled-components';
+import { BodyLBold, BodyM, BodySBold, HeadingMBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
 
 export const Container = styled.article`
@@ -54,7 +54,7 @@ export const Container = styled.article`
   }
 `;
 
-export const Title = styled.h2`
+export const Title2 = styled.h2`
   grid-column: 1/7;
   margin-bottom: 2rem;
 
@@ -134,13 +134,51 @@ export const Caption = styled(BodySBold).attrs({ as: 'p' })`
   display: flex;
 `;
 
-export const Text = styled(BodyM).attrs({ as: 'p' })`
+const ContentStyles = css`
   grid-column: 1/7;
-  margin-block-end: 2rem;
-  font-size: 1.1rem;
 
   ${from.tabletPortrait} {
     padding-inline-end: 3.5rem;
     grid-column: 3/7;
   }
+`;
+
+export const Text = styled(BodyM).attrs({ as: 'p' })`
+  ${ContentStyles}
+  font-size: 1.1rem;
+  margin-block-end: 2rem;
+`;
+
+export const OrderedList = styled(BodyM).attrs({ as: 'ol' })`
+  ${ContentStyles}
+  font-size: 1.1rem;
+  list-style: none;
+  counter-reset: item;
+  padding-inline-start: 0;
+
+  li {
+    counter-increment: item;
+    margin-bottom: 5px;
+    display: flex;
+
+    &:before {
+      margin-right: 10px;
+      content: counter(item);
+      display: inline-block;
+      opacity: 0.25;
+      width: 1.2rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+  }
+`;
+
+export const Title3 = styled(HeadingMBold).attrs({ as: 'h3' })`
+  ${ContentStyles}
+  margin-block: 1rem;
+`;
+
+export const Title4 = styled(BodyLBold).attrs({ as: 'h4' })`
+  ${ContentStyles}
+  margin-block: 1rem 0;
 `;

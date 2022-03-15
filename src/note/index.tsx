@@ -23,8 +23,10 @@ function BlogEntryPage({ note }: { note?: BlogPost }): JSX.Element | null {
 
   const { title, summary, content, references, backlinks } = note;
   const sections = note.content
-    .split('##')
-    .map((el) => (el.includes('\n') ? el.split('\n')[0].trim() : ''))
+    .split('\n## ')
+    .map((el) =>
+      el.includes('\n') ? el.split('\n')[0].replace(/#/g, '').trim() : '',
+    )
     .filter(Boolean);
 
   return (

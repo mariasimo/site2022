@@ -5,20 +5,27 @@ import {
   Blockquote,
   Container,
   Text,
-  Title,
+  Title2,
   Image,
   CodeContainer,
   Divider,
   Caption,
   ImageContainer,
+  OrderedList,
+  Title3,
+  Title4,
 } from './styles';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import CodeSnippet from '$/note/CodeSnippet';
 import remarkGfm from 'remark-gfm';
+import { formatSectionTitleId } from '../utils';
 
 const blogEntryStyledComponents = {
   h2: RenderTitleWithLine,
+  h3: Title3,
+  h4: Title4,
   p: Text,
+  ol: OrderedList,
   blockquote: Blockquote,
   img: RenderImageWithCaption,
   pre: CodeContainer,
@@ -59,15 +66,18 @@ function RenderTitleWithLine({
   node: Element;
   children: ReactNode;
 }): JSX.Element {
-  const isFirstElement =
+  const isFirstTitleInArticle =
     node?.position?.start.line === 1 && node?.position.end.line === 1;
+  const titleId = formatSectionTitleId(node);
 
-  if (isFirstElement) return <Title>{children}</Title>;
+  if (isFirstTitleInArticle) {
+    return <Title2 id={titleId}>{children}</Title2>;
+  }
 
   return (
     <>
       <Divider />
-      <Title>{children}</Title>
+      <Title2 id={titleId}>{children}</Title2>
     </>
   );
 }

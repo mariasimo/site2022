@@ -22,6 +22,10 @@ export const Section = styled(BodyS).attrs({ as: 'p' })`
   :first-of-type {
     border-block-start: 1px solid var(--theme-line);
   }
+
+  a {
+    color: var(--theme-ink);
+  }
 `;
 
 export const Links = styled.div`
