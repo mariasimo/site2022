@@ -1,4 +1,3 @@
-import type { MutableRefObject, ReactNode } from 'react';
 import {
   Container,
   Title,
@@ -14,16 +13,24 @@ import {
 } from './styles';
 import InfoIcon from '$/assets/icons/info.svg';
 import scrollToContent from '$/common/utils/scrollToContent';
+import type { Props } from './types';
+import { getTimeAgo, parseStringToDate } from '$/common/utils/dates';
+
+const statusDictionary: { [key: string]: string } = {
+  draft: "Draft, I'm still learning about this",
+  inProgress: 'In Progress, still making my mind',
+  completed: 'Completed, I may changed my mind in the future',
+};
 
 export default function NoteHero({
   title,
   summary,
   contentRef,
-}: {
-  title: ReactNode;
-  summary: ReactNode;
-  contentRef: MutableRefObject<HTMLDivElement | null>;
-}) {
+  published,
+  lastUpdated,
+  status: rawStatus,
+}: Props) {
+  const status = statusDictionary[rawStatus];
   return (
     <Container>
       <Cover>
@@ -36,12 +43,15 @@ export default function NoteHero({
       </Cover>
       <Meta>
         <DateInfo>
-          <Text>Created 2 months ago</Text> <Text>Updated yesterday</Text>
+          <Text>Created {getTimeAgo(parseStringToDate(published))}</Text>{' '}
+          {lastUpdated ? (
+            <Text>Updated {getTimeAgo(parseStringToDate(lastUpdated))}</Text>
+          ) : null}
         </DateInfo>
         <StatusInfo>
           <Text>Status</Text>
           <Status>
-            Draft, very early stage <InfoIcon />
+            {status} <InfoIcon />
           </Status>
         </StatusInfo>
       </Meta>

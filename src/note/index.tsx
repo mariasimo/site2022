@@ -21,7 +21,17 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
   const contentRef = useRef<HTMLDivElement>(null);
   if (!note) return null;
 
-  const { title, summary, content, references, backlinks } = note;
+  const {
+    title,
+    summary,
+    content,
+    references,
+    backlinks,
+    published,
+    lastUpdated,
+    status,
+  } = note;
+
   const sections = note.content
     .split('\n## ')
     .map((el) =>
@@ -31,7 +41,14 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
 
   return (
     <Layout title={`${title}| María Simó Front—End Developer`}>
-      <Hero title={title} summary={summary} contentRef={contentRef} />
+      <Hero
+        title={title}
+        summary={summary}
+        contentRef={contentRef}
+        published={published}
+        lastUpdated={lastUpdated}
+        status={status}
+      />
       <Container ref={contentRef}>
         <Contents>
           <Content children={content} />
