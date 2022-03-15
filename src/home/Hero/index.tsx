@@ -8,7 +8,7 @@ import {
   SummaryBold,
   Column,
 } from './styles';
-import RevealedText from './RevealedText';
+import RevealedText from '$/common/components/RevealedText';
 import FadeInBlock from '$/common/components/FadeInBlock';
 import { motion } from 'framer-motion';
 
@@ -37,12 +37,12 @@ export default function HomeHero() {
     <Container>
       <motion.div initial="hidden" animate="visible" variants={container}>
         <Lead>
-          {leadText.map((part, index) => (
-            <RevealedText content={part} key={index} />
+          {leadText.map((chunk, index) => (
+            <RevealedText content={chunk} key={index} />
           ))}
         </Lead>
       </motion.div>
-      <FadeInBlock slideValue={50}>
+      <FadeInBlock slideValue={50} delay={1.2}>
         <Summary>
           As a <SummaryBold>developer</SummaryBold>, I want to grow
           horizontally, expanding myself towards adjacent areas to become a
@@ -55,12 +55,12 @@ export default function HomeHero() {
         </Summary>
       </FadeInBlock>
       <Column>
-        <FadeInBlock slideValue={50}>
+        <FadeInBlock slideValue={50} delay={1.2}>
           <ContactBlock />
         </FadeInBlock>
       </Column>
       <Column>
-        <FadeInBlock slideValue={50}>
+        <FadeInBlock slideValue={50} delay={1.2}>
           <SocialBlock />
         </FadeInBlock>
       </Column>

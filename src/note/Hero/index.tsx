@@ -15,6 +15,8 @@ import InfoIcon from '$/assets/icons/info.svg';
 import scrollToContent from '$/common/utils/scrollToContent';
 import type { Props } from './types';
 import { getTimeAgo, parseStringToDate } from '$/common/utils/dates';
+import RevealedText from '$/common/components/RevealedText';
+import FadeInBlock from '$/common/components/FadeInBlock';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
@@ -31,15 +33,24 @@ export default function NoteHero({
   status: rawStatus,
 }: Props) {
   const status = statusDictionary[rawStatus];
+
   return (
     <Container>
       <Cover>
-        <Title>{title}</Title>
-        <Summary>{summary}</Summary>
-        <ScrollButtonContainer>
-          <Text>Scroll to Content</Text>
-          <ScrollButton onClick={() => scrollToContent(contentRef)} />
-        </ScrollButtonContainer>
+        <Title>
+          {[{ text: title }]?.map((chunk, index) => (
+            <RevealedText content={chunk} key={index} />
+          ))}
+        </Title>
+        <FadeInBlock slideValue={50} delay={0.5}>
+          <Summary>{summary}</Summary>
+        </FadeInBlock>
+        <FadeInBlock slideValue={0} delay={0.75}>
+          <ScrollButtonContainer>
+            <Text>Scroll to Content</Text>
+            <ScrollButton onClick={() => scrollToContent(contentRef)} />
+          </ScrollButtonContainer>
+        </FadeInBlock>
       </Cover>
       <Meta>
         <DateInfo>

@@ -5,6 +5,7 @@ export type Props = {
   slideValue?: number;
   from?: 'top' | 'right' | 'bottom' | 'left';
   className?: string;
+  delay?: number;
 };
 
 export type SlidePosition = {

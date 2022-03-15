@@ -1,8 +1,8 @@
-import type { MutableRefObject, ReactNode } from 'react';
+import type { MutableRefObject } from 'react';
 
 export type Props = {
-  title: ReactNode;
-  summary: ReactNode;
+  title: string;
+  summary: string;
   contentRef: MutableRefObject<HTMLDivElement | null>;
   published: string;
   lastUpdated: string | null;

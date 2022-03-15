@@ -33,16 +33,16 @@ const Header = () => {
       </Row>
       <ColumnsContainer>
         <Column $showFrom="tabletPortrait">
-          <FadeInBlock>
+          <FadeInBlock slideValue={10} delay={1}>
             <ContactBlock />
           </FadeInBlock>
         </Column>
         <Column $showFrom="mobile">
-          <FadeInBlock>
+          <FadeInBlock slideValue={10} delay={1}>
             <SocialBlock />
           </FadeInBlock>
         </Column>
-        <FadeInBlock>
+        <FadeInBlock slideValue={10} delay={1}>
           <Badge>Building in public</Badge>
         </FadeInBlock>
       </ColumnsContainer>
