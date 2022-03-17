@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BodyMBold, BodyS } from '$/styles/typography';
+import { BodyMBold, BodyS, BodySBold } from '$/styles/typography';
 
 export const Container = styled.aside`
   width: 100%;
@@ -28,7 +28,7 @@ export const Section = styled(BodyS).attrs({ as: 'p' })`
   }
 `;
 
-export const Links = styled.div`
+export const Links = styled(BodySBold).attrs({ as: 'div' })`
   display: flex;
   gap: 2rem;
   margin-block-start: auto;

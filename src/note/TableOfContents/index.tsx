@@ -1,6 +1,6 @@
 import formatKebabCase from '$/common/utils/formatKebabCase';
 import type { MutableRefObject } from 'react';
-import ArrowLink from './ArrowLink';
+import ArrowLink from '$/common/components/ArrowLink';
 import { Container, Title, Section, Links, AnchorLink } from './styles';
 
 export default function TableOfContents({
@@ -37,8 +37,8 @@ export default function TableOfContents({
         </>
       ) : null}
       <Links>
-        <ArrowLink label="Go to Top" link="#" />
-        <ArrowLink label="Go Home" link="/" />
+        <ArrowLink label="Go to Top" link="#" backlink />
+        <ArrowLink label="Go Home" link="/" backlink />
       </Links>
     </Container>
   );

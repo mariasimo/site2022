@@ -14,9 +14,10 @@ export const Link = styled.a`
   }
 `;
 
-export const Arrow = styled(DefaultArrow)`
+export const Arrow = styled(DefaultArrow)<{ $flip: true }>`
   height: 100%;
   width: 100%;
+  transform: ${({ $flip }) => ($flip ? 'scaleX(-1)' : 'none')};
 `;
 
 export const IconContainer = styled.span`
