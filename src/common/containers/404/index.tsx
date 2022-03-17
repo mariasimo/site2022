@@ -6,12 +6,13 @@ import {
   BoxWithDetails,
   WordMask,
   Word,
+  Row,
   Trigger,
 } from './styles';
 import Head from 'next/head';
 import Header from '$/common/components/Header';
 import ArrowLink from '$/common/components/ArrowLink';
-import { motion, useAnimation } from 'framer-motion';
+import { useAnimation } from 'framer-motion';
 import {
   ReactNode,
   RefObject,
@@ -20,7 +21,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
 import { useTheme } from '$/styles/themes/ThemeContext';
 
 const clip = {
@@ -29,12 +29,6 @@ const clip = {
     transition: { duration: 1 },
   },
 };
-
-const Row = styled(motion.div)`
-  width: 100%;
-  display: flex;
-  gap: 4rem;
-`;
 
 function ClipWord({
   children,
@@ -66,7 +60,7 @@ function ClipWord({
 
     const timeout = setTimeout(() => {
       window.scrollTo(0, 0);
-    }, 1000);
+    }, 1500);
 
     return () => {
       clearTimeout(timeout);

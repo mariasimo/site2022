@@ -15,11 +15,25 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-block-start: 1.5rem;
+  height: 87vh;
+
+  ${from.mobile} {
+    height: 84vh;
+  }
+
+  ${from.tabletPortrait} {
+    height: 87vh;
+  }
+`;
+
+export const Row = styled(motion.div)`
+  width: 100%;
+  display: flex;
+  gap: 0 4rem;
+  flex-wrap: wrap;
 `;
 
 export const Box = styled.div<{ $marginBottom?: string }>`
@@ -51,7 +65,11 @@ export const Details = styled(BodyL)`
 export const WordMask = styled.span`
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
   display: grid;
-  height: 10ch;
+  height: 7ch;
+
+  ${from.tabletPortrait} {
+    height: 10ch;
+  }
 `;
 
 export const Word = styled(motion.p)`
@@ -60,7 +78,7 @@ export const Word = styled(motion.p)`
 
   font-weight: 500;
   line-height: 0.9;
-  font-size: 5rem;
+  font-size: 4.2rem;
 
   ${from.tabletPortrait} {
     font-size: clamp(4rem, 12vw, 6rem);
