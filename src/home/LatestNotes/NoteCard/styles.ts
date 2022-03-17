@@ -4,6 +4,7 @@ import DefaultArrow from '$/assets/icons/arrow-link.svg';
 
 export const Arrow = styled(DefaultArrow)`
   flex-shrink: 0;
+  width: 1.5rem;
 `;
 
 export const Title = styled(HeadingMBold).attrs({ as: 'h2' })`

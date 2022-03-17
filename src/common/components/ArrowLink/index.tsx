@@ -1,4 +1,4 @@
-import { Link, Arrow } from './styles';
+import { Link, Arrow, IconContainer } from './styles';
 
 export default function ArrowLink({
   label,
@@ -13,7 +13,9 @@ export default function ArrowLink({
 }) {
   return (
     <Link href={link} target={target} className={className}>
-      <Arrow />
+      <IconContainer>
+        <Arrow />
+      </IconContainer>
       {label}
     </Link>
   );
