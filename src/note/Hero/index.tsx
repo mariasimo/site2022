@@ -15,8 +15,8 @@ import InfoIcon from '$/assets/icons/info.svg';
 import scrollToContent from '$/common/utils/scrollToContent';
 import type { Props } from './types';
 import { getTimeAgo, parseStringToDate } from '$/common/utils/dates';
-import RevealedText from '$/common/components/RevealedText';
-import FadeInBlock from '$/common/components/FadeInBlock';
+import RevealedText from '$/common/components/animation/RevealedText';
+import FadeInBlock from '$/common/components/animation/FadeInBlock';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",

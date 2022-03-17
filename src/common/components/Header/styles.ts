@@ -3,7 +3,7 @@ import { BodyS, BodySBold } from '$/styles/typography';
 import { Breakpoint, from, showFromMixin } from '$/styles/responsive';
 import DefaultBadge from '$/common/components/Badge';
 import DefaultThemeSwitcher from '$/common/components/ThemeSwitcher';
-import FadeInBlock from '$/common/components/FadeInBlock';
+import FadeInBlock from '$/common/components/animation/FadeInBlock';
 
 const Translate = keyframes`
  0% {

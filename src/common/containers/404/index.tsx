@@ -10,7 +10,7 @@ import Head from 'next/head';
 import Header from '$/common/components/Header';
 import ArrowLink from '$/common/components/ArrowLink';
 import { useEffect, useRef } from 'react';
-import ClipWord from '$/common/components/ClipWord';
+import ClipWord from '$/common/components/animation/ClipWord';
 
 function ErrorView(): JSX.Element {
   const scrollRef = useRef(null);

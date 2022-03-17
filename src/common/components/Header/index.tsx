@@ -14,7 +14,7 @@ import {
 } from './styles';
 import ContactBlock from '$/common/components/ContactBlock';
 import SocialBlock from '$/common/components/SocialBlock';
-import FadeInBlock from '../FadeInBlock';
+import FadeInBlock from '$/common/components/animation/FadeInBlock';
 
 const Header = () => {
   const { themeName, toggleTheme } = useTheme();

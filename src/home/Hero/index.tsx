@@ -8,8 +8,8 @@ import {
   SummaryBold,
   Column,
 } from './styles';
-import RevealedText from '$/common/components/RevealedText';
-import FadeInBlock from '$/common/components/FadeInBlock';
+import RevealedText from '$/common/components/animation/RevealedText';
+import FadeInBlock from '$/common/components/animation/FadeInBlock';
 import { motion } from 'framer-motion';
 
 const leadText = [
