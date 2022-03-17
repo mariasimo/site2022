@@ -79,12 +79,21 @@ export const Meta = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   padding-block: 2.5rem;
+  gap: 1rem;
+
+  ${from.tabletPortrait} {
+    gap: 0;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  ${from.tabletLandscape} {
+    grid-template-columns: repeat(8, 1fr);
+  }
 `;
 
 export const Block = styled.div`
-  grid-column: span 4;
+  grid-column: span 8;
 
-  ${from.mobile} {
+  ${from.tabletPortrait} {
     grid-column: span 2;
   }
 `;
