@@ -60,7 +60,7 @@ function ClipWord({
 
     const timeout = setTimeout(() => {
       window.scrollTo(0, 0);
-    }, 1500);
+    }, 1000);
 
     return () => {
       clearTimeout(timeout);

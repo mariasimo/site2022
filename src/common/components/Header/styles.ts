@@ -7,10 +7,10 @@ import FadeInBlock from '$/common/components/FadeInBlock';
 
 const Translate = keyframes`
  0% {
-    transform: scaleX(100%);
+    transform: translateX(0%);
   }
   100% {
-    transform:  scaleX(100%) translateX(100%) ;
+    transform: translateX(100%);
   }
 `;
 
@@ -43,8 +43,9 @@ export const AnimatedBorder = styled.div`
     transform-origin: 0%;
     z-index: 1;
     top: 0;
-    animation: ${Translate} 1300ms ease-in-out 200ms;
+    animation: ${Translate} 1300ms ease-in-out;
     animation-fill-mode: forwards;
+    transform: scaleX(100%);
   }
 
   &:before {
@@ -52,6 +53,7 @@ export const AnimatedBorder = styled.div`
     height: 1px;
     position: absolute;
     left: 0;
+    top: 0;
     background-color: var(--theme-line);
     width: 100%;
   }
