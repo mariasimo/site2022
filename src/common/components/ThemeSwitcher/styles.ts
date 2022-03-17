@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.button`
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
@@ -8,6 +8,9 @@ export const Container = styled.div`
   position: relative;
   transition: transform 300ms ease-in-out;
   cursor: pointer;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
 `;
 
 export const Circle = styled.div`
