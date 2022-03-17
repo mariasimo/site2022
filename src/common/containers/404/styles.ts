@@ -29,13 +29,6 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Row = styled(motion.div)`
-  width: 100%;
-  display: flex;
-  gap: 0 4rem;
-  flex-wrap: wrap;
-`;
-
 export const Box = styled.div<{ $marginBottom?: string }>`
   margin-block-end: ${({ $marginBottom }) => $marginBottom ?? '0'};
   display: flex;
@@ -61,35 +54,6 @@ export const Details = styled(BodyL)`
     font-size: 1.5rem;
   }
 `;
-
-export const WordMask = styled.span`
-  clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
-  display: grid;
-  height: 7ch;
-
-  ${from.tabletPortrait} {
-    height: 10ch;
-  }
-`;
-
-export const Word = styled(motion.p)`
-  display: inline-block;
-  white-space: pre-wrap;
-
-  font-weight: 500;
-  line-height: 0.9;
-  font-size: 4.2rem;
-
-  ${from.tabletPortrait} {
-    font-size: clamp(4rem, 12vw, 6rem);
-    white-space: nowrap;
-  }
-
-  ${from.tabletLandscape} {
-    font-size: 7.125rem;
-  }
-`;
-
 export const Trigger = styled.div`
   position: absolute;
   bottom: -1px;
