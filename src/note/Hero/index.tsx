@@ -10,6 +10,7 @@ import {
   Cover,
   ScrollButton,
   ScrollButtonContainer,
+  Block,
 } from './styles';
 import InfoIcon from '$/assets/icons/info.svg';
 import scrollToContent from '$/common/utils/scrollToContent';
@@ -17,6 +18,7 @@ import type { Props } from './types';
 import { getTimeAgo, parseStringToDate } from '$/common/utils/dates';
 import RevealedText from '$/common/components/animation/RevealedText';
 import FadeInBlock from '$/common/components/animation/FadeInBlock';
+import ArrowLink from '$/common/components/ArrowLink';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
@@ -53,6 +55,9 @@ export default function NoteHero({
         </FadeInBlock>
       </Cover>
       <Meta>
+        <Block>
+          <ArrowLink label="Go Home" link="/" backlink />
+        </Block>
         <DateInfo>
           <Text>Created {getTimeAgo(parseStringToDate(published))}</Text>{' '}
           {lastUpdated ? (

@@ -90,7 +90,7 @@ export const Meta = styled.div`
   }
 `;
 
-export const Block = styled.div`
+export const Block = styled(BodyXS).attrs({ as: 'div' })`
   grid-column: span 8;
 
   ${from.tabletPortrait} {
@@ -103,7 +103,7 @@ export const StatusInfo = styled(Block)`
   fill: var(--theme-ink);
 `;
 
-export const Text = styled(BodyXS).attrs({ as: 'p' })`
+export const Text = styled.p`
   white-space: nowrap;
 `;
 
