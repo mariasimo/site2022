@@ -12,7 +12,7 @@ import ArrowLink from '$/common/components/ArrowLink';
 import { useEffect, useRef } from 'react';
 import ClipWord from '$/common/components/animation/ClipWord';
 
-function ErrorView(): JSX.Element {
+function ErrorView({ message }: { message?: string }): JSX.Element {
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function ErrorView(): JSX.Element {
             <BoxWithDetails>
               <ClipWord label="went" scrollRef={scrollRef}>
                 <Details>
-                  <span>Error 404 — Not Found</span>
+                  <span>{message || 'Error 404 — Not Found'}</span>
                   <ArrowLink label="Go Home" link="/" />
                 </Details>
               </ClipWord>
