@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { BodyL, BodyXS, HeadingLBold } from '$/styles/typography';
+import { BodyL, BodyXS, BodyXSBold, HeadingLBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
 
 const Scroll = keyframes`
@@ -103,9 +103,13 @@ export const StatusInfo = styled(Block)`
   fill: var(--theme-ink);
 `;
 
-export const Text = styled.p`
-  white-space: nowrap;
+export const Text = styled(BodyXS).attrs({ as: 'p' })``;
+export const Paragraph = styled(BodyXS).attrs({ as: 'p' })`
+  &:not(& + p) {
+    margin-bottom: 1rem;
+  }
 `;
+export const Bold = styled(BodyXSBold).attrs({ as: 'span' })``;
 
 export const Status = styled(Text)`
   display: flex;
