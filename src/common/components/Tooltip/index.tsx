@@ -1,74 +1,147 @@
-import { ComponentType, ReactNode, useEffect, useRef, useState } from 'react';
+import {
+  ComponentType,
+  ReactNode,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
 import { Container, Box } from './styles';
 import ButtonIcon from '$/common/components/ButtonIcon';
 import InfoIcon from '$/assets/icons/info.svg';
+import Portal from '../Portal';
 
 export default function Tooltip({ children }: { children: ReactNode }) {
-  // Add portal
-  // Calc position and width
-  // Get parent node, add position relative
-  // Magnetic effect to cursor while open
-
-  // On open, animate box from bottom to top (or corner to corner), then fade in text
-  // Close on click outside
-  // Close on scroll
-  // Close if icon is not in viewport
-
-  // p descendant of p error will be fix when this is a portal
-
-  // calc tooltipHeight dinamically with maxHeight and pretty scrollbar
-
   const triggerRef = useRef<HTMLDivElement>(null);
-  const [showTooltip, setShowTooltip] = useState(false);
+
   const baseWidth = 400;
-  const [tooltipWidth, setTooltipWidth] = useState(baseWidth);
-  const tooltipHeight = 200;
+  const tooltipHeight = 180;
   const safetyMargin = 24;
-  const [tooltipPosition, setTooltipPosition] = useState({
-    x: -tooltipWidth / 2,
-    y: safetyMargin,
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipWidth, setTooltipWidth] = useState(baseWidth);
+  const [tooltipPos, setTooltipPos] = useState({
+    x: 0,
+    y: 0,
   });
 
-  const toggleShowTooltip = () => {
-    if (triggerRef?.current) {
-      const buttonClientRect = triggerRef?.current?.getBoundingClientRect();
+  const getTooltipYPlacement = useCallback(() => {
+    const buttonClientRect = triggerRef?.current?.getBoundingClientRect();
 
-      // extract this into a function and attach it to a resize window event
-      let newX = tooltipPosition.x;
-      let newY = tooltipPosition.y;
-      let newWidth = tooltipWidth;
+    return {
+      isTopHalf: buttonClientRect
+        ? buttonClientRect.top < window.innerHeight / 2
+        : false,
+    };
+  }, []);
 
-      // calcs when window is < tooltipWidth + margin * 2
-      if (window.innerWidth - safetyMargin * 2 <= newWidth) {
-        newWidth = window.innerWidth - safetyMargin * 2;
+  const getTooltipXPlacement = useCallback(() => {
+    const buttonClientRect = triggerRef?.current?.getBoundingClientRect();
+    if (!buttonClientRect) return { isLeftBound: false, isRightBound: false };
+
+    return {
+      isLeftBound: buttonClientRect.left <= safetyMargin,
+      isRightBound:
+        buttonClientRect.left + tooltipWidth / 2 + safetyMargin >=
+        window.innerWidth,
+    };
+  }, [tooltipWidth]);
+
+  const updateTooltip = useCallback(() => {
+    const buttonClientRect = triggerRef?.current?.getBoundingClientRect();
+    if (buttonClientRect) {
+      const { x: buttonX, y: buttonY } = buttonClientRect;
+
+      const centeredTooltip =
+        buttonX + buttonClientRect.width / 2 - tooltipWidth / 2;
+
+      const { isTopHalf } = getTooltipYPlacement();
+      const isWindowLessThanWidth =
+        window.innerWidth - safetyMargin * 2 <= tooltipWidth;
+
+      let tooltipX = centeredTooltip;
+      let tooltipY = buttonY - tooltipHeight;
+      let width = tooltipWidth;
+
+      if (!isWindowLessThanWidth) {
+        const { isLeftBound, isRightBound } = getTooltipXPlacement();
+
+        if (isLeftBound) {
+          tooltipX = buttonX <= safetyMargin ? safetyMargin : 0;
+        } else if (isRightBound) {
+          const partOfTooltipClipped = width - (window.innerWidth - buttonX);
+          tooltipX = buttonX - partOfTooltipClipped - safetyMargin;
+        } else {
+          tooltipX = centeredTooltip;
+        }
+
+        width = tooltipWidth;
       } else {
-        newWidth = baseWidth;
+        width = window.innerWidth - safetyMargin * 2;
+        tooltipX = safetyMargin;
       }
 
-      if (buttonClientRect.left - newX < 0) {
-        // if button position have enough margin, place box in same x, otherwise add safety margin
-        newX = buttonClientRect.left >= safetyMargin ? 0 : safetyMargin;
-      }
-      if (buttonClientRect.left + newWidth - newX > window.innerWidth) {
-        newX =
-          -(newWidth / 2) -
-          (buttonClientRect.left + newWidth / 2 - window.innerWidth) -
-          safetyMargin;
-      }
-      if (buttonClientRect.top - tooltipHeight - safetyMargin < 0) {
-        newY = safetyMargin;
-      }
-      if (
-        buttonClientRect.top + tooltipHeight + safetyMargin * 2 >
-        window.innerHeight
-      ) {
-        newY = -tooltipHeight - safetyMargin / 2;
+      if (isTopHalf) {
+        tooltipY = buttonY + safetyMargin;
+      } else {
+        tooltipY = buttonY - tooltipHeight;
       }
 
-      setTooltipWidth(newWidth);
-      setTooltipPosition({ x: newX, y: newY });
-      setShowTooltip((prev) => !prev);
+      setTooltipPos({ x: tooltipX, y: tooltipY });
+      setTooltipWidth(width);
     }
+  }, [tooltipWidth, getTooltipXPlacement, getTooltipYPlacement]);
+
+  useLayoutEffect(() => {
+    // debounce
+    if (triggerRef?.current) {
+      window.addEventListener('resize', updateTooltip);
+
+      // hide on scroll, when scroll is +100 with intersection observer
+    }
+  }, [updateTooltip]);
+
+  function toggleShowTooltip() {
+    updateTooltip();
+    setShowTooltip((prev) => !prev);
+  }
+
+  const box = {
+    hidden: {
+      scaleX: 0,
+      scaleY: 0,
+      transition: {
+        type: 'tween',
+        ease: 'linear',
+        when: 'afterChildren',
+      },
+    },
+    visible: {
+      scaleX: [0, 1, 1],
+      scaleY: [0, 0, 1],
+      transition: {
+        type: 'tween',
+        ease: 'linear',
+        when: 'beforeChildren',
+        scaleY: { duration: 0.5 },
+        scaleX: { duration: 0.1 },
+      },
+    },
+    exit: ({ direction }: { direction: number }) => ({
+      y: -10 * direction,
+      transition: {
+        type: 'tween',
+        ease: 'linear',
+        when: 'beforeChildren',
+        duration: 0.1,
+      },
+    }),
+  };
+
+  const text = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { type: 'tween', duration: 0.2 } },
   };
 
   return (
@@ -80,16 +153,34 @@ export default function Tooltip({ children }: { children: ReactNode }) {
           onClick={toggleShowTooltip}
         />
       </div>
-      {showTooltip ? (
-        <Box
-          $xCoord={tooltipPosition.x}
-          $yCoord={tooltipPosition.y}
-          $width={tooltipWidth}
-          $height={tooltipHeight}
-        >
-          {children}
-        </Box>
-      ) : null}
+      <Portal>
+        <AnimatePresence>
+          {showTooltip && triggerRef.current ? (
+            <Box
+              key="tooltip"
+              $xCoord={tooltipPos.x}
+              $yCoord={tooltipPos.y}
+              $width={tooltipWidth}
+              $height={tooltipHeight}
+              variants={box}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              // change this depending on placement
+              // if is in bottom, originY = 0, and exit 10
+              style={{
+                originX: 0,
+                originY: getTooltipYPlacement().isTopHalf ? 0 : 1,
+              }}
+              custom={{
+                direction: getTooltipYPlacement().isTopHalf ? -1 : 1,
+              }}
+            >
+              <motion.div variants={text}>{children}</motion.div>
+            </Box>
+          ) : null}
+        </AnimatePresence>
+      </Portal>
     </Container>
   );
 }

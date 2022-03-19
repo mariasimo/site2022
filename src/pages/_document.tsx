@@ -76,6 +76,7 @@ export default class AppDocument extends Document {
       <body>
         <Main />
         <NextScript />
+        <div id="portal-root" />
       </body>
     </Html>
   );
