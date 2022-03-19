@@ -19,18 +19,19 @@ export const animateTooltip = {
       scaleX: { duration: 0.1 },
     },
   },
-  exit: ({ direction }: { direction: number }) => ({
-    y: -10 * direction,
+  exit: {
+    scaleY: 0,
     transition: {
       type: 'tween',
       ease: 'linear',
-      when: 'beforeChildren',
-      duration: 0.1,
+      when: 'afterChildren',
+      scaleY: { duration: 0.25 },
     },
-  }),
+  },
 };
 
 export const animateText = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0, transition: { type: 'tween', duration: 0.2 } },
+  exit: { opacity: 0, y: -10 },
 };

@@ -1,4 +1,5 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { debounce } from 'debounce';
 
 export default function useLogic() {
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -38,14 +39,14 @@ export default function useLogic() {
   const updateTooltip = useCallback(() => {
     const buttonClientRect = buttonRef?.current?.getBoundingClientRect();
     if (buttonClientRect) {
-      const { x: buttonX, y: buttonY } = buttonClientRect;
+      const { x: buttonX, top: buttonY } = buttonClientRect;
 
       const centeredTooltip =
         buttonX + buttonClientRect.width / 2 - tooltipWidth / 2;
 
-      const { isTopHalf } = getTooltipYPlacement();
       const isWindowLessThanWidth =
         window.innerWidth - safetyMargin * 2 <= tooltipWidth;
+      const { isTopHalf } = getTooltipYPlacement();
 
       let tooltipX = centeredTooltip;
       let tooltipY = buttonY - tooltipHeight;
@@ -72,7 +73,7 @@ export default function useLogic() {
       if (isTopHalf) {
         tooltipY = buttonY + safetyMargin;
       } else {
-        tooltipY = buttonY - tooltipHeight;
+        tooltipY = buttonY - tooltipHeight - safetyMargin / 2;
       }
 
       setTooltipPos({ x: tooltipX, y: tooltipY });
@@ -81,13 +82,24 @@ export default function useLogic() {
   }, [tooltipWidth, getTooltipXPlacement, getTooltipYPlacement]);
 
   useLayoutEffect(() => {
-    // debounce
     if (buttonRef?.current) {
-      window.addEventListener('resize', updateTooltip);
+      const updateOnResize = debounce(updateTooltip, 100, false);
 
-      // hide on scroll, when scroll is +100 with intersection observer
+      const updateOnScroll = debounce(() => setShowTooltip(false), 25, true);
+
+      if (showTooltip) {
+        window.addEventListener('resize', updateOnResize);
+        window.addEventListener('scroll', updateOnScroll);
+      }
+
+      return () => {
+        window.removeEventListener('resize', updateOnResize);
+        window.removeEventListener('scroll', updateOnScroll);
+      };
     }
-  }, [updateTooltip]);
+
+    return () => null;
+  }, [updateTooltip, showTooltip]);
 
   function toggleShowTooltip() {
     updateTooltip();
