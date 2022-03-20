@@ -14,10 +14,12 @@ export default function Tooltip({ children }: { children: ReactNode }) {
     toggleShowTooltip,
     showTooltip,
     tooltipWidth,
-    tooltipHeight,
+    maxTooltipHeight,
     tooltipPos,
     getTooltipYPlacement,
     buttonRef,
+    initTooltip,
+    isInit,
   } = useLogic();
 
   return (
@@ -31,15 +33,16 @@ export default function Tooltip({ children }: { children: ReactNode }) {
       </div>
       <Portal>
         <AnimatePresence>
-          {showTooltip && buttonRef.current ? (
+          {showTooltip ? (
             <Box
+              ref={initTooltip}
               key="tooltip"
               $xCoord={tooltipPos.x}
               $yCoord={tooltipPos.y}
               $width={tooltipWidth}
-              $height={tooltipHeight}
+              $height={maxTooltipHeight}
               variants={animateTooltip}
-              initial="hidden"
+              initial={isInit ? 'hidden' : 'noInit'}
               animate="visible"
               exit="exit"
               style={{

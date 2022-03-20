@@ -1,4 +1,5 @@
 export const animateTooltip = {
+  noInit: { opacity: 0 },
   hidden: {
     scaleX: 0,
     scaleY: 0,

@@ -1,18 +1,35 @@
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import {
+  RefObject,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { debounce } from 'debounce';
 
 export default function useLogic() {
   const buttonRef = useRef<HTMLDivElement>(null);
 
   const baseWidth = 400;
-  const tooltipHeight = 180;
+  const maxTooltipHeight = 180;
   const safetyMargin = 24;
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [isInit, setInit] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(true);
   const [tooltipWidth, setTooltipWidth] = useState(baseWidth);
+  const [tooltipHeight, setTooltipHeight] = useState(0);
   const [tooltipPos, setTooltipPos] = useState({
     x: 0,
     y: 0,
   });
+
+  function initTooltip(el: HTMLSpanElement) {
+    if (el && !isInit) {
+      setTooltipHeight(el?.clientHeight);
+      setInit(true);
+      setShowTooltip(false);
+    }
+  }
 
   const getTooltipYPlacement = useCallback(() => {
     const buttonClientRect = buttonRef?.current?.getBoundingClientRect();
@@ -79,7 +96,7 @@ export default function useLogic() {
       setTooltipPos({ x: tooltipX, y: tooltipY });
       setTooltipWidth(width);
     }
-  }, [tooltipWidth, getTooltipXPlacement, getTooltipYPlacement]);
+  }, [tooltipWidth, getTooltipXPlacement, getTooltipYPlacement, tooltipHeight]);
 
   useLayoutEffect(() => {
     if (buttonRef?.current) {
@@ -110,9 +127,11 @@ export default function useLogic() {
     toggleShowTooltip,
     showTooltip,
     tooltipPos,
-    tooltipHeight,
+    maxTooltipHeight,
     tooltipWidth,
     getTooltipYPlacement,
     buttonRef,
+    initTooltip,
+    isInit,
   };
 }
