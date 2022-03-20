@@ -41,7 +41,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
     .filter(Boolean);
 
   return (
-    <Layout title={`${title}| María Simó Front—End Developer`}>
+    <Layout title={`${title} | María Simó Front—End Developer`}>
       <Hero
         title={title}
         summary={summary}

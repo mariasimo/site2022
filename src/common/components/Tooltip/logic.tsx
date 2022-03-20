@@ -1,15 +1,10 @@
-import {
-  RefObject,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { debounce } from 'debounce';
+import useOnClickOutside from '$/common/hooks/useOnClickOutside';
 
 export default function useLogic() {
   const buttonRef = useRef<HTMLDivElement>(null);
+  const containerTooltip = useRef<HTMLDivElement>(null);
 
   const baseWidth = 400;
   const maxTooltipHeight = 180;
@@ -118,6 +113,8 @@ export default function useLogic() {
     return () => null;
   }, [updateTooltip, showTooltip]);
 
+  useOnClickOutside(containerTooltip, () => setShowTooltip(false));
+
   function toggleShowTooltip() {
     updateTooltip();
     setShowTooltip((prev) => !prev);
@@ -133,5 +130,6 @@ export default function useLogic() {
     buttonRef,
     initTooltip,
     isInit,
+    containerTooltip,
   };
 }

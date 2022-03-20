@@ -19,7 +19,7 @@ export const Box = styled(motion.span)<{
   position: fixed;
   top: ${({ $yCoord }) => `${$yCoord}px`};
   left: ${({ $xCoord }) => `${$xCoord}px`};
-  background: whitesmoke;
+  background: var(--theme-paper);
   z-index: 1;
   overflow-y: auto;
   padding: 1.25rem;
