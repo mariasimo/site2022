@@ -4,6 +4,7 @@ import { prettyScrollbar } from '$/styles/mixins';
 
 export const Container = styled.span`
   position: relative;
+  line-height: 0;
 `;
 
 export const Box = styled(motion.span)<{

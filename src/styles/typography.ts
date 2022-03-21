@@ -61,6 +61,7 @@ const BodyMBase = styled.span`
   font-family: var(--theme-font-text);
   font-size: 1rem;
   line-height: 1.6;
+  letter-spacing: 0.02rem;
 `;
 
 export const BodyM = styled(BodyMBase)`
@@ -93,6 +94,8 @@ const BodyXSBase = styled.span`
   font-family: var(--theme-font-text);
   font-size: 0.75rem;
   line-height: 1.6;
+  letter-spacing: 0.025rem;
+  word-spacing: 0.0625rem;
 
   ${from.mobile} {
     font-size: 0.875rem;

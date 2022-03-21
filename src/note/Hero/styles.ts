@@ -103,7 +103,10 @@ export const StatusInfo = styled(Block)`
   fill: var(--theme-ink);
 `;
 
-export const Text = styled(BodyXS).attrs({ as: 'p' })``;
+export const Text = styled(BodyXS).attrs({ as: 'p' })`
+  white-space: nowrap;
+`;
+
 export const Paragraph = styled(BodyXS).attrs({ as: 'p' })`
   &:not(& + p) {
     margin-bottom: 1rem;
