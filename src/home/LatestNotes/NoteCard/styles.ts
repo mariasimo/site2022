@@ -20,6 +20,7 @@ export const Container = styled.article<{ $disabled?: boolean }>`
     border-block-start: 1px solid var(--theme-line);
   }
   ${Arrow}, ${Title} {
+    transition: color ease 0.3s;
     color: ${({ $disabled }) =>
       $disabled ? 'var(--theme-disabledText)' : 'var(--theme-ink)'};
   }
