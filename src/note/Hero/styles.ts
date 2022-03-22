@@ -1,17 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { BodyL, BodyXS, BodyXSBold, HeadingLBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
-
-const Scroll = keyframes`
-  0% {
-    opacity: 1;
-    transform: translateY(-0.625rem);
-  }
-  100% {
-     opacity: 0;
-    transform: translateY(0.625rem);
-  }
-`;
+import { motion } from 'framer-motion';
 
 export const Container = styled.section`
   height: 100vh;
@@ -26,19 +16,20 @@ export const Cover = styled.div`
   margin-block-end: 6rem;
 `;
 
-export const ScrollButtonContainer = styled.div`
+export const ScrollButtonContainer = styled(motion.div)`
   margin-left: auto;
   margin-top: -4rem;
   display: none;
   width: min-content;
   align-items: center;
+  cursor: default;
 
   ${from.tabletPortrait} {
     display: flex;
   }
 `;
 
-export const ScrollButton = styled.button`
+export const ScrollButton = styled(motion.button)`
   border: 1px solid var(--theme-line);
   width: 4rem;
   height: 4rem;
@@ -49,21 +40,14 @@ export const ScrollButton = styled.button`
   flex-shrink: 0;
   margin-inline-start: 1rem;
   background-color: transparent;
+`;
 
-  &:after {
-    content: '';
-    border-radius: 50%;
-    width: 0.5rem;
-    height: 0.5rem;
-    background-color: var(--theme-ink);
-    display: flex;
-  }
-
-  &:hover {
-    &:after {
-      animation: ${Scroll} 1.2s ease infinite;
-    }
-  }
+export const Circle = styled(motion.span)`
+  border-radius: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--theme-ink);
+  display: flex;
 `;
 
 export const Title = styled(HeadingLBold).attrs({ as: 'h1' })`
