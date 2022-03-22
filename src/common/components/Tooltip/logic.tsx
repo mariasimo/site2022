@@ -1,17 +1,15 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { debounce } from 'debounce';
 import useOnClickOutside from '$/common/hooks/useOnClickOutside';
+import { SAFETY_MARGIN, TOOLTIP_MAX_HEIGHT, TOOLTIP_WIDTH } from './constants';
 
 export default function useLogic() {
   const buttonRef = useRef<HTMLDivElement>(null);
   const containerTooltip = useRef<HTMLDivElement>(null);
 
-  const baseWidth = 400;
-  const maxTooltipHeight = 180;
-  const safetyMargin = 24;
   const [isInit, setInit] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
-  const [tooltipWidth, setTooltipWidth] = useState(baseWidth);
+  const [tooltipWidth, setTooltipWidth] = useState(TOOLTIP_WIDTH);
   const [tooltipHeight, setTooltipHeight] = useState(0);
   const [tooltipPos, setTooltipPos] = useState({
     x: 0,
@@ -41,9 +39,9 @@ export default function useLogic() {
     if (!buttonClientRect) return { isLeftBound: false, isRightBound: false };
 
     return {
-      isLeftBound: buttonClientRect.left <= safetyMargin,
+      isLeftBound: buttonClientRect.left <= SAFETY_MARGIN,
       isRightBound:
-        buttonClientRect.left + tooltipWidth / 2 + safetyMargin >=
+        buttonClientRect.left + tooltipWidth / 2 + SAFETY_MARGIN >=
         window.innerWidth,
     };
   }, [tooltipWidth]);
@@ -57,7 +55,7 @@ export default function useLogic() {
         buttonX + buttonClientRect.width / 2 - tooltipWidth / 2;
 
       const isWindowLessThanWidth =
-        window.innerWidth - safetyMargin * 2 <= tooltipWidth;
+        window.innerWidth - SAFETY_MARGIN * 2 <= tooltipWidth;
       const { isTopHalf } = getTooltipYPlacement();
 
       let tooltipX = centeredTooltip;
@@ -68,24 +66,24 @@ export default function useLogic() {
         const { isLeftBound, isRightBound } = getTooltipXPlacement();
 
         if (isLeftBound) {
-          tooltipX = buttonX <= safetyMargin ? safetyMargin : 0;
+          tooltipX = buttonX <= SAFETY_MARGIN ? SAFETY_MARGIN : 0;
         } else if (isRightBound) {
           const partOfTooltipClipped = width - (window.innerWidth - buttonX);
-          tooltipX = buttonX - partOfTooltipClipped - safetyMargin;
+          tooltipX = buttonX - partOfTooltipClipped - SAFETY_MARGIN;
         } else {
           tooltipX = centeredTooltip;
         }
 
         width = tooltipWidth;
       } else {
-        width = window.innerWidth - safetyMargin * 2;
-        tooltipX = safetyMargin;
+        width = window.innerWidth - SAFETY_MARGIN * 2;
+        tooltipX = SAFETY_MARGIN;
       }
 
       if (isTopHalf) {
-        tooltipY = buttonY + safetyMargin;
+        tooltipY = buttonY + SAFETY_MARGIN;
       } else {
-        tooltipY = buttonY - tooltipHeight - safetyMargin / 2;
+        tooltipY = buttonY - tooltipHeight - SAFETY_MARGIN / 2;
       }
 
       setTooltipPos({ x: tooltipX, y: tooltipY });
@@ -124,7 +122,7 @@ export default function useLogic() {
     toggleShowTooltip,
     showTooltip,
     tooltipPos,
-    maxTooltipHeight,
+    maxTooltipHeight: TOOLTIP_MAX_HEIGHT,
     tooltipWidth,
     getTooltipYPlacement,
     buttonRef,

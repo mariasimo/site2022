@@ -1,3 +1,7 @@
+export const TOOLTIP_WIDTH = 400;
+export const TOOLTIP_MAX_HEIGHT = 193;
+export const SAFETY_MARGIN = 24;
+
 export const animateTooltip = {
   noInit: { opacity: 0 },
   hidden: {

@@ -42,7 +42,7 @@ export default function Tooltip({ children }: { children: ReactNode }) {
                 $xCoord={tooltipPos.x}
                 $yCoord={tooltipPos.y}
                 $width={tooltipWidth}
-                $height={maxTooltipHeight}
+                $maxHeight={maxTooltipHeight}
                 variants={animateTooltip}
                 initial={isInit ? 'hidden' : 'noInit'}
                 animate="visible"

@@ -11,11 +11,11 @@ export const Box = styled(motion.span)<{
   $xCoord: number;
   $yCoord: number;
   $width: number;
-  $height: number;
+  $maxHeight: number;
 }>`
   width: ${({ $width }) => `${$width}px`};
   height: auto;
-  max-height: ${({ $height }) => `${$height}px`};
+  max-height: ${({ $maxHeight }) => `${$maxHeight}px`};
   border: 1px solid var(--theme-ink);
   background-color: var(--theme-paper);
   position: fixed;
