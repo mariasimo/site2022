@@ -17,12 +17,11 @@ const experience: Section = {
     {
       description: (
         <p>
-          <Bold>Since March 2021 I've been working at Z1</Bold>, a sevillian
-          digital product agency. I work with NextJS, TypeScript, Apollo and
-          GraphQL crafting beautiful web apps – sometimes in squad and others
-          solo—, in a remote and international context. I team up with
-          backenders, product people, designers and clients in an agile
-          environment.
+          <Bold>Since March 2021 I've been working at Z1</Bold>, a Sevillian
+          digital product agency. I mainly work with TypeScript, React, Apollo
+          and GraphQL. I'm a manager of a front-end squad and team up with
+          backend, product people, designers and clients. We work together in a
+          remote and international context to craft beautiful web apps.
         </p>
       ),
       links: [
@@ -35,11 +34,10 @@ const experience: Section = {
     {
       description: (
         <p>
-          <Bold>Before that I worked for a year at Secuoyas</Bold>, they gave me
-          my first opportunity as a developer. There I learned the ways and
-          rituals involved in manufacturing digital products. I worked with
-          Gatsby and Framer Motion to create some cool animations and
-          interactions for griddo.io.
+          <Bold>I worked for a year at Secuoyas.</Bold> It was my first
+          experience as a developer. I learned the processes involved in
+          manufacturing digital products. I worked with Gatsby and Framer Motion
+          to develop the website for its principal product.
         </p>
       ),
       links: [
@@ -57,10 +55,9 @@ const experience: Section = {
       description: (
         <p>
           <Bold>In early 2020 I was a Teacher Assistant at Ironhack</Bold>, for
-          the Full-Time Web Dev Bootcamp. My role there was to provide the
-          students with complementary information, guide them through the
-          exercises and tasks and, from a more large perspective, through the
-          tough and challenging experience that the bootcamp itself is.
+          the Full-Time Web Development Bootcamp. My role there was to support
+          the students and guide them to complete their tasks. But also to
+          support them through the challenging experience the bootcamp is.
         </p>
       ),
       links: [
@@ -103,10 +100,10 @@ const education: Section = {
       description: (
         <p>
           <Bold>Once upon a time, I studied Arts</Bold> at the University of
-          Granada. I also took a couple of web dev and graphic design courses. I
-          painted for many many years, I was an illustrator for children's books
-          and I briefly worked as a concept artist for theme parks, but that was
-          a long time ago.
+          Granada. I also took a couple of web development and graphic design
+          courses. I painted for many many years, I was an illustrator for
+          children's books and I briefly worked as a concept artist for themed
+          parks, but that was a long time ago.
         </p>
       ),
     },
