@@ -1,4 +1,8 @@
-export const nord = {
+import type { CSSProperties } from 'react';
+
+export const nord: {
+  [key: string]: CSSProperties;
+} = {
   'code[class*="language-"]': {
     color: '#f8f8f2',
     background: 'none',
@@ -61,9 +65,6 @@ export const nord = {
   },
   punctuation: {
     color: '#81A1C1',
-  },
-  '.namespace': {
-    Opacity: '.7',
   },
   property: {
     color: '#81A1C1',
