@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { BodyL, BodyXS, BodyXSBold, HeadingLBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
 import { motion } from 'framer-motion';

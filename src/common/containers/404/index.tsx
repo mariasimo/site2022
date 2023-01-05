@@ -28,10 +28,10 @@ function ErrorView({ message }: { message?: string }): JSX.Element {
         <Header />
         <Wrapper>
           <Box $marginBottom="0">
-            <ClipWord label="Guess whaaaaat" scrollRef={scrollRef} />
-            <ClipWord label="Something" scrollRef={scrollRef} />
+            <ClipWord label="Guess whaǻäāāạt" scrollRef={scrollRef} />
+            <ClipWord label="Someŧhiiíìĭng" scrollRef={scrollRef} />
             <BoxWithDetails>
-              <ClipWord label="went" scrollRef={scrollRef}>
+              <ClipWord label="ẅeẹnt" scrollRef={scrollRef}>
                 <Details>
                   <span>{message || 'Error 404 — Not Found'}</span>
                   <ArrowLink label="Go Home" link="/" />
@@ -40,9 +40,8 @@ function ErrorView({ message }: { message?: string }): JSX.Element {
             </BoxWithDetails>
           </Box>
           <Box $marginBottom="4rem">
-            <ClipWord label="wrrrrrong" scrollRef={scrollRef} />
+            <ClipWord label="wrrrróòøøǿong" scrollRef={scrollRef} />
           </Box>
-          <ClipWord label="Guesssss what" scrollRef={scrollRef} />
         </Wrapper>
       </Container>
       <Trigger ref={scrollRef} />

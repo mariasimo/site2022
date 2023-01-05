@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { BodyL } from '$/styles/typography';
 import { from } from '$/styles/responsive';
-import { motion } from 'framer-motion';
 
 export const Container = styled.div`
   line-height: 1.5;
@@ -17,7 +16,7 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   height: 87vh;
 
   ${from.mobile} {
