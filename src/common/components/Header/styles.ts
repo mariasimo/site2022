@@ -4,6 +4,7 @@ import { Breakpoint, from, showFromMixin } from '$/styles/responsive';
 import DefaultBadge from '$/common/components/Badge';
 import DefaultThemeSwitcher from '$/common/components/ThemeSwitcher';
 import FadeInBlock from '$/common/components/animation/FadeInBlock';
+import 'open-props/easings';
 
 const Translate = keyframes`
  0% {
@@ -43,7 +44,7 @@ export const AnimatedBorder = styled.div`
     transform-origin: 0%;
     z-index: 1;
     top: 0;
-    animation: ${Translate} 1300ms ease-in-out;
+    animation: ${Translate} 600ms var(--ease-in-5);
     animation-fill-mode: forwards;
     transform: scaleX(100%);
   }
