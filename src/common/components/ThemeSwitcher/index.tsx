@@ -1,5 +1,5 @@
 import type { ThemeKey } from '$/styles/themes';
-import { Container, Circle, Mask } from './styles';
+import { Button, SunAndMoon } from './styles';
 
 export default function ThemeSwitcher({
   className,
@@ -11,9 +11,14 @@ export default function ThemeSwitcher({
   handleClick: () => void;
 }) {
   return (
-    <Container onClick={handleClick} className={className}>
-      <Circle />
-      <Mask $isLightTheme={themeName === 'light'} />
-    </Container>
+    <Button
+      onClick={handleClick}
+      className={className}
+      title="Toggles light & dark"
+      aria-label="auto"
+      aria-live="polite"
+    >
+      <SunAndMoon $isLightTheme={themeName === 'light'} />
+    </Button>
   );
 }

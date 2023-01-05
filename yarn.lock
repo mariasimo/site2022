@@ -4779,6 +4779,11 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
+open-props@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/open-props/-/open-props-1.5.3.tgz#691e4afb6b1185d1b9138de7970d45950439ca60"
+  integrity sha512-NzORO2a4Rf/MEo1DBTKxEzJ6ZNx9JswnvwjSKK9QOntg28AoxXt2LdpwfJ1dEQE4mkTdyaWkzwbtPg1yKpKFgw==
+
 optionator@^0.9.1:
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.9.1.tgz#4f236a6373dae0566a6d43e1326674f50c291499"
