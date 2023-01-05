@@ -3,7 +3,7 @@ import { BodyL, BodyLBold, HeadingL, HeadingLBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
 
 export const Container = styled.section`
-  padding-block: 6.5rem 8rem;
+  padding-block: 8rem;
   border-block-end: 1px solid var(--theme-line);
 
   ${from.tabletPortrait} {
@@ -12,7 +12,7 @@ export const Container = styled.section`
 `;
 
 export const Lead = styled(HeadingL).attrs({ as: 'h1' })`
-  max-width: 60rem;
+  max-width: 56rem;
   margin-block-end: 3.5rem;
   line-height: 1.2;
 
