@@ -11,3 +11,10 @@ export const Link = styled(BodyS)`
     color: var(--theme-interactive);
   }
 `;
+
+export const SocialAbbr = styled.span`
+  width: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  vertical-align: top;
+`;
