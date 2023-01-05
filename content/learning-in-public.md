@@ -1,4 +1,4 @@
 ---
-current: delving into authentication & authorization, TDD + React Testing Library.
-next: getting into Python + Django, and exploring new 3D Framer Motion Features
+current: delving into algorithms, data structures and testing.
+next: getting into Python + Django, and picking up CS50 open courses.
 ---
