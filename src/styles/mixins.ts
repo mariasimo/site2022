@@ -1,3 +1,8 @@
+import type {
+  DefaultTheme,
+  FlattenInterpolation,
+  ThemeProps,
+} from 'styled-components';
 import { css, keyframes } from 'styled-components';
 
 export const maxWidth = css`
@@ -71,5 +76,31 @@ export const ShineEffect = css`
       rgba(125, 185, 232, 0) 100%
     ); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 */
+  }
+`;
+
+// Pretty Scrollbar
+export const prettyScrollbar = (
+  isVertical = true,
+): FlattenInterpolation<ThemeProps<DefaultTheme>> => css`
+  scrollbar-width: thin;
+  scrollbar-color: var(--theme-ink) transparent;
+
+  &::-webkit-scrollbar {
+    ${isVertical
+      ? css`
+          width: 0.375rem;
+        `
+      : css`
+          height: 0.375rem;
+        `};
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--theme-ink);
   }
 `;

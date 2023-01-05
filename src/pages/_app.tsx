@@ -7,11 +7,11 @@ import ErrorBoundary from '$/common/components/ErrorBoundary';
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
-    <ErrorBoundary>
-      <ThemeProvider>
-        <GlobalStyle />
+    <ThemeProvider>
+      <GlobalStyle />
+      <ErrorBoundary>
         <Component {...pageProps} />
-      </ThemeProvider>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 }

@@ -6,9 +6,17 @@ const styled = { createGlobalStyle };
 const GlobalStyle = styled.createGlobalStyle`
   ${normalize};
 
+  html.not-found {
+    ::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+  }
+
   * {
     box-sizing: border-box;
   }
+
   body {
     font-family: 'Neue Haas Grotesk Display Pro', -apple-system,
       BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
@@ -35,6 +43,12 @@ const GlobalStyle = styled.createGlobalStyle`
 
   a {
     text-decoration: none;
+    transition: color ease-in-out 0.25s;
+
+    &:visited,
+    &:active {
+      color: var(--theme-ink);
+    }
   }
 
   #__next {

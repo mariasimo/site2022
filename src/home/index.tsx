@@ -1,32 +1,22 @@
-import { Container } from './styles';
-import Head from 'next/head';
-
-import Header from '$/common/components/Header';
-import Footer from '$/common/components/Footer';
-import HeroSection from './HeroSection';
-import ResumeSection from './ResumeSection';
-import BlogSection from './BlogSection';
-import type { BlogPost } from '$/lib/api/posts';
-import type { LearningInPublicNode } from '$/lib/api/learningInPublic';
+import Hero from './Hero';
+import Resume from './Resume';
+import LatestNotes from './LatestNotes';
+import Layout from '$/common/layouts/Main';
+import type { NoteCard } from '$/common/utils/notes';
 
 function HomeView({
-  posts,
+  notes,
   learningInPublic,
 }: {
-  posts: BlogPost[];
-  learningInPublic: LearningInPublicNode;
+  notes: NoteCard[];
+  learningInPublic: { current: string; next: string };
 }): JSX.Element {
   return (
-    <Container>
-      <Head>
-        <title>María Simó Front—End Developer</title>
-      </Head>
-      <Header />
-      <HeroSection />
-      <BlogSection posts={posts} learningInPublic={learningInPublic} />
-      <ResumeSection />
-      <Footer />
-    </Container>
+    <Layout title="María Simó Front—End Developer">
+      <Hero />
+      <LatestNotes notes={notes} learningInPublic={learningInPublic} />
+      <Resume />
+    </Layout>
   );
 }
 

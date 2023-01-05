@@ -78,12 +78,6 @@ module.exports = {
             '@typescript-eslint/explicit-module-boundary-types': 'off',
           },
         },
-        {
-          files: ['src/@types/generated/contentful.d.ts'],
-          rules: {
-            '@typescript-eslint/naming-convention': 'off',
-          },
-        },
       ],
     },
     {

@@ -32,12 +32,6 @@
     "target": "es5",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "src/@types/additional.d.ts",
-    "**/*.tsx",
-    "**/*.ts",
-    "getContentfulEnvironment.js"
-  ],
+  "include": ["next-env.d.ts", "additional.d.ts", "**/*.tsx", "**/*.ts"],
   "exclude": ["node_modules"]
 }

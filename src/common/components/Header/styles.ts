@@ -3,19 +3,20 @@ import { BodyS, BodySBold } from '$/styles/typography';
 import { Breakpoint, from, showFromMixin } from '$/styles/responsive';
 import DefaultBadge from '$/common/components/Badge';
 import DefaultThemeSwitcher from '$/common/components/ThemeSwitcher';
-import FadeInBlock from '../FadeInBlock';
+import FadeInBlock from '$/common/components/animation/FadeInBlock';
+import 'open-props/easings';
 
 const Translate = keyframes`
  0% {
-    transform: scaleX(100%);
+    transform: translateX(0%);
   }
   100% {
-    transform:  scaleX(100%) translateX(100%) ;
+    transform: translateX(100%);
   }
 `;
 
 export const Container = styled.header`
-  padding-block: 0.75rem;
+  padding-block: 1rem;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 1.5rem;
@@ -43,8 +44,9 @@ export const AnimatedBorder = styled.div`
     transform-origin: 0%;
     z-index: 1;
     top: 0;
-    animation: ${Translate} 1300ms ease-in-out 200ms;
+    animation: ${Translate} 600ms var(--ease-in-5);
     animation-fill-mode: forwards;
+    transform: scaleX(100%);
   }
 
   &:before {
@@ -52,12 +54,15 @@ export const AnimatedBorder = styled.div`
     height: 1px;
     position: absolute;
     left: 0;
+    top: 0;
     background-color: var(--theme-line);
     width: 100%;
   }
 `;
 
-export const Text = styled(BodyS).attrs({ as: 'p' })``;
+export const Text = styled(BodyS).attrs({ as: 'p' })`
+  cursor: pointer;
+`;
 
 export const ColumnsContainer = styled.div`
   display: flex;
@@ -99,10 +104,6 @@ export const Column = styled.div<{ $showFrom?: Breakpoint }>`
   flex: 1 1 0px;
 
   ${({ $showFrom }) => showFromMixin($showFrom)}
-
-  ${Text} {
-    line-height: 1.4;
-  }
 `;
 
 export const Bold = styled(BodySBold).attrs({ as: 'span' })`

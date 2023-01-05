@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTheme } from '$/styles/themes/ThemeContext';
+import NextLink from 'next/link';
 import {
   Container,
   Row,
@@ -13,7 +14,7 @@ import {
 } from './styles';
 import ContactBlock from '$/common/components/ContactBlock';
 import SocialBlock from '$/common/components/SocialBlock';
-import FadeInBlock from '../FadeInBlock';
+import FadeInBlock from '$/common/components/animation/FadeInBlock';
 
 const Header = () => {
   const { themeName, toggleTheme } = useTheme();
@@ -24,22 +25,24 @@ const Header = () => {
       {themeName !== 'light' && <AnimatedBorder />}
       <Row>
         <ThemeSwitcher handleClick={toggleTheme} themeName={themeName} />
-        <Text>
-          <Bold>María Simó</Bold> Front—end developer
-        </Text>
+        <NextLink href="/" passHref>
+          <Text as="a">
+            <Bold>María Simó</Bold> Front—end developer
+          </Text>
+        </NextLink>
       </Row>
       <ColumnsContainer>
         <Column $showFrom="tabletPortrait">
-          <FadeInBlock>
+          <FadeInBlock slideValue={10} delay={1}>
             <ContactBlock />
           </FadeInBlock>
         </Column>
         <Column $showFrom="mobile">
-          <FadeInBlock>
+          <FadeInBlock slideValue={10} delay={1}>
             <SocialBlock />
           </FadeInBlock>
         </Column>
-        <FadeInBlock>
+        <FadeInBlock slideValue={10} delay={1}>
           <Badge>Building in public</Badge>
         </FadeInBlock>
       </ColumnsContainer>

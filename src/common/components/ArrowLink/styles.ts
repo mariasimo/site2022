@@ -14,9 +14,17 @@ export const Link = styled.a`
   }
 `;
 
-export const Arrow = styled(DefaultArrow)`
+export const Arrow = styled(DefaultArrow)<{ $flip: true }>`
+  height: 100%;
+  width: 100%;
+  transform: ${({ $flip }) => ($flip ? 'scaleX(-1)' : 'none')};
+`;
+
+export const IconContainer = styled.span`
+  flex-shrink: 0;
+  width: 2ch;
+  display: flex;
   margin-inline-start: -0.35rem;
   margin-inline-end: 0.5rem;
   margin-block-start: 0.1rem;
-  flex-shrink: 0;
 `;

@@ -45,6 +45,8 @@ const BodyLBase = styled.span`
   font-family: var(--theme-font-display);
   font-size: 1.25rem;
   line-height: 1.5;
+  letter-spacing: 0.015rem;
+  word-spacing: 0.0625rem;
 `;
 
 export const BodyL = styled(BodyLBase)`
@@ -59,6 +61,7 @@ const BodyMBase = styled.span`
   font-family: var(--theme-font-text);
   font-size: 1rem;
   line-height: 1.6;
+  letter-spacing: 0.02rem;
 `;
 
 export const BodyM = styled(BodyMBase)`
@@ -91,6 +94,8 @@ const BodyXSBase = styled.span`
   font-family: var(--theme-font-text);
   font-size: 0.75rem;
   line-height: 1.6;
+  letter-spacing: 0.025rem;
+  word-spacing: 0.0625rem;
 
   ${from.mobile} {
     font-size: 0.875rem;
