@@ -10,6 +10,8 @@ type NoteFrontmatter = {
   status: 'draft' | 'inProgress' | 'completed';
   language?: 'Spanish' | 'English' | null;
   socialImage?: string | null;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
 };
 
 export type Note = NoteFrontmatter & {
@@ -66,6 +68,8 @@ export function getNote(slug: string): Note | undefined {
     status: frontmatter?.status ?? 'draft',
     language: frontmatter?.language ?? null,
     socialImage: frontmatter?.socialImage ?? null,
+    metaTitle: frontmatter?.metaTitle ?? frontmatter.title,
+    metaDescription: frontmatter?.metaDescription ?? null,
     slug,
     content,
     references: references,

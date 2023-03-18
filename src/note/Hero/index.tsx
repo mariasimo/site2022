@@ -49,8 +49,10 @@ export default function NoteHero({
   published,
   lastUpdated,
   language,
-  socialImage,
   status: rawStatus,
+  socialImage,
+  metaTitle,
+  metaDescription,
 }: Props) {
   const status = statusDictionary[rawStatus];
   const magnetRef = useRef(null);
@@ -61,18 +63,30 @@ export default function NoteHero({
   return (
     <Container>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={summary} />
-        <meta name="og:url" content={`origin${asPath}`} />
-        <meta name="og:title" content={title} />
-        <meta name="og:description" content={summary} />
-        {socialImage ? (
-          <>
-            <meta name="twitter:image" content={`${origin}${socialImage}`} />
-            <meta name="og:image" content={`${origin}${socialImage}`} />
-          </>
+        <title>{metaTitle}</title>
+        {metaDescription ? (
+          <meta property="description" content={metaDescription} />
         ) : null}
+        <meta property="og:url" content={`origin${asPath}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
         <meta name="og:site_name" content="Maria Simo Codes" />
+        {metaDescription ? (
+          <meta property="og:description" content={metaDescription} />
+        ) : null}
+        {socialImage ? (
+          <meta property="og:image" content={`${origin}${socialImage}`} />
+        ) : null}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="mariasimo.codes" />
+        <meta property="twitter:url" content={`origin${asPath}`} />
+        <meta name="twitter:title" content={title} />
+        {metaDescription ? (
+          <meta property="twitter:description" content={metaDescription} />
+        ) : null}
+        {socialImage ? (
+          <meta name="twitter:image" content={`${origin}${socialImage}`} />
+        ) : null}
       </Head>
       <Cover>
         <Title>

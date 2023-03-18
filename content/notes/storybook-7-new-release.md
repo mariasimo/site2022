@@ -1,7 +1,7 @@
 ---
 title: 'Lo nuevo de la nueva versión de Storybook'
-metatitle: 'Storybook 7'
-metadescription: 'Lo nuevo de la nueva versión de Storybook'
+metaTitle: 'Lo nuevo de la nueva versión de Storybook'
+metaDescription: 'Storybook está a punto de liberar una nueva mayor después de dos años, que incluye importantes cambios en la escritura de historias, nuevas formas de documentación y multitud de posibilidades para hacer testing dentro de la propia herramienta.'
 socialImage: '/images/storybook-18-03-2023/og.png'
 published: '18/03/2023'
 status: 'draft'

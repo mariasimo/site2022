@@ -33,6 +33,8 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
     language,
     socialImage,
     status,
+    metaDescription,
+    metaTitle,
   } = note;
 
   const sections = note.content
@@ -51,8 +53,10 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
         published={published}
         lastUpdated={lastUpdated}
         language={language}
-        socialImage={socialImage}
         status={status}
+        socialImage={socialImage}
+        metaTitle={metaTitle}
+        metaDescription={metaDescription}
       />
       <Container ref={contentRef}>
         <Contents>

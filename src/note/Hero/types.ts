@@ -10,4 +10,6 @@ export type Props = {
   status: string;
   language: Note['language'];
   socialImage: Note['socialImage'];
+  metaTitle: Note['metaTitle'];
+  metaDescription: Note['metaDescription'];
 };
