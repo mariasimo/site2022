@@ -15,6 +15,7 @@ import {
   Paragraph,
   Circle,
   GoHomeBlock,
+  LearnMoreLink,
 } from './styles';
 import scrollToContent from '$/common/utils/scrollToContent';
 import type { Props } from './types';
@@ -114,7 +115,12 @@ export default function NoteHero({
                 this content.
               </Paragraph>
               <Paragraph>
-                <Bold>Learn more</Bold>
+                <LearnMoreLink
+                  href="https://v5.chriskrycho.com/journal/epistemic-status/"
+                  target="_blank"
+                >
+                  Learn more
+                </LearnMoreLink>
               </Paragraph>
             </Tooltip>
           </Status>

@@ -110,6 +110,8 @@ export const Paragraph = styled(BodyXS).attrs({ as: 'p' })`
 `;
 export const Bold = styled(BodyXSBold).attrs({ as: 'span' })``;
 
+export const LearnMoreLink = styled(Bold).attrs({ as: 'a' })``;
+
 export const Status = styled(Text)`
   display: flex;
   align-items: center;
