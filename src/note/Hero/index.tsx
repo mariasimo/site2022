@@ -37,11 +37,6 @@ const statusDictionary: { [key: string]: string } = {
   completed: 'Completed, I may changed my mind in the future',
 };
 
-const origin =
-  typeof window !== 'undefined' && window.location.origin
-    ? window.location.origin
-    : '';
-
 export default function NoteHero({
   title,
   summary,
@@ -75,7 +70,10 @@ export default function NoteHero({
           <meta property="og:description" content={metaDescription} />
         ) : null}
         {socialImage ? (
-          <meta property="og:image" content={`${origin}${socialImage}`} />
+          <meta
+            name="og:image"
+            content={`https://www.mariasimo.codes/${socialImage}`}
+          />
         ) : null}
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="mariasimo.codes" />
@@ -85,7 +83,10 @@ export default function NoteHero({
           <meta property="twitter:description" content={metaDescription} />
         ) : null}
         {socialImage ? (
-          <meta name="twitter:image" content={`${origin}${socialImage}`} />
+          <meta
+            name="twitter:image"
+            content={`https://www.mariasimo.codes/${socialImage}`}
+          />
         ) : null}
       </Head>
       <Cover>
