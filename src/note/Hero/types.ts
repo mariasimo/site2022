@@ -7,4 +7,5 @@ export type Props = {
   published: string;
   lastUpdated: string | null;
   status: string;
+  language: string | null;
 };

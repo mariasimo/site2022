@@ -69,6 +69,7 @@ export const Meta = styled.div`
     gap: 0;
     grid-template-columns: repeat(6, 1fr);
   }
+
   ${from.tabletLandscape} {
     grid-template-columns: repeat(8, 1fr);
   }
@@ -79,6 +80,16 @@ export const Block = styled(BodyXS).attrs({ as: 'div' })`
 
   ${from.tabletPortrait} {
     grid-column: span 2;
+  }
+`;
+
+export const GoHomeBlock = styled(Block)`
+  grid-column: span 8;
+  margin-block-end: 2rem;
+
+  ${from.tabletPortrait} {
+    grid-column: span 2;
+    margin-block-end: 0;
   }
 `;
 

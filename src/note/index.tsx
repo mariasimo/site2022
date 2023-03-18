@@ -30,6 +30,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
     backlinks,
     published,
     lastUpdated,
+    language,
     status,
   } = note;
 
@@ -48,6 +49,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
         contentRef={contentRef}
         published={published}
         lastUpdated={lastUpdated}
+        language={language}
         status={status}
       />
       <Container ref={contentRef}>

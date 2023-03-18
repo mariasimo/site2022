@@ -14,6 +14,7 @@ import {
   Bold,
   Paragraph,
   Circle,
+  GoHomeBlock,
 } from './styles';
 import scrollToContent from '$/common/utils/scrollToContent';
 import type { Props } from './types';
@@ -38,6 +39,7 @@ export default function NoteHero({
   contentRef,
   published,
   lastUpdated,
+  language,
   status: rawStatus,
 }: Props) {
   const status = statusDictionary[rawStatus];
@@ -87,9 +89,9 @@ export default function NoteHero({
         </FadeInBlock>
       </Cover>
       <Meta>
-        <Block>
+        <GoHomeBlock>
           <ArrowLink label="Go Home" link="/" backlink />
-        </Block>
+        </GoHomeBlock>
         <DateInfo>
           <Text>Created {getTimeAgo(parseStringToDate(published))}</Text>{' '}
           {lastUpdated ? (
@@ -114,6 +116,7 @@ export default function NoteHero({
             </Tooltip>
           </Status>
         </StatusInfo>
+        <Block>{language ? <Text>Language: {language}</Text> : null}</Block>
       </Meta>
     </Container>
   );
