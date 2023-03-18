@@ -116,6 +116,7 @@ export default function NoteHero({
               </Paragraph>
               <Paragraph>
                 <LearnMoreLink
+                  as="a"
                   href="https://v5.chriskrycho.com/journal/epistemic-status/"
                   target="_blank"
                 >
