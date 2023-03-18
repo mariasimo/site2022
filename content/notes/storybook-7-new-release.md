@@ -268,7 +268,7 @@ _Storybook_ cuenta con toda una sección de [documentación sobre testing](https
 
 Actualmente la versión estable de _Storybook_ sigue siendo la 6.5. y el equipo está puliendo [los últimos detalles](https://github.com/orgs/storybookjs/projects/8?ref=storybook-blog) para la release. Pero podemos empezar a probar nueva versión si instalamos `storybook@next`. Si queremos empezar a pensar en la migración a la nueva versión, _Storybook_ facilita [una guía](https://chromatic-ui.notion.site/Storybook-7-migration-guide-dbf41fa347304eb2a5e9c69b34503937) con los cambios.
 
-Aunque la nueva versión presenta numerosos cambios interesantes, ya solo el ahorro de tiempo y código que va a suponer el nuevo formato para escribir historias, estoy impaciente tener la oportunidad de integrarla en un nuevo proyecto.
+Aunque la nueva versión presenta numerosos cambios interesantes, ya solo el ahorro de tiempo y código que va a suponer el nuevo formato para escribir historias, estoy impaciente por tener la oportunidad de integrarla en un nuevo proyecto.
 
 ## References
 
