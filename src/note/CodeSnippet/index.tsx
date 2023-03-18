@@ -17,6 +17,8 @@ export default function CodeSnippet({
       language={match?.length ? match[1] : 'javascript'}
       style={nord}
       showLineNumbers
+      lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
+      wrapLines={true}
     />
   );
 }

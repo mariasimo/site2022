@@ -14,6 +14,7 @@ import {
   Bold,
   Paragraph,
   Circle,
+  GoHomeBlock,
 } from './styles';
 import scrollToContent from '$/common/utils/scrollToContent';
 import type { Props } from './types';
@@ -25,6 +26,7 @@ import Tooltip from '$/common/components/Tooltip';
 import { useRef } from 'react';
 import { useMagnetEffect } from '$/common/hooks/useMagnetEffect';
 import { useAnimation } from 'framer-motion';
+import MarkdownParser from '../../common/components/MarkdownParser';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
@@ -38,6 +40,7 @@ export default function NoteHero({
   contentRef,
   published,
   lastUpdated,
+  language,
   status: rawStatus,
 }: Props) {
   const status = statusDictionary[rawStatus];
@@ -54,7 +57,9 @@ export default function NoteHero({
           ))}
         </Title>
         <FadeInBlock slideValue={50} delay={0.5}>
-          <Summary>{summary}</Summary>
+          <Summary>
+            <MarkdownParser children={summary} />
+          </Summary>
         </FadeInBlock>
         <FadeInBlock slideValue={0} delay={0.75}>
           <ScrollButtonContainer
@@ -87,9 +92,9 @@ export default function NoteHero({
         </FadeInBlock>
       </Cover>
       <Meta>
-        <Block>
+        <GoHomeBlock>
           <ArrowLink label="Go Home" link="/" backlink />
-        </Block>
+        </GoHomeBlock>
         <DateInfo>
           <Text>Created {getTimeAgo(parseStringToDate(published))}</Text>{' '}
           {lastUpdated ? (
@@ -114,6 +119,7 @@ export default function NoteHero({
             </Tooltip>
           </Status>
         </StatusInfo>
+        <Block>{language ? <Text>Language: {language}</Text> : null}</Block>
       </Meta>
     </Container>
   );

@@ -8,6 +8,7 @@ type NoteFrontmatter = {
   tags?: string[];
   comingSoon?: boolean;
   status: 'draft' | 'inProgress' | 'completed';
+  language?: 'Spanish' | 'English' | null;
 };
 
 export type Note = NoteFrontmatter & {
@@ -18,7 +19,10 @@ export type Note = NoteFrontmatter & {
   backlinks: string | null;
 };
 
-export type NoteCard = Pick<Note, 'slug' | 'title' | 'comingSoon' | 'tags'>;
+export type NoteCard = Pick<
+  Note,
+  'slug' | 'title' | 'comingSoon' | 'tags' | 'language'
+>;
 
 export function listNotes() {
   const notesList = getLatestFilesFromDirectory(contentConfig.notesDirectory);
@@ -59,10 +63,11 @@ export function getNote(slug: string): Note | undefined {
     published: frontmatter.published ?? '',
     lastUpdated: frontmatter?.lastUpdated ?? '',
     status: frontmatter?.status ?? 'draft',
+    language: frontmatter?.language ?? null,
     slug,
     content,
     references: references,
-    backlinks: backlinks,
+    backlinks: backlinks ?? null,
   };
 
   return slug ? note : undefined;
@@ -84,9 +89,19 @@ export function getNotesCards(): NoteCard[] {
         slug: slug,
         tags: note?.tags,
         comingSoon: note?.comingSoon,
+        language: note?.language ?? null,
+        date: !note?.comingSoon && (note?.lastUpdated || note?.published),
       };
     })
-    .sort((prev) => (!prev?.comingSoon ? -1 : 1));
+    .sort((a, b) => {
+      if (a.date && b.date) {
+        return getDateMs(a.date) < getDateMs(b.date) ? 1 : -1;
+      }
+      if (a.date && !b.date) {
+        return -1;
+      }
+      return 1;
+    });
 }
 
 function extractReferencesAndBacklinks(content: string) {
@@ -96,4 +111,13 @@ function extractReferencesAndBacklinks(content: string) {
   const backlinks = content.split(/## backlinks/i)[1];
 
   return { references, backlinks };
+}
+
+/**
+ * Return ms from date string
+ * @param dateString dd/mm/yyyy format
+ */
+function getDateMs(dateString: string) {
+  const [day, month, year] = dateString.split('/');
+  return new Date(+year, +month - 1, +day).getTime();
 }

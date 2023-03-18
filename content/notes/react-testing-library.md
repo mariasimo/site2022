@@ -7,7 +7,7 @@ published: '14/02/2022'
 status: 'draft'
 comingSoon: true
 tags:
-  - technicalWriting
+  - Technical writing
 ---
 
 My excerpt

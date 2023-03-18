@@ -4,16 +4,18 @@ const light = {
   name: 'dark',
   ...base,
   colors: {
-    paper: '#111',
-    ink: '#e1e1e1',
+    paper: '#16181d',
+    ink: '#cfc4c4',
     accent: 'blue',
     interactive: '#ffbc00',
     line: '#707070',
     selectedText: '#afafaf',
-    selectedTextBg: '#2a2a2a',
+    selectedTextBg: '#23262e',
     blockquoteLine: '#c5c5c5',
-    blockquoteBg: '#2a2a2a',
+    blockquoteBg: '#23262e',
     disabledText: '#888',
+    codeInlineText: '#6485a6',
+    codeInlineBg: '#e1e1e115',
   },
 };
 

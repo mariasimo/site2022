@@ -3,8 +3,8 @@ import { from } from './responsive';
 
 const HeadingLBase = styled.span`
   font-family: var(--theme-font-display);
-  font-size: 1.3125rem;
-  line-height: 1.4;
+  font-size: 1.5rem;
+  line-height: 1.2;
 
   ${from.mobile} {
     font-size: 1.8rem;
@@ -25,7 +25,7 @@ export const HeadingLBold = styled(HeadingLBase)`
 
 const HeadingMBase = styled.span`
   font-family: var(--theme-font-display);
-  font-size: 1.3125rem;
+  font-size: 1.4rem;
   line-height: 1.2;
 
   ${from.mobile} {
@@ -43,7 +43,7 @@ export const HeadingMBold = styled(HeadingMBase)`
 
 const BodyLBase = styled.span`
   font-family: var(--theme-font-display);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   line-height: 1.5;
   letter-spacing: 0.015rem;
   word-spacing: 0.0625rem;
@@ -59,13 +59,16 @@ export const BodyLBold = styled(BodyLBase)`
 
 const BodyMBase = styled.span`
   font-family: var(--theme-font-text);
-  font-size: 1rem;
+  font-size: 1.15rem;
   line-height: 1.6;
   letter-spacing: 0.02rem;
+  word-spacing: 0.0625rem;
 `;
 
 export const BodyM = styled(BodyMBase)`
   font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 `;
 
 export const BodyMBold = styled(BodyMBase)`

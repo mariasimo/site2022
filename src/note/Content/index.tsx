@@ -11,23 +11,37 @@ import {
   Caption,
   ImageContainer,
   OrderedList,
+  UnorderedList,
   Title3,
   Title4,
+  CodeInline,
 } from './styles';
 import CodeSnippet from '$/note/CodeSnippet';
 import { formatSectionTitleId } from '../utils';
 import MarkdownParser from '../../common/components/MarkdownParser';
+
+type CodeSnippetProps = {
+  inline: boolean;
+  className: string;
+  children: JSX.Element;
+};
 
 const blogEntryStyledComponents = {
   h2: RenderTitleWithLine,
   h3: Title3,
   h4: Title4,
   p: Text,
+  ul: UnorderedList,
   ol: OrderedList,
   blockquote: Blockquote,
   img: RenderImageWithCaption,
   pre: CodeContainer,
-  code: CodeSnippet,
+  code: ({ inline, ...props }: CodeSnippetProps) => {
+    if (inline) {
+      return <CodeInline {...props} />;
+    }
+    return <CodeSnippet {...props} />;
+  },
 };
 
 export default function NoteContent({ children }: { children: string }) {
