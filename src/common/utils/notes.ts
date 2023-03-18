@@ -90,9 +90,18 @@ export function getNotesCards(): NoteCard[] {
         tags: note?.tags,
         comingSoon: note?.comingSoon,
         language: note?.language ?? null,
+        date: !note?.comingSoon && (note?.lastUpdated || note?.published),
       };
     })
-    .sort((prev) => (!prev?.comingSoon ? -1 : 1));
+    .sort((a, b) => {
+      if (a.date && b.date) {
+        return getDateMs(a.date) < getDateMs(b.date) ? 1 : -1;
+      }
+      if (a.date && !b.date) {
+        return -1;
+      }
+      return 1;
+    });
 }
 
 function extractReferencesAndBacklinks(content: string) {
@@ -102,4 +111,13 @@ function extractReferencesAndBacklinks(content: string) {
   const backlinks = content.split(/## backlinks/i)[1];
 
   return { references, backlinks };
+}
+
+/**
+ * Return ms from date string
+ * @param dateString dd/mm/yyyy format
+ */
+function getDateMs(dateString: string) {
+  const [day, month, year] = dateString.split('/');
+  return new Date(+year, +month - 1, +day).getTime();
 }
