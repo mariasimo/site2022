@@ -13,7 +13,10 @@ export const Container = styled.section`
 
 export const Cover = styled.div`
   position: relative;
-  margin-block-end: 6rem;
+
+  ${from.mobile} {
+    margin-block-end: 6rem;
+  }
 `;
 
 export const ScrollButtonContainer = styled(motion.div)`
@@ -66,7 +69,6 @@ export const Meta = styled.div`
   gap: 1rem;
 
   ${from.tabletPortrait} {
-    gap: 0;
     grid-template-columns: repeat(6, 1fr);
   }
 
@@ -85,9 +87,8 @@ export const Block = styled(BodyXS).attrs({ as: 'div' })`
 
 export const GoHomeBlock = styled(Block)`
   grid-column: span 8;
-  margin-block-end: 2rem;
 
-  ${from.tabletPortrait} {
+  ${from.tabletLandscape} {
     grid-column: span 2;
     margin-block-end: 0;
   }

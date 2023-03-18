@@ -170,46 +170,45 @@ export const Text = styled(BodyM).attrs({ as: 'p' })`
   margin-block-end: 2rem;
 `;
 
-export const OrderedList = styled(BodyM).attrs({ as: 'ol' })`
+export const ListStyles = styled(BodyM)`
   ${ContentStyles}
   list-style: none;
-  counter-reset: item;
   padding-inline-start: 0;
+  margin-block: 0 2rem;
+  list-style-position: outside;
 
   li {
-    counter-increment: item;
-    margin-bottom: 5px;
-    display: flex;
+    position: relative;
+    margin-block-end: 0.3125rem;
+    margin-inline-start: 2rem;
 
     &:before {
-      margin-right: 10px;
-      content: counter(item);
       display: inline-block;
+      position: absolute;
+      left: -2rem;
       opacity: 0.25;
-      width: 1.2rem;
       text-align: right;
       flex-shrink: 0;
     }
   }
 `;
 
-export const UnorderedList = styled(BodyM).attrs({ as: 'ul' })`
-  ${ContentStyles}
-  list-style: none;
-  padding-inline-start: 0;
+export const OrderedList = styled(ListStyles).attrs({ as: 'ol' })`
+  counter-reset: item;
 
   li {
-    margin-bottom: 5px;
-    display: flex;
+    counter-increment: item;
 
     &:before {
-      margin-right: 10px;
+      content: counter(item);
+    }
+  }
+`;
+
+export const UnorderedList = styled(ListStyles).attrs({ as: 'ul' })`
+  li {
+    &:before {
       content: '—';
-      display: inline-block;
-      opacity: 0.25;
-      width: 1.2rem;
-      text-align: right;
-      flex-shrink: 0;
     }
   }
 `;
