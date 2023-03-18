@@ -67,7 +67,7 @@ export function getNote(slug: string): Note | undefined {
     slug,
     content,
     references: references,
-    backlinks: backlinks,
+    backlinks: backlinks ?? null,
   };
 
   return slug ? note : undefined;
