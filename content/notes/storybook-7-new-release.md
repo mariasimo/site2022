@@ -16,7 +16,7 @@ _Storybook_ está a punto de liberar una nueva _mayor_ después de dos años, qu
 
 ---
 
-## Qué es _Storybook_
+## Qué es Storybook
 
 _Storybook_ es una herramienta para el desarrollo, documentación y testeo de la UI de nuestra aplicación. Las UIs modernas están formadas por componentes, y _Storybook_ ha impulsado una filosofía de _Component Driven Development_. Permite desarrollar nuestros componentes en un entorno aislado de la aplicación, para asegurar su calidad desde todos los ángulos posibles.
 
@@ -176,7 +176,7 @@ Partial<{
 
 ```
 
-## Documentación en _Storybook_ 7
+## Documentación en Storybook 7
 
 Como apuntábamos arriba, los _Docs_ cambian su ubicación. Ya no se encuentran en el menu superior de cada historia, sino que pasan a formar parte del árbol de contenidos, como la primera de las historias de un componente. Es decir, conceptualmente, los docs se mueven desde un nivel de historia a un nivel de componente. Este movimiento responde a una intención por parte del equipo de _Storybook_ de que seamos más conscientes de este recurso.
 
@@ -225,7 +225,7 @@ Si, en cambio, lo que buscamos es un control total sobre la documentación, pode
 
 📎 [Más sobre la documentación en Storybook](https://storybook.js.org/blog/storybook-7-docs/)
 
-## Testing en _Storybook_ 7
+## Testing en Storybook 7
 
 _Storybook_ puede considerarse una herramienta de testeo en sí misma. Pero, además, ha ido incluyendo más y más integraciones que permiten hacer diferentes tipos de tests directamente en el marco de la herramienta, incluidos tests unitarios y de integración. Especialmente para equipos especializados en el desarrollo de UI, parece una manera bastante interesante de concentrar los esfuerzos de _testing_ en un solo punto de la aplicacion, y ahorrarnos configurar y hacer convivir, con su lógico solapado, diferentes herramientas de testeo.
 
