@@ -9,6 +9,7 @@ type NoteFrontmatter = {
   comingSoon?: boolean;
   status: 'draft' | 'inProgress' | 'completed';
   language?: 'Spanish' | 'English' | null;
+  socialImage?: string | null;
 };
 
 export type Note = NoteFrontmatter & {
@@ -64,6 +65,7 @@ export function getNote(slug: string): Note | undefined {
     lastUpdated: frontmatter?.lastUpdated ?? '',
     status: frontmatter?.status ?? 'draft',
     language: frontmatter?.language ?? null,
+    socialImage: frontmatter?.socialImage ?? null,
     slug,
     content,
     references: references,

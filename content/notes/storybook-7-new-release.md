@@ -2,7 +2,7 @@
 title: 'Lo nuevo de la nueva versión de Storybook'
 metatitle: 'Storybook 7'
 metadescription: 'Lo nuevo de la nueva versión de Storybook'
-socialImage: ''
+socialImage: '/images/storybook-18-03-2023/og.png'
 published: '18/03/2023'
 status: 'draft'
 language: 'Spanish'

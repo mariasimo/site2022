@@ -31,6 +31,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
     published,
     lastUpdated,
     language,
+    socialImage,
     status,
   } = note;
 
@@ -50,6 +51,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
         published={published}
         lastUpdated={lastUpdated}
         language={language}
+        socialImage={socialImage}
         status={status}
       />
       <Container ref={contentRef}>

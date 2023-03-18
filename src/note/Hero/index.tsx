@@ -28,12 +28,19 @@ import { useRef } from 'react';
 import { useMagnetEffect } from '$/common/hooks/useMagnetEffect';
 import { useAnimation } from 'framer-motion';
 import MarkdownParser from '../../common/components/MarkdownParser';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
   inProgress: 'In Progress, still making my mind',
   completed: 'Completed, I may changed my mind in the future',
 };
+
+const origin =
+  typeof window !== 'undefined' && window.location.origin
+    ? window.location.origin
+    : '';
 
 export default function NoteHero({
   title,
@@ -42,15 +49,31 @@ export default function NoteHero({
   published,
   lastUpdated,
   language,
+  socialImage,
   status: rawStatus,
 }: Props) {
   const status = statusDictionary[rawStatus];
   const magnetRef = useRef(null);
   const { x, y } = useMagnetEffect(magnetRef, { strength: 0.7 });
   const controls = useAnimation();
+  const { asPath } = useRouter();
 
   return (
     <Container>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={summary} />
+        <meta name="og:url" content={`origin${asPath}`} />
+        <meta name="og:title" content={title} />
+        <meta name="og:description" content={summary} />
+        {socialImage ? (
+          <>
+            <meta name="twitter:image" content={`${origin}${socialImage}`} />
+            <meta name="og:image" content={`${origin}${socialImage}`} />
+          </>
+        ) : null}
+        <meta name="og:site_name" content="Maria Simo Codes" />
+      </Head>
       <Cover>
         <Title>
           {[{ text: title }]?.map((chunk, index) => (

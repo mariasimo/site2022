@@ -9,4 +9,5 @@ export type Props = {
   lastUpdated: string | null;
   status: string;
   language: Note['language'];
+  socialImage: Note['socialImage'];
 };
