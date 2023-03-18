@@ -2,6 +2,7 @@ import formatKebabCase from '$/common/utils/formatKebabCase';
 import type { MutableRefObject } from 'react';
 import ArrowLink from '$/common/components/ArrowLink';
 import { Container, Title, Section, Links, AnchorLink } from './styles';
+import MarkdownParser from '../../common/components/MarkdownParser';
 
 export default function TableOfContents({
   className,
@@ -29,7 +30,7 @@ export default function TableOfContents({
             {sections.map((sectionTitle, idx) => (
               <Section key={`${sectionTitle}-${idx}`}>
                 <AnchorLink onClick={() => handleSmoothScroll(sectionTitle)}>
-                  {sectionTitle}
+                  <MarkdownParser children={sectionTitle} />
                 </AnchorLink>
               </Section>
             ))}
