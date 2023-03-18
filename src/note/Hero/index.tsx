@@ -71,8 +71,8 @@ export default function NoteHero({
         ) : null}
         {socialImage ? (
           <meta
-            name="og:image"
-            content={`https://www.mariasimo.codes/${socialImage}`}
+            property="og:image"
+            content={`https://www.mariasimo.codes${socialImage}`}
           />
         ) : null}
         <meta name="twitter:card" content="summary_large_image" />
@@ -85,7 +85,7 @@ export default function NoteHero({
         {socialImage ? (
           <meta
             name="twitter:image"
-            content={`https://www.mariasimo.codes/${socialImage}`}
+            content={`https://www.mariasimo.codes${socialImage}`}
           />
         ) : null}
       </Head>
