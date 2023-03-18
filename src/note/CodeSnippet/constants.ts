@@ -8,6 +8,7 @@ export const nord: {
     background: 'none',
     fontFamily:
       "\"Fira Code\", Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace",
+    fontSize: '1rem',
     textAlign: 'left',
     whiteSpace: 'pre',
     wordSpacing: 'normal',

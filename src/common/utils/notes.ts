@@ -63,7 +63,7 @@ export function getNote(slug: string): Note | undefined {
     published: frontmatter.published ?? '',
     lastUpdated: frontmatter?.lastUpdated ?? '',
     status: frontmatter?.status ?? 'draft',
-    language: frontmatter?.language,
+    language: frontmatter?.language ?? null,
     slug,
     content,
     references: references,

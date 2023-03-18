@@ -1,5 +1,11 @@
 import styled, { css } from 'styled-components';
-import { BodyLBold, BodyM, BodySBold, HeadingMBold } from '$/styles/typography';
+import {
+  BodyLBold,
+  BodyM,
+  BodySBold,
+  HeadingMBold,
+  BodyMBold,
+} from '$/styles/typography';
 import { from } from '$/styles/responsive';
 
 export const Container = styled.article`
@@ -54,15 +60,6 @@ export const Container = styled.article`
   }
 `;
 
-export const Title2 = styled.h2`
-  grid-column: 1/7;
-  padding-block: 2rem;
-
-  ${from.tabletPortrait} {
-    grid-column: 1/3;
-  }
-`;
-
 export const Blockquote = styled(BodyM).attrs({ as: 'blockquote' })`
   grid-column: 1/7;
   padding-block: 2rem 4rem;
@@ -98,7 +95,7 @@ export const CodeContainer = styled.div`
 
 export const Divider = styled.hr`
   grid-column: 1/7;
-  margin-block-start: 2rem;
+  margin-block: 3rem;
   width: 100%;
   border: none;
 
@@ -130,7 +127,7 @@ export const Image = styled.img`
 
 export const Caption = styled(BodySBold).attrs({ as: 'p' })`
   max-width: 26.25rem;
-  margin-block-start: 2rem;
+  margin-block-start: 1rem;
   display: flex;
 `;
 
@@ -141,17 +138,40 @@ const ContentStyles = css`
     padding-inline-end: 3.5rem;
     grid-column: 3/7;
   }
+
+  a:visited,
+  a:active {
+    color: var(--theme-interactive);
+  }
+`;
+
+export const Title2 = styled(HeadingMBold).attrs({ as: 'h2' })`
+  grid-column: 1/7;
+  padding-block-end: 2rem;
+
+  ${from.tabletPortrait} {
+    grid-column: 1/3;
+    margin-inline-end: 2rem;
+  }
+`;
+
+export const Title3 = styled(BodyLBold).attrs({ as: 'h3' })`
+  ${ContentStyles}
+  margin-block: 1rem;
+`;
+
+export const Title4 = styled(BodyMBold).attrs({ as: 'h4' })`
+  ${ContentStyles}
+  margin-block: 1rem 0;
 `;
 
 export const Text = styled(BodyM).attrs({ as: 'p' })`
   ${ContentStyles}
-  font-size: 1.1rem;
-  margin-block: 2rem;
+  margin-block-end: 2rem;
 `;
 
 export const OrderedList = styled(BodyM).attrs({ as: 'ol' })`
   ${ContentStyles}
-  font-size: 1.1rem;
   list-style: none;
   counter-reset: item;
   padding-inline-start: 0;
@@ -173,12 +193,35 @@ export const OrderedList = styled(BodyM).attrs({ as: 'ol' })`
   }
 `;
 
-export const Title3 = styled(HeadingMBold).attrs({ as: 'h3' })`
+export const UnorderedList = styled(BodyM).attrs({ as: 'ul' })`
   ${ContentStyles}
-  margin-block: 1rem;
+  list-style: none;
+  padding-inline-start: 0;
+
+  li {
+    margin-bottom: 5px;
+    display: flex;
+
+    &:before {
+      margin-right: 10px;
+      content: '—';
+      display: inline-block;
+      opacity: 0.25;
+      width: 1.2rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+  }
 `;
 
-export const Title4 = styled(BodyLBold).attrs({ as: 'h4' })`
-  ${ContentStyles}
-  margin-block: 1rem 0;
+export const CodeInline = styled.span`
+  font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono',
+    monospace;
+  color: var(--theme-codeInlineText);
+  background-color: var(--theme-codeInlineBg);
+  font-weight: 500;
+  font-size: 86%;
+  padding: 0 0.2rem;
+  margin: 0 0.2rem;
+  border-radius: 0.25rem;
 `;

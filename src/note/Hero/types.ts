@@ -1,4 +1,5 @@
 import type { MutableRefObject } from 'react';
+import type { Note } from '../../common/utils/notes';
 
 export type Props = {
   title: string;
@@ -7,5 +8,5 @@ export type Props = {
   published: string;
   lastUpdated: string | null;
   status: string;
-  language: string | null;
+  language: Note['language'];
 };

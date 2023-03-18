@@ -26,6 +26,7 @@ import Tooltip from '$/common/components/Tooltip';
 import { useRef } from 'react';
 import { useMagnetEffect } from '$/common/hooks/useMagnetEffect';
 import { useAnimation } from 'framer-motion';
+import MarkdownParser from '../../common/components/MarkdownParser';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
@@ -56,7 +57,9 @@ export default function NoteHero({
           ))}
         </Title>
         <FadeInBlock slideValue={50} delay={0.5}>
-          <Summary>{summary}</Summary>
+          <Summary>
+            <MarkdownParser children={summary} />
+          </Summary>
         </FadeInBlock>
         <FadeInBlock slideValue={0} delay={0.75}>
           <ScrollButtonContainer

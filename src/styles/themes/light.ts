@@ -4,7 +4,7 @@ const light = {
   name: 'light',
   ...base,
   colors: {
-    ink: '#000000',
+    ink: '#242832',
     paper: '#f5f5f5',
     accent: '#ffbc00',
     interactive: 'blue',
@@ -14,6 +14,8 @@ const light = {
     blockquoteLine: '#c5c5c5',
     blockquoteBg: '#ebebeb',
     disabledText: '#555',
+    codeInlineText: '#6485a6',
+    codeInlineBg: '#fff',
   },
 };
 
