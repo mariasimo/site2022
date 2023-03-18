@@ -8,7 +8,7 @@ type NoteFrontmatter = {
   tags?: string[];
   comingSoon?: boolean;
   status: 'draft' | 'inProgress' | 'completed';
-  language: 'Spanish' | 'English';
+  language?: 'Spanish' | 'English' | null;
 };
 
 export type Note = NoteFrontmatter & {
@@ -19,7 +19,10 @@ export type Note = NoteFrontmatter & {
   backlinks: string | null;
 };
 
-export type NoteCard = Pick<Note, 'slug' | 'title' | 'comingSoon' | 'tags'>;
+export type NoteCard = Pick<
+  Note,
+  'slug' | 'title' | 'comingSoon' | 'tags' | 'language'
+>;
 
 export function listNotes() {
   const notesList = getLatestFilesFromDirectory(contentConfig.notesDirectory);
@@ -60,7 +63,7 @@ export function getNote(slug: string): Note | undefined {
     published: frontmatter.published ?? '',
     lastUpdated: frontmatter?.lastUpdated ?? '',
     status: frontmatter?.status ?? 'draft',
-    language: frontmatter?.language ?? null,
+    language: frontmatter?.language,
     slug,
     content,
     references: references,
@@ -86,6 +89,7 @@ export function getNotesCards(): NoteCard[] {
         slug: slug,
         tags: note?.tags,
         comingSoon: note?.comingSoon,
+        language: note?.language ?? null,
       };
     })
     .sort((prev) => (!prev?.comingSoon ? -1 : 1));

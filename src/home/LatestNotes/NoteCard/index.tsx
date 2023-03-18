@@ -1,5 +1,5 @@
 import type { NoteCard as NoteCardType } from '$/common/utils/notes';
-import { Container, Title, Details, Header, Arrow } from './styles';
+import { Container, Title, Details, Header, Arrow, Language } from './styles';
 import NextLink from 'next/link';
 
 export default function NoteCard({ note }: { note: NoteCardType }) {
@@ -12,7 +12,10 @@ export default function NoteCard({ note }: { note: NoteCardType }) {
           <Title>{title}</Title>
           <Arrow />
         </Header>
-        <Details>{comingSoon ? 'Coming Soon' : tags?.join(', ')}</Details>
+        <Details>
+          {comingSoon ? 'Coming Soon' : tags?.join(', ')}{' '}
+          {note.language ? <Language>{note.language}</Language> : null}
+        </Details>
       </Container>
     </NextLink>
   );

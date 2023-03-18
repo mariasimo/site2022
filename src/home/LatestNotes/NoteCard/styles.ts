@@ -47,3 +47,10 @@ export const Header = styled.div`
 `;
 
 export const Details = styled(BodyS).attrs({ as: 'p' })``;
+
+export const Language = styled.span`
+  &:before {
+    content: '|';
+    margin-inline: 0.5rem;
+  }
+`;
