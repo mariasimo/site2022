@@ -66,7 +66,11 @@ export const Meta = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   padding-block: 2.5rem;
-  gap: 1rem;
+  gap: 0.25rem;
+
+  ${from.mobile} {
+    gap: 1rem;
+  }
 
   ${from.tabletPortrait} {
     grid-template-columns: repeat(6, 1fr);
@@ -87,6 +91,11 @@ export const Block = styled(BodyXS).attrs({ as: 'div' })`
 
 export const GoHomeBlock = styled(Block)`
   grid-column: span 8;
+  margin-block-end: 0.75rem;
+
+  ${from.mobile} {
+    margin-block-end: 0;
+  }
 
   ${from.tabletLandscape} {
     grid-column: span 2;
