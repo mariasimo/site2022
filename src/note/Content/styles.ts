@@ -60,6 +60,7 @@ export const Container = styled.article`
   }
 
   .footnote-ref,
+  a:link,
   a:visited,
   a:active {
     color: var(--theme-interactive);
