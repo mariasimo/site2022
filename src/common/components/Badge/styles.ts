@@ -4,7 +4,7 @@ import { ShineEffect } from '$/styles/mixins';
 
 export const Container = styled.div`
   align-items: center;
-  background-color: var(--theme-accent);
+  background-color: var(--theme-interactive);
   border-radius: 0.75rem;
   display: inline-flex;
   height: 1.5rem;
@@ -17,5 +17,5 @@ export const Container = styled.div`
 `;
 
 export const Link = styled(BodyXXSBold)`
-  color: var(--theme-ink);
+  color: var(--theme-paper);
 `;
