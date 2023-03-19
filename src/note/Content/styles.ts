@@ -58,6 +58,12 @@ export const Container = styled.article`
       }
     }
   }
+
+  .footnote-ref,
+  a:visited,
+  a:active {
+    color: var(--theme-interactive);
+  }
 `;
 
 export const Blockquote = styled(BodyM).attrs({ as: 'blockquote' })`
@@ -137,11 +143,6 @@ const ContentStyles = css`
   ${from.tabletPortrait} {
     padding-inline-end: 3.5rem;
     grid-column: 3/7;
-  }
-
-  a:visited,
-  a:active {
-    color: var(--theme-interactive);
   }
 `;
 
