@@ -84,12 +84,12 @@ function RenderImageWithCaption({
   node: Element;
 }): JSX.Element | null {
   if (!node.properties) return null;
-  const { alt = '', src } = node?.properties;
+  const { alt = '', src, title } = node?.properties;
 
   return (
     <ImageContainer>
       {src ? <Image src={src as string} alt={alt as string} /> : null}
-      {alt ? <Caption>{alt} </Caption> : null}
+      {title ? <Caption>{title} </Caption> : null}
     </ImageContainer>
   );
 }

@@ -28,7 +28,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a blandit neque. Nam
 
 Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla vulputate enim consectetur efficitur tristique. Proin tincidunt mi a velit finibus, sit amet aliquam odio suscipit. Vestibulum at velit euismod leo malesuada pellentesque. Cras laoreet sem eget diam vehicula consequat.
 
-![Right now delving into search algorithms thanks to advent of code, authentication & authorization, and some Python.](//images.ctfassets.net/bjk1kgb633gz/2kNE1fHsCmejw5matoMxrv/eb1c9367867857c5416f72cc26ee6b86/test.png)
+![Right now delving into search algorithms thanks to advent of code, authentication & authorization, and some Python.](//images.ctfassets.net/bjk1kgb633gz/2kNE1fHsCmejw5matoMxrv/eb1c9367867857c5416f72cc26ee6b86/test.png 'Right now delving into search algorithms thanks to advent of code, authentication & authorization, and some Python.')
 
 Nulla facilisi. Pellentesque vel placerat enim, ut auctor leo[^1]. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque in tincidunt quam. Sed aliquam lectus at nibh placerat, eu auctor sem fringilla. Cras ligula neque, egestas varius est eu, mattis placerat risus. Nulla efficitur est et dolor condimentum tempor. Nullam accumsan fermentum lacus. Fusce id leo sapien. Donec non dolor in leo maximus volutpat vel id orci.
 

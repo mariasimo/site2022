@@ -83,7 +83,7 @@ Otra novedad interesante es que, a partir de ahora, **podemos omitir el atributo
 
 Ahora _Storybook_ es capaz de leer la ubicación de nuestros archivos y mapear la estructura de directorios de nuestra app. Es capaz de reproducir tal cual el árbol de archivos que vemos en nuestro IDE. De esta manera, podemos dejar de pensar en cómo organizar las historias y obtenemos una experiencia más consistente entre nuestro IDE y _Storybook_.
 
-![Fuente "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/storybook-tree.png)
+![Fuente "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/storybook-tree.png "Fuente "Component Story Format 3 is here", Storybook blog")
 
 ### Mejor soporte para Typescript
 
@@ -154,9 +154,9 @@ export const Default: StoryObj<typeof meta> = {
 
 ```
 
-![Autocompletado en las historias de Storybook 7](/images/storybook-18-03-2023/storybook-7-ts-autocompletado.png)
+![Autocompletado en las historias de Storybook 7](/images/storybook-18-03-2023/storybook-7-ts-autocompletado.png 'Autocompletado en las historias de Storybook 7')
 
-![Errores en las historias de Storybook 7](/images/storybook-18-03-2023/storybook-7-ts-errores.png)
+![Errores en las historias de Storybook 7](/images/storybook-18-03-2023/storybook-7-ts-errores.png 'Errores en las historias de Storybook 7')
 
 Como vemos en las imágenes, ahora sí vamos a tener opciones de autocompletado y detección de errores. El tipado de `args` es una unión mucho más compleja. Vemos que `planName` es opcional, porque Typescript entiende que ya lo hemos especificado en el **meta**.
 
@@ -182,7 +182,7 @@ Como apuntábamos arriba, los _Docs_ cambian su ubicación. Ya no se encuentran 
 
 La mayoría de las veces nuestros componentes son auto-descriptivos pero, en determinadas situaciones, sí vamos a querer documentar más cuidadosamente. Por ejemplo, si estamos trabajando en un sistema de diseño o nuestro _Storybook_ va a ser consultado y consumido por diferentes _stakeholders_ y necesitamos ser más exhaustivos. En ese caso, tenemos los docs a nuestra disposición.
 
-![Fuente "Storybook 7 Docs", Storybook blog](/images/storybook-18-03-2023/sb-7-docs.png)
+![Fuente "Storybook 7 Docs", Storybook blog](/images/storybook-18-03-2023/sb-7-docs.png "Fuente "Storybook 7 Docs", Storybook blog")
 
 Éstas son las distintas opciones que tenemos para documentar nuestros componentes:
 
@@ -260,7 +260,7 @@ export const Default = {
 
 Para visualizar el resultado, tenemos un nuevo panel, `Interactions`, donde podemos emular los pasos de la interacción y _debuguear_ nuestros tests.
 
-![Fuente "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/sb-7-tests.gif)
+![Fuente "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/sb-7-tests.gif "Fuente "Component Story Format 3 is here", Storybook blog")
 
 Para que esta manera de testear sea una opción viable, necesitamos poder integrar las pruebas en el _pipeline_ de integración continua de la aplicación. _Storybook_ nos proporciona un [_test runner_](https://storybook.js.org/addons/@storybook/test-runner) que transforma todas las interacciones a nivel de historia en tests que podemos correr en modo _headless_. Incluye opciones para generar informes de cobertura. Además, cuando un test falla, te vincula directamente a la historia de _Storybook_ para poder visualizar el error.
 
