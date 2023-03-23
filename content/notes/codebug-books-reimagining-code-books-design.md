@@ -21,11 +21,11 @@ Llevo toda la semana con una gripe que ha resultado ser COVID, metida en la cama
 
 Antes de programar, era diseñadora. Una vida antes de eso, estudié artes. Muchas cosas han cambiado, pero lo que nunca ha cambiado ha sido mi amor por los libros, también como objetos físicos, de culto, de deseo.
 
-Creo que mi amor por los libros tiene que ver con mi interés por los lenguajes, que ha sido constante en todos los oficios que he tenido en mi vida. La noción de lenguaje es fundamental tanto en las artes plásticas como en el diseño como en la programación.
+Creo que mi amor por los libros tiene que ver con mi interés por los lenguajes, que ha sido constante en todos los oficios que he tenido en mi vida. La noción de lenguaje es fundamental tanto en las artes plásticas, como en el diseño, como en la programación.
 
-Suelo decir que lo que pasaba en mi cabeza cuando pintaba o cuando monto un _layout_, el proceso de pensamiento, no es tan diferente de lo que pasa cuando trato de resolver un problema relacionado con código.
+Suelo decir que lo que pasaba en mi cabeza cuando pintaba, o cuando monto un _layout_, el proceso de pensamiento, no es tan diferente de lo que pasa cuando trato de resolver un problema relacionado con código.
 
-Por eso, tengo la convicción de que muchas personas con capacidad para el lenguaje escrito, o para aprender idiomas, podrían ser programadoras de primera. Esa gente que comúnmente conocemos como "gente de letras", la misma que te dice: "yo nunca valdría para eso". Y es que, claro, hemos creado una frontera terrible entre profesiones humanísticas y técnicas, que no es para nada fácil de atravesar.
+Por eso, tengo la convicción de que muchas personas con capacidad para el lenguaje escrito, o para aprender idiomas, podrían ser programadoras de primera. Esa gente que comúnmente conocemos como "gente de letras", la misma que te dice: "yo nunca valdría para eso". Por desgracia, hemos creado una frontera terrible entre profesiones humanísticas y técnicas, que no es para nada fácil de atravesar.
 
 Pero ese no es el tema.
 
@@ -33,41 +33,40 @@ Pero ese no es el tema.
 
 ![CodeBug books. Reimaginando el diseño de los libros de programación](/images/codebug-books-23-03-2023/standing-books-collection-landscape-cream.jpg 'CodeBug books. Reimaginando el diseño de los libros de programación')
 
-Si no fuera programadora, me hubiera gustado tener un trabajo relacionado con los libros, especialmente con la edición de libros. Hay algo realmente bonito en el proceso de pensar una portada. O de maquetar un párrafo.
+Si no fuera programadora, me hubiera gustado tener un trabajo relacionado con los libros, especialmente con la edición de libros.
 
-Ser capaz de maquetar un buen párrafo, fluído, bien ajustado, con la extensión adecuada, el interlineado preciso para el largo del párrafo y el tamaño del texto, una tipografía legible, un pairing bonito... es una habilidad de diseño que muchas veces pasa totalmente desapercibida, pero es esencial.
-
-Creo que sería una buena prueba técnica para ciertos roles de diseño. Se puede saber mucho de cuánto sabe una persona simplemente por qué consideraciones aplica en la maquetación de un párrafo.
+Hay algo realmente bonito en el proceso de pensar una portada. O de maquetar un párrafo.
+Ser capaz de maquetar un buen párrafo, fluído, bien ajustado, con la extensión adecuada, el interlineado preciso para el largo del párrafo y el tamaño del texto, una tipografía legible, un pairing bonito... es una habilidad de diseño que muchas veces pasa totalmente desapercibida, aunque ahí es donde se puede apreciar el oficio.
 
 A veces, abres un libro y ¡ay!.
 
+Creo que sería una buena prueba técnica para ciertos roles de diseño. Se puede saber mucho de un perfil de diseño simplemente por las consideraciones que aplica en la maquetación de un párrafo.
+
 Pero ese tampoco es el tema.
 
-## CodeBug books
+## CodeBug Books
 
-El caso es que también me encantan los libros de programación. Me gusta tener un libro en la mesilla y que me acompañe durante mucho tiempo, tomármelo con calma, dejar que el libro haga su trabajo. Lo malo de eso es que tengo una lista enorme de libros pendientes que me encantaría leer.
-
-Hay editoriales de programación muy interesantes y que ponen cosas hay fuera realmente fantásticas pero, seamos sinceros, aquí el cambio del sector del diseño a sector de la programación sí [se nota](https://www.counter-print.co.uk/collections/all-books/Graphic-Design).
+El tema es que me encantan los libros de programación. Hay editoriales de programación muy interesantes y que ponen cosas hay fuera realmente fantásticas pero, seamos sinceros, aquí el cambio del sector del diseño a sector de la programación sí se nota. Echad un vistazo, por ejemplo, a [Counter Print Books](https://www.counter-print.co.uk/collections/all-books/Graphic-Design), una editorial con libros de diseño que son una delicia.
 
 Así que estos días me he dedicado a rediseñar las cubiertas de algunos libros muy populares de programación. He rediseñado cuatro de mis favoritos, como si se tratase de la colección de una editorial, completamente inventada, a la que he llamado _CodeBug books_.
 
 ![Así serían "Clean Code" y "A Philosophy of Software Design" si los hubiera editado CodeBug Books](/images/codebug-books-23-03-2023/floating-yellow.jpg 'Así serían "Clean Code" y "A Philosophy of Software Design" si los hubiera editado CodeBug Books')
 
-Sin más. Ha estado bien dedicar un tiempito a diseñar de nuevo, sin ningún propósito. No para un _side project_, ni para un amigo, nada de eso. Está muy bien volver a recuperar una habilidad así, sin las pretensiones ni presiones añadidas que la profesionalización añade.
+Lo he hecho sin más intención y propósito que el de jugar. Ha estado bien dedicar un tiempito a diseñar de nuevo. No para un _side project_, ni para un amigo, nada de eso. Sienta bien volver a convertir el oficio en simple afición, sin las pretensiones ni presiones añadidas que la profesionalización añade.
 
-Así serían mis cubiertas ideales (o, al menos, una aproximación) para:
+Así serían mis cubiertas ideales (así, o una cosa parecida) para:
 
 - **"Clean Code"**, de Robert C. Martin
 - **"Eloquent Javascript"**, de Marijn Haberveke
 - **"Refactoring"**, de Martin Fowler
 - **"A Philosophy of Software Design"**, de John Ousterhout
 
-Algunos de los diseños de cubierta originales me gustan más o otros menos. El del _Clean Code_, en concreto me parece terrible. El de _A Philosophy of Software Design_, en cambio, está bastante bien.
-
 Un diseño simple, solucionado con muy pocos elementos, cohesivo y con un sabor un poco retro.
 En inglés porque es el idioma en el que me gusta leer libros técnicos.
 
-Espero qué os gusten. Podéis decirme qué os parecen y recomendarme vuestros libros de programación favoritos [aquí](https://twitter.com/mariasimocodes).
+Algunos de los diseños de cubierta originales me gustan más o otros menos. El del _Clean Code_, en concreto me parece horrible. El de _A Philosophy of Software Design_, en cambio, está bastante bien.
+
+Dejo todas las imágenes a continuación. Espero qué os gusten. Podéis decirme qué os parecen y recomendarme vuestros libros de programación favoritos [aquí](https://twitter.com/mariasimocodes).
 
 ## Show me the design
 
