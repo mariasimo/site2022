@@ -59,10 +59,14 @@ export const BodyLBold = styled(BodyLBase)`
 
 const BodyMBase = styled.span`
   font-family: var(--theme-font-text);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   line-height: 1.6;
   letter-spacing: 0.02rem;
   word-spacing: 0.0625rem;
+
+  ${from.mobile} {
+    font-size: 1.15rem;
+  }
 `;
 
 export const BodyM = styled(BodyMBase)`
@@ -95,14 +99,10 @@ export const BodySBold = styled(BodySBase)`
 
 const BodyXSBase = styled.span`
   font-family: var(--theme-font-text);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.6;
   letter-spacing: 0.025rem;
   word-spacing: 0.0625rem;
-
-  ${from.mobile} {
-    font-size: 0.875rem;
-  }
 `;
 
 export const BodyXS = styled(BodyXSBase)`

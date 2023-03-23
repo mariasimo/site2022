@@ -34,7 +34,7 @@ import { useRouter } from 'next/router';
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
   inProgress: 'In Progress, still making my mind',
-  completed: 'Completed, I may changed my mind in the future',
+  completed: 'Completed, I could change my mind later',
 };
 
 export default function NoteHero({
