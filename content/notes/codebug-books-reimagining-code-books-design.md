@@ -2,7 +2,7 @@
 title: 'Reimaginando el diseño de los libros de programación'
 metaTitle: 'CodeBug Books. Reimaginando el diseño de los libros de programación'
 metaDescription: 'Storybook está a punto de liberar una nueva mayor después de dos años, que incluye importantes cambios en la escritura de historias, nuevas formas de documentación y multitud de posibilidades para hacer testing dentro de la propia herramienta.'
-socialImage: '/images/storybook-18-03-2023/og.png'
+socialImage: '/images/codebug-books-23-03-2023/og.png'
 published: '23/03/2023'
 status: 'completed'
 language: 'Spanish'
