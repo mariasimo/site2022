@@ -32,22 +32,19 @@ export function listNotes() {
 
   return notesList
     .map((fileName) => fileName.replace('.md', ''))
-    .filter((slug) => {
-      const { data: frontmatter } = getMarkdownContents(
-        contentConfig.notesDirectory,
-        slug,
-      );
+    .filter((path) => {
+      const { data: frontmatter } = getMarkdownContents(path);
 
       return !frontmatter.comingSoon;
     });
 }
 
-export function getNote(slug: string): Note | undefined {
+export function getNote(slug: string, locale?: string): Note | undefined {
   const {
     data,
     content: rawContent,
     excerpt,
-  } = getMarkdownContents(contentConfig.notesDirectory, slug);
+  } = getMarkdownContents(`${slug}/${locale ?? ''}`);
 
   // Right now only casting is posible to type frontmatter
   // https://github.com/jonschlinkert/gray-matter/issues/135
