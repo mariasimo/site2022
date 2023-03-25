@@ -260,7 +260,7 @@ export const Default = {
 
 Para visualizar el resultado, tenemos un nuevo panel, `Interactions`, donde podemos emular los pasos de la interacción y _debuguear_ nuestros tests.
 
-![Fuente "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/sb-7-tests.gif "Fuente "Component Story Format 3 is here", Storybook blog")
+![Fuente "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/sb-7-tests.gif 'Fuente "Component Story Format 3 is here", Storybook blog')
 
 Para que esta manera de testear sea una opción viable, necesitamos poder integrar las pruebas en el _pipeline_ de integración continua de la aplicación. _Storybook_ nos proporciona un [_test runner_](https://storybook.js.org/addons/@storybook/test-runner) que transforma todas las interacciones a nivel de historia en tests que podemos correr en modo _headless_. Incluye opciones para generar informes de cobertura. Además, cuando un test falla, te vincula directamente a la historia de _Storybook_ para poder visualizar el error.
 
