@@ -56,7 +56,7 @@ export const Header = styled.div`
 
 export const Details = styled(BodyS).attrs({ as: 'p' })``;
 
-export const Translations = styled.ul`
+export const Language = styled.span`
   display: inline;
   margin: 0;
   padding: 0;
@@ -64,16 +64,5 @@ export const Translations = styled.ul`
   &:before {
     content: '|';
     margin-inline: 0.5rem;
-  }
-`;
-
-export const Language = styled.li`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: inline;
-
-  &:not(:last-child):after {
-    content: ', ';
   }
 `;
