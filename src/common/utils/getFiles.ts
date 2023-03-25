@@ -18,19 +18,17 @@ const readSubDirsRecursive = function (path: string, files: string[] = []) {
   return files;
 };
 
-export function getLatestFilesFromDirectory(dir: string, num?: number) {
-  const files = readSubDirsRecursive(dir)
+export function getFilesFromDirectory(dir: string) {
+  return readSubDirsRecursive(dir)
     .sort(function (a, b) {
       return fs.statSync(b).mtime.getTime() - fs.statSync(a).mtime.getTime();
     })
     .map((file) => file.replace(dir, ''));
-
-  return files.slice(0, num);
 }
 
 export function getMarkdownContents(path: string) {
   const fileName = fs.readFileSync(
-    `${contentConfig.notesDirectory}/${path}.md`,
+    `${contentConfig.notesDirectory}${path}.md`,
     'utf-8',
   );
   const contents = matter(fileName, {
@@ -38,4 +36,13 @@ export function getMarkdownContents(path: string) {
   });
 
   return contents;
+}
+
+export function getTranslationsList(path: string): string[] | undefined {
+  const dir = `${contentConfig.notesDirectory}${path}`;
+  if (!fs.existsSync(dir) || !fs.lstatSync(dir).isDirectory()) return;
+
+  return fs
+    .readdirSync(`${contentConfig.notesDirectory}${path}`)
+    .map((item) => item.replace('.md', ''));
 }

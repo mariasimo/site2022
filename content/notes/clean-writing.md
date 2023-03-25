@@ -6,6 +6,7 @@ socialImage: ''
 published: '13/02/2022'
 lastUpdated: '13/03/2022'
 comingSoon: true,
+
 status: 'draft'
 tags:
   - 'Technical writing'
