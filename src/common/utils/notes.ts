@@ -5,12 +5,12 @@ import {
 } from './getFiles';
 import contentConfig from '../../../content.config';
 
-const languages = {
+export const languagesDictionary = {
   en: 'English',
   es: 'Spanish',
 } as const;
 
-export type Language = keyof typeof languages;
+export type Language = keyof typeof languagesDictionary;
 
 type NoteFrontmatter = {
   title: string;
@@ -32,12 +32,12 @@ export type Note = NoteFrontmatter & {
   content: string;
   references: string | null;
   backlinks: string | null;
-  translations?: Language[] | null;
+  translations: Language[] | null;
 };
 
 export type NoteCard = Pick<
   Note,
-  'slug' | 'title' | 'comingSoon' | 'tags' | 'language'
+  'slug' | 'title' | 'comingSoon' | 'tags' | 'translations' | 'language'
 >;
 
 export function listNotes() {
@@ -77,6 +77,7 @@ export function getNote(slug: string, locale?: string): Note | undefined {
     lastUpdated: frontmatter?.lastUpdated ?? '',
     status: frontmatter?.status ?? 'draft',
     translations: translations ?? [frontmatter?.language],
+    language: frontmatter.language ?? 'en',
     socialImage: frontmatter?.socialImage ?? null,
     metaTitle: frontmatter?.metaTitle ?? frontmatter.title,
     metaDescription: frontmatter?.metaDescription ?? null,
@@ -101,8 +102,12 @@ export function getNotesCards(): NoteCard[] {
   return latestNotesList
     .slice(0, 4)
     .map((fileName) => {
-      const slug = fileName.replace('.md', '');
-      const note = getNote(slug);
+      const [slug, locale] = fileName
+        .replace('.md', '')
+        .split('/')
+        .filter(Boolean);
+
+      const note = getNote(slug, locale);
 
       return {
         title: note?.title ?? '',
@@ -110,7 +115,8 @@ export function getNotesCards(): NoteCard[] {
         tags: note?.tags,
         comingSoon: note?.comingSoon,
         hideFromList: note?.hideFromList,
-        language: note?.language ?? null,
+        translations: note?.translations ?? [],
+        language: note?.language,
         date: !note?.comingSoon && (note?.lastUpdated || note?.published),
       };
     })

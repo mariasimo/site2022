@@ -38,11 +38,14 @@ export function getMarkdownContents(path: string) {
   return contents;
 }
 
-export function getTranslationsList(path: string): string[] | undefined {
-  const dir = `${contentConfig.notesDirectory}${path}`;
-  if (!fs.existsSync(dir) || !fs.lstatSync(dir).isDirectory()) return;
+export function getTranslationsList(path: string): string[] {
+  const dir = `${contentConfig.notesDirectory}${path.replace('/', '')}`;
 
-  return fs
-    .readdirSync(`${contentConfig.notesDirectory}${path}`)
-    .map((item) => item.replace('.md', ''));
+  if (
+    !fs.existsSync(dir) ||
+    (fs.existsSync(dir) && !fs.lstatSync(dir).isDirectory())
+  )
+    return [];
+
+  return fs.readdirSync(dir).map((item) => item.replace('.md', ''));
 }

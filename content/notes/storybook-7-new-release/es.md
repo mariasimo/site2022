@@ -5,7 +5,7 @@ metaDescription: 'Storybook está a punto de liberar una nueva mayor después de
 socialImage: '/images/storybook-18-03-2023/og.png'
 published: '18/03/2023'
 status: 'draft'
-language: 'Spanish'
+language: 'es'
 hideFromList: true,
 tags:
   - 'Tools'

@@ -29,16 +29,24 @@ export const Container = styled.article<{ $disabled?: boolean }>`
     if (!$disabled) {
       return css`
         &:hover {
-          cursor: pointer;
           ${Arrow}, ${Title} {
             color: var(--theme-interactive);
           }
         }
       `;
+    } else {
+      return css`
+        cursor: default;
+        a {
+          cursor: default;
+        }
+      `;
     }
-
-    return null;
   }}
+
+  p {
+    color: var(--theme-ink);
+  }
 `;
 
 export const Header = styled.div`
@@ -48,9 +56,24 @@ export const Header = styled.div`
 
 export const Details = styled(BodyS).attrs({ as: 'p' })``;
 
-export const Language = styled.span`
+export const Translations = styled.ul`
+  display: inline;
+  margin: 0;
+  padding: 0;
+
   &:before {
     content: '|';
     margin-inline: 0.5rem;
+  }
+`;
+
+export const Language = styled.li`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+
+  &:not(:last-child):after {
+    content: ', ';
   }
 `;

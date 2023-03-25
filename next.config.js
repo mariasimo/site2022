@@ -3,6 +3,8 @@ const svgLoader = require('./scripts/webpack/svgLoader.js');
 module.exports = {
   webpack(config) {
     svgLoader(config, '/_next');
+    config.resolve.fallback = { fs: false };
+
     return config;
   },
   eslint: {
@@ -13,4 +15,5 @@ module.exports = {
     locales: ['en', 'es'],
     defaultLocale: 'en',
   },
+  webpack5: true,
 };
