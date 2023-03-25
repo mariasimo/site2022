@@ -34,6 +34,7 @@ import MarkdownParser from '../../common/components/MarkdownParser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { languagesDictionary } from '../../common/utils/notes';
+import NextLink from 'next/link';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
@@ -57,7 +58,9 @@ export default function NoteHero({
   const magnetRef = useRef(null);
   const { x, y } = useMagnetEffect(magnetRef, { strength: 0.7 });
   const controls = useAnimation();
-  const { asPath } = useRouter();
+  const { asPath, query, locale } = useRouter();
+
+  const slug = typeof query.slug === 'string' ? query.slug : undefined;
 
   return (
     <Container>
@@ -170,13 +173,21 @@ export default function NoteHero({
         </StatusInfo>
         <Block>
           {' '}
-          {translations?.length ? (
+          {translations && translations?.length > 1 && slug ? (
             <Translations role="list">
-              {translations?.map((locale) => (
-                <Language key={locale}>{languagesDictionary[locale]}</Language>
+              {translations?.map((translation) => (
+                <Language key={translation} $isActive={locale === translation}>
+                  <NextLink href={slug} locale={translation}>
+                    {languagesDictionary[translation]}
+                  </NextLink>
+                </Language>
               ))}
             </Translations>
-          ) : null}
+          ) : (
+            <Language key={translations?.[0]}>
+              {languagesDictionary[translations?.[0] ?? 'en']}
+            </Language>
+          )}
         </Block>
       </Meta>
     </Container>

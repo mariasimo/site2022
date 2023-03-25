@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { BodyL, BodyXS, BodyXSBold, HeadingLBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
 import { motion } from 'framer-motion';
@@ -138,7 +138,7 @@ export const Translations = styled.ul`
   padding: 0;
 `;
 
-export const Language = styled.li`
+export const Language = styled.li<{ $isActive?: boolean }>`
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -147,4 +147,22 @@ export const Language = styled.li`
   &:not(:last-child):after {
     content: ', ';
   }
+
+  ${({ $isActive }) => {
+    if ($isActive) {
+      return css`
+        a {
+          font-weight: 500;
+        }
+      `;
+    } else {
+      return css`
+        a:link,
+        a:visited,
+        a:active {
+          color: var(--theme-interactive);
+        }
+      `;
+    }
+  }}
 `;

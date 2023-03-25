@@ -53,9 +53,9 @@ export function listNotes() {
 }
 
 export function getNote(slug: string, locale?: string): Note {
-  const translations = getTranslationsList(slug) as Language[];
+  const translationsList = getTranslationsList(slug) as Language[];
 
-  const path = translations?.length && locale ? `${slug}/${locale}` : slug;
+  const path = translationsList?.length && locale ? `${slug}/${locale}` : slug;
   const { data, content: rawContent, excerpt } = getMarkdownContents(path);
 
   // Right now only casting is posible to type frontmatter
@@ -67,6 +67,10 @@ export function getNote(slug: string, locale?: string): Note {
 
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
+  const translations = translationsList.length
+    ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
+    : [frontmatter?.language ?? 'en'];
+
   const note: Note = {
     title: frontmatter.title,
     summary: excerpt ?? '',
@@ -76,9 +80,7 @@ export function getNote(slug: string, locale?: string): Note {
     published: frontmatter.published ?? '',
     lastUpdated: frontmatter?.lastUpdated ?? '',
     status: frontmatter?.status ?? 'draft',
-    translations: translations.length
-      ? translations
-      : [frontmatter?.language ?? 'en'],
+    translations,
     language: frontmatter.language ?? 'en',
     socialImage: frontmatter?.socialImage ?? null,
     metaTitle: frontmatter?.metaTitle ?? frontmatter.title,
