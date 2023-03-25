@@ -1,5 +1,9 @@
 import NoteView from '$/note';
-import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import type {
+  GetStaticPathsContext,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from 'next';
 import { getNote, listNotes } from '../common/utils/notes';
 
 function NotePage({
@@ -10,15 +14,18 @@ function NotePage({
 
 export default NotePage;
 
-export function getStaticPaths() {
+export function getStaticPaths({ locales }: GetStaticPathsContext) {
   const notes = listNotes();
 
   return {
-    paths: notes.map((note) => ({
-      params: {
-        slug: note,
-      },
-    })),
+    paths: notes.flatMap((note) => {
+      return locales?.map((locale) => ({
+        params: {
+          slug: note,
+        },
+        locale,
+      }));
+    }),
     fallback: false,
   };
 }

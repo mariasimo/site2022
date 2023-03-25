@@ -35,7 +35,6 @@ module.exports = {
       },
       rules: {
         '@typescript-eslint/no-unused-vars': 'off',
-        'arrow-body-style': 'warn',
         'import/no-unresolved': 'off',
         'jsx-a11y/anchor-is-valid': 'off',
         'no-void': 'off',
