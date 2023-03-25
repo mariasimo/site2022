@@ -9,19 +9,21 @@ export default function NoteCard({ note }: { note: NoteCardType }) {
   const { title, comingSoon, tags, slug, language } = note;
 
   return (
-    <NextLink href={slug} locale={language ?? 'en'}>
-      <Container $disabled={comingSoon ?? false}>
-        <Header>
-          <Title>{title}</Title>
-          <Arrow />
-        </Header>
-        <Details>
-          {comingSoon ? 'Coming Soon' : tags?.join(', ')}{' '}
-          {!comingSoon ? (
-            <Language>{languagesDictionary[language ?? 'en']}</Language>
-          ) : null}
-        </Details>
-      </Container>
-    </NextLink>
+    <Container $disabled={comingSoon ?? false}>
+      <NextLink href={slug} locale={language ?? 'en'} passHref>
+        <a>
+          <Header>
+            <Title>{title}</Title>
+            <Arrow />
+          </Header>
+          <Details>
+            {comingSoon ? 'Coming Soon' : tags?.join(', ')}{' '}
+            {!comingSoon ? (
+              <Language>{languagesDictionary[language ?? 'en']}</Language>
+            ) : null}
+          </Details>
+        </a>
+      </NextLink>
+    </Container>
   );
 }

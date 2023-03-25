@@ -46,8 +46,8 @@ const RevealedText = ({
   staggerWords?: number;
 }) => {
   const Style = content.style;
-
   const words = content.text.split(' ').map((w) => `${w} `);
+
   return (
     <Container
       initial="hidden"
@@ -56,7 +56,7 @@ const RevealedText = ({
       custom={{ staggerWords }}
     >
       {words.map((word, index) => (
-        <WordMask key={`${word}+${index}`}>
+        <WordMask key={`${word}+${index}+${content.text}`}>
           <Word variants={item} custom={{ duration }}>
             {Style ? <Style>{word}</Style> : word}
           </Word>
