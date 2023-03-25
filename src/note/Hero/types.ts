@@ -8,7 +8,7 @@ export type Props = {
   published: string;
   lastUpdated: string | null;
   status: string;
-  language: Note['language'];
+  translations: Note['translations'];
   socialImage: Note['socialImage'];
   metaTitle: Note['metaTitle'];
   metaDescription: Note['metaDescription'];

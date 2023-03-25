@@ -7,6 +7,7 @@ import {
   DateInfo,
   Text,
   Status,
+  StatusText,
   Cover,
   ScrollButton,
   ScrollButtonContainer,
@@ -16,6 +17,8 @@ import {
   Circle,
   GoHomeBlock,
   LearnMoreLink,
+  Translations,
+  Language,
 } from './styles';
 import scrollToContent from '$/common/utils/scrollToContent';
 import type { Props } from './types';
@@ -30,6 +33,7 @@ import { useAnimation } from 'framer-motion';
 import MarkdownParser from '../../common/components/MarkdownParser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { languagesDictionary } from '../../common/utils/notes';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
@@ -43,7 +47,7 @@ export default function NoteHero({
   contentRef,
   published,
   lastUpdated,
-  language,
+  translations,
   status: rawStatus,
   socialImage,
   metaTitle,
@@ -141,9 +145,8 @@ export default function NoteHero({
           ) : null}
         </DateInfo>
         <StatusInfo>
-          <Text>Status</Text>
           <Status>
-            {status}
+            Status{' '}
             <Tooltip>
               <Paragraph>
                 The <Bold>epistemic status</Bold> is the degree of certainty or
@@ -163,8 +166,18 @@ export default function NoteHero({
               </Paragraph>
             </Tooltip>
           </Status>
+          <StatusText>{status}</StatusText>
         </StatusInfo>
-        <Block>{language ? <Text>Language: {language}</Text> : null}</Block>
+        <Block>
+          {' '}
+          {translations?.length ? (
+            <Translations role="list">
+              {translations?.map((locale) => (
+                <Language key={locale}>{languagesDictionary[locale]}</Language>
+              ))}
+            </Translations>
+          ) : null}
+        </Block>
       </Meta>
     </Container>
   );

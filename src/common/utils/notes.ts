@@ -20,7 +20,7 @@ type NoteFrontmatter = {
   comingSoon?: boolean;
   hideFromList?: boolean;
   status: 'draft' | 'inProgress' | 'completed';
-  language?: Language | null;
+  language: Language | null;
   socialImage?: string | null;
   metaTitle?: string | null;
   metaDescription?: string | null;
@@ -52,7 +52,7 @@ export function listNotes() {
     });
 }
 
-export function getNote(slug: string, locale?: string): Note | undefined {
+export function getNote(slug: string, locale?: string): Note {
   const translations = getTranslationsList(slug) as Language[];
 
   const path = translations?.length && locale ? `${slug}/${locale}` : slug;
@@ -76,7 +76,9 @@ export function getNote(slug: string, locale?: string): Note | undefined {
     published: frontmatter.published ?? '',
     lastUpdated: frontmatter?.lastUpdated ?? '',
     status: frontmatter?.status ?? 'draft',
-    translations: translations ?? [frontmatter?.language],
+    translations: translations.length
+      ? translations
+      : [frontmatter?.language ?? 'en'],
     language: frontmatter.language ?? 'en',
     socialImage: frontmatter?.socialImage ?? null,
     metaTitle: frontmatter?.metaTitle ?? frontmatter.title,
@@ -87,7 +89,7 @@ export function getNote(slug: string, locale?: string): Note | undefined {
     backlinks: backlinks ?? null,
   };
 
-  return slug ? note : undefined;
+  return note;
 }
 
 export function getNotesCards(): NoteCard[] {
@@ -115,7 +117,7 @@ export function getNotesCards(): NoteCard[] {
         tags: note?.tags,
         comingSoon: note?.comingSoon,
         hideFromList: note?.hideFromList,
-        translations: note?.translations ?? [],
+        translations: note?.translations ?? [note.language ?? 'en'],
         language: note?.language,
         date: !note?.comingSoon && (note?.lastUpdated || note?.published),
       };

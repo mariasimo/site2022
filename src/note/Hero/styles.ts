@@ -125,4 +125,26 @@ export const Status = styled(Text)`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  white-space: wrap;
+`;
+
+export const StatusText = styled(Text)`
+  white-space: pre-wrap;
+`;
+
+export const Translations = styled.ul`
+  display: inline;
+  margin: 0;
+  padding: 0;
+`;
+
+export const Language = styled.li`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+
+  &:not(:last-child):after {
+    content: ', ';
+  }
 `;
