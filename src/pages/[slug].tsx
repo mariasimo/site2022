@@ -1,5 +1,9 @@
 import NoteView from '$/note';
-import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import type {
+  GetStaticPathsContext,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from 'next';
 import { getNote, listNotes } from '../common/utils/notes';
 
 function NotePage({
@@ -10,20 +14,21 @@ function NotePage({
 
 export default NotePage;
 
-export function getStaticPaths() {
+export function getStaticPaths({ locales }: GetStaticPathsContext) {
   const notes = listNotes();
 
   return {
-    paths: notes.map((note) => {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      const [slug, locale] = note.split('/').filter(Boolean);
+    paths: notes.flatMap((note) => {
+      const [slug] = note.split('/').filter(Boolean);
 
-      return {
-        params: {
-          slug,
-        },
-        locale,
-      };
+      return locales?.map((locale) => {
+        return {
+          params: {
+            slug,
+          },
+          locale,
+        };
+      });
     }),
     fallback: false,
   };
