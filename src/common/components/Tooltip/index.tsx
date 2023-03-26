@@ -25,13 +25,13 @@ export default function Tooltip({ children }: { children: ReactNode }) {
 
   return (
     <Container>
-      <div ref={buttonRef}>
+      <span ref={buttonRef}>
         <ButtonIcon
           icon={InfoIcon as ComponentType}
           label="Tooltip info icon"
           onClick={toggleShowTooltip}
         />
-      </div>
+      </span>
       <Portal>
         <AnimatePresence>
           {showTooltip ? (

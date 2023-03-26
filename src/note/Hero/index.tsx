@@ -104,7 +104,7 @@ export default function NoteHero({
         </Title>
         <FadeInBlock slideValue={50} delay={0.5}>
           <Summary>
-            <MarkdownParser children={summary} />
+            <MarkdownParser children={summary} components={{ p: 'span' }} />
           </Summary>
         </FadeInBlock>
         <FadeInBlock slideValue={0} delay={0.75}>
@@ -177,7 +177,7 @@ export default function NoteHero({
             <Translations role="list">
               {translations?.map((translation) => (
                 <Language key={translation} $isActive={locale === translation}>
-                  <NextLink href={slug} locale={translation}>
+                  <NextLink href={`/${slug}`} locale={translation}>
                     {languagesDictionary[translation]}
                   </NextLink>
                 </Language>
