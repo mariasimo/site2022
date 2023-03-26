@@ -1,7 +1,7 @@
 ---
-title: "What's new in the new version of Storybook"
-metaTitle: "What's new in the new version of Storybook"
-metaDescription: 'Storybook está a punto de liberar una nueva mayor después de dos años, que incluye importantes cambios en la escritura de historias, nuevas formas de documentación y multitud de posibilidades para hacer testing dentro de la propia herramienta.'
+title: "What's new in the new Storybook"
+metaTitle: "What's new in the new Storybook"
+metaDescription: 'Storybook is about to release a new mayor after two years, introducing meaningful changes about how stories are written, new documentation methods and lots of possibilities for testing within the very same workshop'
 socialImage: '/images/storybook-18-03-2023/og.png'
 published: '18/03/2023'
 status: 'draft'
@@ -12,38 +12,38 @@ tags:
   - 'UI development'
 ---
 
-_Storybook_ está a punto de liberar una nueva _mayor_ después de dos años, que incluye importantes cambios en la escritura de historias, nuevas formas de documentación y multitud de posibilidades para hacer testing dentro de la propia herramienta.
+_Storybook_ is about to release a new mayor after two years, introducing meaningful changes about how stories are written, new documentation methods and lots of possibilities for testing within the very same workshop.
 
 ---
 
-## Qué es Storybook
+## What is Storybook
 
-_Storybook_ es una herramienta para el desarrollo, documentación y testeo de la UI de nuestra aplicación. Las UIs modernas están formadas por componentes, y _Storybook_ ha impulsado una filosofía de _Component Driven Development_. Permite desarrollar nuestros componentes en un entorno aislado de la aplicación, para asegurar su calidad desde todos los ángulos posibles.
+_Storybook_ is a tool for developing, documenting, and testing the UI of our application. Modern UIs are made up of components, and as such, _Storybook_ has driven a philosophy of _Component-Driven Development_. It allows us to develop our components in an isolated environment separate from the main application to ensure their quality from every possible angle.
 
-Es también la herramienta idónea para la documentación de sistemas de diseño, porque se sitúa como una fuente de verdad perfecta en la comunicación entre diseñadores y desarrolladores.
+It is also the most suitable tool for documenting design systems because it serves as the perfect source of truth in communication between designers and developers.
 
-Ha pasado de ser una herramienta de nicho a un estándar de la industria para el desarrollo de UIs.
+From its roots as a niche tool, it has become an industry standard in the development of visual interfaces.
 
-## Cambios fundamentales de la nueva versión
+## Fundamental changes in the new version
 
-Los _storybooks_ dentro de nuestras aplicaciones son mucho más extensos y sofisticados que hace algunos años. Por eso el equipo de _Storybook_ ha orientado sus esfuerzos a mejorar la ergonomía de la herramienta en esta nueva versión. En tres aspectos:
+The _storybooks_ inside our applications are now much more large and sophisticated than some years ago. That's why the _Storybook_ team has put their efforts into improve the ergonomics of the tool for this new version. On three principal aspects:
 
-- Un diseño renovado de la interfaz
-- Una manera más simple de escribir historias
-- Mejor soporte de Typescript
+- A renovated interface design
+- A more simple way to write stories
+- A better support for Typescript
 
-### Un diseño renovado de la interfaz
+### A renovated interface design
 
-En cuanto a la renovación del diseño, pasa por un cambio en el set de iconos, el rediseño y consolidación de los menus flotantes y otro montón de ajustes que vienen a mejorar el aspecto general y la experiencia de uso de la interfaz. El cambio más notable es la desapariciónde ubicación del tab de "Docs" en el menu superior de las historias, para integrarse en el menu lateral, como veremos en el apartado de [Documentación](#documentación-en-storybook-7).
+The interface has been the subject of a restyling, including a change in the icon set, the redesign and consolidation of floating menus and a whole lot more of tweaks aimed at improving its general look and experience of use. The most notable change is the disappearance of the "Docs" tab from the story upper menu, to be integrated within the side menu. We will see this in more detail in the section of [Documentation](#documentation-in-storybook-7).
 
-### Una manera más simple de escribir historias
+### A more simple way to write stories
 
-La sintaxis con la que escribimos historias en el entorno de _Storybook_ se conoce como _Component Story Format_ (en adelante, CSF). _Storybook_ 7 implementa una nueva versión de CSF, CSF3, más ligera, que nos permite escribir historias con mucho menos código.
+The syntax we use for writing stories in the _Storybook_ environment is known as _Component Story Format_ (from now on, CSF). _Storybook_ 7 implements a new ligther version of CSF, CSF 3, which will enable is to write stories with a whole lot less of code.
 
-> En la nueva versión de _Storybook_, la sintáxis de la historia pasa a ser simplemente en un objeto, sin necesidad de ninguna declaración adicional.
+> En the new version of _Storybook_, the syntax of the story becomes a simple object, with no need for any adiditional declarations.
 
 ```tsx
-// En Storybook 6
+// Storybook 6
 export default {
   title: 'Components/Button',
   component: Button,
@@ -52,16 +52,16 @@ export default {
 export const Primary = (args) => <Button {...args} />;
 Primary.args = { primary: true };
 
-// En Storybook 7
+// Storybook 7
 export default { component: Button };
 export const Primary = { args: { primary: true } };
 ```
 
-La exportación por defecto (líneas 2 y 11) se conoce como _meta_. Especifica cómo es el componente que estamos creando a rasgos generales. El _named export_ (líneas 7 y 12) es la historia y especifica aquellos inputs que crean un estado del componente que estamos interesados en documentar.
+The default export (lines 2 and 11) it's known as _meta_. It specifies the general characteristics of the component. The named export (lines 7 and 12) is the story, and it specifies inputs to create a particual component state that we're interested in having documented.
 
-En CFS2 era necesaria una función de renderizado para cada una de las historias (línea 7). En CSF3 ya no hace falta. La sintáxis de la historia pasa a ser simplemente en un objeto, sin necesidad de ninguna declaración adicional.
+With CFS2 we had to include a render function for each one of our stories (line 7). With CSF3 that is no longer necessary. the syntax of the story becomes a simple object, with no need for any adiditional declarations.
 
-Aunque las historias aceptan una propiedad `render`, por si queremos sobreescribir algún comportamiento concreto del componente para una historia en particular. Lo haríamos así:
+Nonetheless, stories accept a property `render`, in case we want to overwrite certain component behavior in a particular story. To do that:
 
 ```tsx
 export const Primary = {
@@ -70,7 +70,7 @@ export const Primary = {
 }
 ```
 
-Ahora que las historias son puramente objetos, podemos extenderlas a partir de una historia anterior usando `spread`.
+Now that stories are purely object, we can extend them from a previous story using Javascript `spread`:
 
 ```tsx
 export const Tertiary = {
@@ -79,17 +79,17 @@ export const Tertiary = {
 };
 ```
 
-Otra novedad interesante es que, a partir de ahora, **podemos omitir el atributo `title`en el _meta_ de nuestras historias**. Típicamente, empleamos `title` para indicar el título y la ubicación de la historia en el árbol de contenidos.
+Another interesting novelty is that, from now on, **we can spare the `title` attribute from our stories _meta_**. Typically, we have being used `title` to indicate the title and the ubication of our story in the contents tree.
 
-Ahora _Storybook_ es capaz de leer la ubicación de nuestros archivos y mapear la estructura de directorios de nuestra app. Es capaz de reproducir tal cual el árbol de archivos que vemos en nuestro IDE. De esta manera, podemos dejar de pensar en cómo organizar las historias y obtenemos una experiencia más consistente entre nuestro IDE y _Storybook_.
+Now, _Storybook_ is able to read the ubication of our application files and map its structure of folders. It's able to recreate the app files tree of our app as we see it in our IDE. This way, we can stop thinking about how to organize stories and have a much nicer consistent experience between our IDE and _Storybook_.
 
-![Fuente "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/storybook-tree.png "Fuente "Component Story Format 3 is here", Storybook blog")
+![Source "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/storybook-tree.png "Source "Component Story Format 3 is here", Storybook blog")
 
-### Mejor soporte para Typescript
+### A better support for Typescript
 
-Un problema habitual en el tipado de las historias ha sido que _Storybook_ no era capaz de lanzar un error cuando no pasábamos propiedades requeridas al componente en la historia. La ayuda que recibíamos de Typescript era muy limitada dentro del ámbito de _Storybook_, por no poseer un tipado fuerte.
+A typical issue with the typing of stories has been that _Storybook_ was not able to show an error when we omit required properties in the story of the component. So the help we receive from Typescript inside _Storybook_ was very limited, not being strongly typed.
 
-Esta limitación viene dada porque las historias pueden recibir parte de sus argumentos a través de su _meta_ y otra parte a través de la propia historia. Por ejemplo:
+We encounter this limitation because stories can receive some of its arguments through the _meta_ object and some through the story itself. An example:
 
 ```tsx
 export type Props = {
@@ -110,14 +110,15 @@ const Template: Story<Props> = (args) => <PlanCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  // deberíamos tener un error aquí, porque price es requerido
+  // price is required, so we should have an error here
   planDescription: 'Zero to conversational in a month.',
 };
 ```
 
-En este caso, tan habitual, la propiedad `args` de la historia viene tipada como `Partial<Props>`, de modo que no es posible saber qué propiedades "faltan".
+In this common case, the property `args` in our story is typed as `Partial<Props>`, so it's just not possible to know which properties are missing.
 
-Ahora, la versión 7 incluye dos tipos, `Meta` y `StoryObj`, con los que va a ser posible tener autocompletado y errores cuando las historias no cumplan el contrato de tipado del componente. La manera más simple de tipar una historia con estos tipos sería la siguiente:
+Now, version 7 comes with two types, `Meta` and `StoryObj`, that will make possible having autocompletion and errores when stories don't fulfill the types contract of the component.
+The easiest way to type a stories with these new types is:
 
 ```tsx
 const meta: Meta<typeof Button> = {
@@ -129,7 +130,7 @@ type Story = StoryObj<typeof Button>;
 export const Primary: Story = { args: { primary: true } };
 ```
 
-Para el caso que mencionamos, donde los `args` están repartidos entre el _meta_ y las _stories_, tenemos que tipar de otra manera, para que Typescript sea capaz de seguir el hilo. Tomamos ventaja del nuevo operador de Typescript, [`satisfies`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html).
+To solve the problem we mentioned about, when `args` are shared between _meta_ and stories, we need to type differently, so Typescript is able to follow along. We take advantage from the new Typescript operator [`satisfies`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html).
 
 ```tsx
 
@@ -147,23 +148,23 @@ export default meta
 
 export const Default: StoryObj<typeof meta> = {
   args: {
-    // ahora vamos a tener autocompletado y errores
+    // now we have autocompletion and errors 🎉
    planDescription: 'Zero to conversational in a month.',
   }
 };
 
 ```
 
-![Autocompletado en las historias de Storybook 7](/images/storybook-18-03-2023/storybook-7-ts-autocompletado.png 'Autocompletado en las historias de Storybook 7')
+![Autocompletion for stories at Storybook 7](/images/storybook-18-03-2023/storybook-7-ts-autocompletado.png 'Autocompletion for stories at Storybook 7')
 
-![Errores en las historias de Storybook 7](/images/storybook-18-03-2023/storybook-7-ts-errores.png 'Errores en las historias de Storybook 7')
+![Type errores for stories at Storybook 7](/images/storybook-18-03-2023/storybook-7-ts-errores.png 'Type errores for stories at Storybook 7')
 
-Como vemos en las imágenes, ahora sí vamos a tener opciones de autocompletado y detección de errores. El tipado de `args` es una unión mucho más compleja. Vemos que `planName` es opcional, porque Typescript entiende que ya lo hemos especificado en el **meta**.
+As we see in the images above, now we do have autocompletion and error detection. The type of `args` is a much more complex union now, with `planName` noted as optional, because Typescript gets that we have already specified it at the _meta_ level.
 
-📎 [CodeSandox con código de ejemplo](https://codesandbox.io/s/storybook-7-typescript-7n394n?file=/src/PlanCard/stories.ts:0-309)
+📎 [Example code sandbox](https://codesandbox.io/s/storybook-7-typescript-7n394n?file=/src/PlanCard/stories.ts:0-309)
 
 ```ts
-// Éste es el tipado que Typescript es capaz de inferir ahora
+// This is the types that Typescript is able to infer now 👏
 Partial<{
     planName: string;
     price: number;
@@ -176,22 +177,22 @@ Partial<{
 
 ```
 
-## Documentación en Storybook 7
+## Documentation in Storybook 7
 
-Como apuntábamos arriba, los _Docs_ cambian su ubicación. Ya no se encuentran en el menu superior de cada historia, sino que pasan a formar parte del árbol de contenidos, como la primera de las historias de un componente. Es decir, conceptualmente, los docs se mueven desde un nivel de historia a un nivel de componente. Este movimiento responde a una intención por parte del equipo de _Storybook_ de que seamos más conscientes de este recurso.
+We mentioned it earlier, the _Docs_ change its location for the new version. They will now longer can be found in the upper menu of each story. They move to be integrated in the contents tree, as the first of the stories of each component. This change reflects the _Storybook_ team intention to makes us users more aware of this resource.
 
-La mayoría de las veces nuestros componentes son auto-descriptivos pero, en determinadas situaciones, sí vamos a querer documentar más cuidadosamente. Por ejemplo, si estamos trabajando en un sistema de diseño o nuestro _Storybook_ va a ser consultado y consumido por diferentes _stakeholders_ y necesitamos ser más exhaustivos. En ese caso, tenemos los docs a nuestra disposición.
+Most of times, our components are self-descriptive but, on some situations, we do want to document more carefully. For example, if we're working on a design system and/or our _Storybook_ is going to be referred by different _stakeholders_ and we need to be more exhaustive. In that case, we have docs to our dispossal.
 
-![Fuente "Storybook 7 Docs", Storybook blog](/images/storybook-18-03-2023/sb-7-docs.png "Fuente "Storybook 7 Docs", Storybook blog")
+![Source "Storybook 7 Docs", Storybook blog](/images/storybook-18-03-2023/sb-7-docs.png "Source "Storybook 7 Docs", Storybook blog")
 
-Éstas son las distintas opciones que tenemos para documentar nuestros componentes:
+There are different options to document your components:
 
 - Autodocs
-- Documentación personalizada
+- Custom documentation
 
 ### Autodocs
 
-El _autodoc_ es una plantilla que se genera automáticamente para cada uno de nuestros archivos, e incluye ejemplos y descripciones de las historias que creamos para el componente. Es una _feature_ opcional. Si queremos generar _autodocs_, tenemos que indicarlo de forma explícita. Lo hacemos pasando una `prop` al objeto _meta_:
+The _autodoc_ is a template which is automatically generated for each one of our files. It includes examples and descriptions of the stories we create for the component. It's an optional feature. If you want to generate _autodocs_, we need to be explicit about it. We do that by passing a prop to the _meta_ object:
 
 ```tsx
 const meta = {
@@ -200,10 +201,10 @@ const meta = {
 };
 ```
 
-Si queremos ir un paso más allá, podemos personalizar los _autodocs_. Lo hacemos de dos maneras:
+In case we want to go a step further, we can customize the _autodocs_. We can do that in two ways:
 
-- Añadiendo comentarios con _JsDoc_, que se convierten en las descripciones de nuestra historia en la documentación.
-- Usando las opciones de `parameters.docs`.
+- By adding _JSDoc_ comments, which will transform in the descriptions of our story inside the documentation.
+- Using the options `parameters.docs` provide us with.
 
 ```tsx
 /** This is the description of my story */
@@ -219,27 +220,27 @@ export const Primary: Story = {
 };
 ```
 
-### Documentación personalizada
+### Custom documentation
 
-Si, en cambio, lo que buscamos es un control total sobre la documentación, podemos usar _MDX_. _MDX_ es markdown con la posibilidad de renderizar componentes. No es una sintáxis propia de _Storybook_, sino un estándar de la industria. _Storybook_ usa MDX2. Con _MDX_ podemos crear páginas de documentación independientes, para introducir nuestro sistema, o bien asociadas a nuestra historia.
+However, if what we are looking for is complete control over documentation, we can use _MDX_. _MDX_ is markdown which also can render components. It's not a synxtax created by _Storybook_, but an industry standard. _Storybook_ 7 uses _MDX_ 2. With _MDX_, we can create pages of documentation, independent of any story, to introduct our system, or tied to an specific story.
 
-📎 [Más sobre la documentación en Storybook](https://storybook.js.org/blog/storybook-7-docs/)
+📎 [More on documentation at Storybook](https://storybook.js.org/blog/storybook-7-docs/)
 
-## Testing en Storybook 7
+## Testing with Storybook 7
 
-_Storybook_ puede considerarse una herramienta de testeo en sí misma. Pero, además, ha ido incluyendo más y más integraciones que permiten hacer diferentes tipos de tests directamente en el marco de la herramienta, incluidos tests unitarios y de integración. Especialmente para equipos especializados en el desarrollo de UI, parece una manera bastante interesante de concentrar los esfuerzos de _testing_ en un solo punto de la aplicacion, y ahorrarnos configurar y hacer convivir, con su lógico solapado, diferentes herramientas de testeo.
+_Storybook_ can be considered a testing tool in itself. But, beyond its own capabilities, it has been including more and more integrations which enable doing different types of testing directly within the tool framework, including unitary and integration tests. This might be particularily interesting for teams specialized in UI development, because it will allow them to focus all testing effort in one place within the application, and save them the set up and integration, with the inavoidable overlap, of different testing tools.
 
-Para crear un test de componente, necesitamos tres pasos:
+In order to create a component test, we do three steps:
 
-- Aislar el componente y preparar un _test case_
-- Simular las interacciones con herramientas como _Testing Library_
-- Ejecutar aserciones con herramientas como _Jest_
+- Isolate the component and set up a test case.
+- Emulate interaction with tools like _Testing Library_.
+- Make assertions with tools like _Jest_.
 
-Muchas veces tenemos que hacer un montón de trabajo previo para renderizar los componentes de manera aislada en nuestros tests (_mockear providers_, _routers_, datos...), cuando en _Storybook_ ya lo tenemos hecho. Además en el entorno de _Node_, donde corren nuestros test, no recibimos ningún _feedback_ visual cuando algo va mal.
+Often, we need to do tons of work just to render the components in an isolated manner in our tests (mocking providers, routers, data...), when we have that already working in our component stories. Besides, our test typically run in a _Node_ environment, so we don't receive any visual feedback when something goes sideways.
 
-**_Storybook_ Interaction Tests** permite escribir tests directamente dentro de las _stories_ y ejecutarlos en el _browser_. Cada una de las historias que creamos es en sí misma un _test case_, donde el primer paso es renderizar y comprobar que todo marcha como esperamos.
+The idea with **_Storybook_ Interaction Tests** is to write our tests directly inside the stories and execute them in the browser. Each one of the stories we create is a test case in itselft, where first thing we do is render the component and check everything behaves they way we expect.
 
-Después, podemos usar la nueva propiedad de story `play` y escribir el test directamente en nuestra historia. En el test, simulamos la interacción del usuario en el _browser_ y hacer aserciones. _Storybook_ nos provee de _wrappers_ para _Jest_ y _Testing library_ que hacen posible su uso en el entorno del _browser_.
+Then, we can use the new story property `play` and write the test directly in our story. In the test, we simulate user interaction through the browser and make assertions. _Storybook_ provide us with wrappers for _Jest_ and _Testing Library_, which makes possible their use in a browser-based environment.
 
 ```tsx
 import { within, fireEvent } from '@storybook/testing-library';
@@ -256,23 +257,23 @@ export const Default = {
 };
 ```
 
-> Añadir tests con _Jest_ y _Testing Library_ es una manera de amplificar la experiencia de testeo que ya supone escribir historias.
+> Adding test with _Jest_ and _Testing Library_ is a way of augment the testing experience of writing stories.
 
-Para visualizar el resultado, tenemos un nuevo panel, `Interactions`, donde podemos emular los pasos de la interacción y _debuguear_ nuestros tests.
+To visualize the result of our tests, there's a new panel, `Interactions`, where we can run each interaction step and debug our tests.
 
-![Fuente "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/sb-7-tests.gif 'Fuente "Component Story Format 3 is here", Storybook blog')
+![Source "Component Story Format 3 is here", Storybook blog](/images/storybook-18-03-2023/sb-7-tests.gif 'Source "Component Story Format 3 is here", Storybook blog')
 
-Para que esta manera de testear sea una opción viable, necesitamos poder integrar las pruebas en el _pipeline_ de integración continua de la aplicación. _Storybook_ nos proporciona un [_test runner_](https://storybook.js.org/addons/@storybook/test-runner) que transforma todas las interacciones a nivel de historia en tests que podemos correr en modo _headless_. Incluye opciones para generar informes de cobertura. Además, cuando un test falla, te vincula directamente a la historia de _Storybook_ para poder visualizar el error.
+In order for this to be a viable testing option, a way to integrate this tests in the continuous integration pipeline of our application is needed. _Storybook_ offers a [test runner](https://storybook.js.org/addons/@storybook/test-runner) that transform all the story-level interactions into tests that we can run in headless mode. It includes options for generate coverage reports. And, when a test fails, it prints a direct link to the _Storybook_ story that is failing so we can visualize the error.
 
-Aunque funciona con _Playwright_ por detrás, lo que nos obliga en cierta medida a familiarizarnos con esta herramienta y añadirla a nuestro stack, es una opción que merece la pena explorar.
+Though it works with _Playwrint_ behind the scenes, which kind of forces us to get familiar with a new tool and add it to our stack, looks like a option worthy of further exploration.
 
-_Storybook_ cuenta con toda una sección de [documentación sobre testing](https://storybook.js.org/tutorials/ui-testing-handbook/).
+_Storybook_ features a complete section of [documentation about testing](https://storybook.js.org/tutorials/ui-testing-handbook/) on their site.
 
-## ¿Cuándo empezamos?
+## When do we start?
 
-Actualmente la versión estable de _Storybook_ sigue siendo la 6.5. y el equipo está puliendo [los últimos detalles](https://github.com/orgs/storybookjs/projects/8?ref=storybook-blog) para la release. Pero podemos empezar a probar nueva versión si instalamos `storybook@next`. Si queremos empezar a pensar en la migración a la nueva versión, _Storybook_ facilita [una guía](https://chromatic-ui.notion.site/Storybook-7-migration-guide-dbf41fa347304eb2a5e9c69b34503937) con los cambios.
+At the moment, _Storybook_ stable version remains 6.5. and the team is polishing [the final details](https://github.com/orgs/storybookjs/projects/8?ref=storybook-blog) before the release. We can start to test the new version by installing `storybook@next`. If we want to start thinking about the migration to this new version, _Storybook_ have put to your disposal [a guide](https://chromatic-ui.notion.site/Storybook-7-migration-guide-dbf41fa347304eb2a5e9c69b34503937) that cover all the changes needed.
 
-Aunque la nueva versión presenta numerosos cambios interesantes, ya sólo por el ahorro de tiempo y código que va a suponer el nuevo formato para escribir historias, estoy impaciente por tener la oportunidad de integrarla en un nuevo proyecto.
+Though the new version present itself with a number of interesting changes, the time and code we're saving thanks to the new format for writing stories, makes me impaction to have the change of integrate it in a new project.n nuevo proyecto.
 
 ## References
 

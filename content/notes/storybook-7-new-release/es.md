@@ -6,7 +6,6 @@ socialImage: '/images/storybook-18-03-2023/og.png'
 published: '18/03/2023'
 status: 'draft'
 language: 'es'
-hideFromList: true,
 tags:
   - 'Tools'
   - 'DX'
@@ -35,7 +34,7 @@ Los _storybooks_ dentro de nuestras aplicaciones son mucho más extensos y sofis
 
 ### Un diseño renovado de la interfaz
 
-En cuanto a la renovación del diseño, pasa por un cambio en el set de iconos, el rediseño y consolidación de los menus flotantes y otro montón de ajustes que vienen a mejorar el aspecto general y la experiencia de uso de la interfaz. El cambio más notable es la desapariciónde ubicación del tab de "Docs" en el menu superior de las historias, para integrarse en el menu lateral, como veremos en el apartado de [Documentación](#documentación-en-storybook-7).
+En cuanto a la renovación del diseño, pasa por un cambio en el set de iconos, el rediseño y consolidación de los menus flotantes y otro montón de ajustes que vienen a mejorar el aspecto general y la experiencia de uso de la interfaz. El cambio más notable es la desaparición del tab de "Docs" en el menu superior de las historias, para integrarse en el menu lateral, como veremos en el apartado de [Documentación](#documentación-en-storybook-7).
 
 ### Una manera más simple de escribir historias
 
@@ -66,8 +65,8 @@ Aunque las historias aceptan una propiedad `render`, por si queremos sobreescrib
 
 ```tsx
 export const Primary = {
-	render: (args) => <Button {...args} specialProp={specialProp}/>
-	args: { primary: true }
+  render: (args) => <Button {...args} specialProp={specialProp}/>
+  args: { primary: true }
 }
 ```
 
@@ -228,7 +227,7 @@ Si, en cambio, lo que buscamos es un control total sobre la documentación, pode
 
 ## Testing en Storybook 7
 
-_Storybook_ puede considerarse una herramienta de testeo en sí misma. Pero, además, ha ido incluyendo más y más integraciones que permiten hacer diferentes tipos de tests directamente en el marco de la herramienta, incluidos tests unitarios y de integración. Especialmente para equipos especializados en el desarrollo de UI, parece una manera bastante interesante de concentrar los esfuerzos de _testing_ en un solo punto de la aplicacion, y ahorrarnos configurar y hacer convivir, con su lógico solapado, diferentes herramientas de testeo.
+_Storybook_ puede considerarse una herramienta de testeo en sí misma. Pero, además, ha ido incluyendo más y más integraciones que permiten hacer diferentes tipos de tests directamente en el marco de la herramienta, incluidos tests unitarios y de integración. Esto parece una manera bastante interesante de concentrar los esfuerzos de _testing_ en un solo punto de la aplicacion, particulamente para equipos especializados en el desarrollo de UI. Podemos ahorrarnos configurar y hacer convivir, con su inevitable solapado, diferentes herramientas de testeo
 
 Para crear un test de componente, necesitamos tres pasos:
 
