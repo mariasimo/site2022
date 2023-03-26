@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import type { ComponentType } from 'react';
+import { from } from '../../../../styles/responsive';
 
 const Container = styled(motion.span)`
   * {
     line-height: 1.4;
+  }
+
+  ${from.desktop} {
+    * {
+      line-height: 1.2;
+    }
   }
 `;
 

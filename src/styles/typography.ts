@@ -13,6 +13,11 @@ const HeadingLBase = styled.span`
   ${from.tabletPortrait} {
     font-size: 2.625rem;
   }
+
+  ${from.desktop} {
+    font-size: 3.75rem;
+    line-height: 1.1;
+  }
 `;
 
 export const HeadingL = styled(HeadingLBase)`
@@ -47,6 +52,10 @@ const BodyLBase = styled.span`
   line-height: 1.5;
   letter-spacing: 0.015rem;
   word-spacing: 0.0625rem;
+
+  ${from.desktop} {
+    font-size: 1.5rem;
+  }
 `;
 
 export const BodyL = styled(BodyLBase)`

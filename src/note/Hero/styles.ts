@@ -17,6 +17,10 @@ export const Cover = styled.div`
   ${from.mobile} {
     margin-block-end: 6rem;
   }
+
+  ${from.desktop} {
+    margin-block-end: 10rem;
+  }
 `;
 
 export const ScrollButtonContainer = styled(motion.div)`
@@ -56,10 +60,18 @@ export const Circle = styled(motion.span)`
 export const Title = styled(HeadingLBold).attrs({ as: 'h1' })`
   margin-block-end: 3rem;
   max-width: 36rem;
+
+  ${from.desktop} {
+    max-width: 42rem;
+  }
 `;
 
 export const Summary = styled(BodyL).attrs({ as: 'p' })`
   max-width: 36rem;
+
+  ${from.desktop} {
+    max-width: 42rem;
+  }
 `;
 
 export const Meta = styled.div`
