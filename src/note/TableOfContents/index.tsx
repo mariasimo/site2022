@@ -1,5 +1,4 @@
 import formatKebabCase from '$/common/utils/formatKebabCase';
-import type { MutableRefObject } from 'react';
 import ArrowLink from '$/common/components/ArrowLink';
 import { Container, Title, Section, Links, AnchorLink } from './styles';
 import { useRouter } from 'next/router';
@@ -7,11 +6,9 @@ import { useRouter } from 'next/router';
 export default function TableOfContents({
   className,
   sections,
-  contentRef,
 }: {
   className?: string;
   sections: string[];
-  contentRef: MutableRefObject<HTMLDivElement | null>;
 }) {
   const { replace, ...query } = useRouter();
 
@@ -21,10 +18,6 @@ export default function TableOfContents({
     const sectionId = `#${formatKebabCase(
       str.replace(nonAlphaNumericCharsButDash, ''),
     )}`;
-    contentRef?.current?.querySelector(sectionId)?.scrollIntoView({
-      behavior: 'smooth',
-    });
-
     void replace({ ...query, hash: sectionId });
   };
 

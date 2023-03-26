@@ -62,7 +62,7 @@ function NoteView({ note }: { note?: Note }): JSX.Element | null {
         <Contents>
           <Content children={content} />
         </Contents>
-        <TableOfContents sections={sections} contentRef={contentRef} />
+        <TableOfContents sections={sections} />
       </Container>
       {references || backlinks ? (
         <LinksSection>
