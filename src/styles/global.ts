@@ -44,11 +44,7 @@ const GlobalStyle = styled.createGlobalStyle`
   a {
     text-decoration: none;
     transition: color ease-in-out 0.25s;
-
-    &:link,
-    &[href] {
-      color: var(--theme-ink);
-    }
+    color: var(--theme-ink);
   }
 
   #__next {
