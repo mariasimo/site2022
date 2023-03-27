@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme } from '$/styles/themes/ThemeContext';
 import NextLink from 'next/link';
 import {

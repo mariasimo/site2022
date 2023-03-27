@@ -4,17 +4,22 @@ import { from } from '$/styles/responsive';
 import { motion } from 'framer-motion';
 
 export const Container = styled.section`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
   border-block-end: 1px solid var(--theme-line);
+  padding-block-start: 3rem;
 `;
 
 export const Cover = styled.div`
   position: relative;
 
   ${from.mobile} {
+    margin-block-end: 3rem;
+  }
+
+  ${from.tabletLandscape} {
     margin-block-end: 6rem;
   }
 
@@ -31,7 +36,7 @@ export const ScrollButtonContainer = styled(motion.div)`
   align-items: center;
   cursor: default;
 
-  ${from.tabletPortrait} {
+  ${from.tabletLandscape} {
     display: flex;
   }
 `;
