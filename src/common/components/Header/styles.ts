@@ -113,6 +113,7 @@ export const Bold = styled(BodySBold).attrs({ as: 'span' })`
 export const ThemeSwitcher = styled(DefaultThemeSwitcher)`
   margin-block-start: 0.25rem;
   flex-shrink: 0;
+  max-width: 1.5rem;
 `;
 
 export const Badge = styled(DefaultBadge)`
