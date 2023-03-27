@@ -45,7 +45,8 @@ const GlobalStyle = styled.createGlobalStyle`
     text-decoration: none;
     transition: color ease-in-out 0.25s;
 
-    &:active {
+    &:link:visited,
+    &:link:active {
       color: var(--theme-ink);
     }
   }
