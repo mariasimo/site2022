@@ -24,7 +24,7 @@ export const Lead = styled(HeadingL).attrs({ as: 'h1' })`
 export const LeadBold = styled(HeadingLBold).attrs({ as: 'span' })``;
 
 export const Summary = styled(BodyL).attrs({ as: 'p' })`
-  max-width: 43.8rem;
+  max-width: 48rem;
   display: none;
 
   ${from.tabletPortrait} {

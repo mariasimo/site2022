@@ -69,6 +69,11 @@ export const Title = styled(HeadingLBold).attrs({ as: 'h1' })`
   ${from.desktop} {
     max-width: 42rem;
   }
+
+  ${from.desktop} {
+    font-size: 3.75rem;
+    line-height: 1.1;
+  }
 `;
 
 export const Summary = styled(BodyL).attrs({ as: 'p' })`
@@ -76,6 +81,10 @@ export const Summary = styled(BodyL).attrs({ as: 'p' })`
 
   ${from.desktop} {
     max-width: 42rem;
+  }
+
+  ${from.desktop} {
+    font-size: 1.5rem;
   }
 `;
 
