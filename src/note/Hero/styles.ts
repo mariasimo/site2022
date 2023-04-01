@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { BodyL, BodyXS, BodyXSBold, HeadingLBold } from '$/styles/typography';
 import { from } from '$/styles/responsive';
 import { motion } from 'framer-motion';
@@ -21,6 +21,10 @@ export const Cover = styled.div`
 
   ${from.tabletLandscape} {
     margin-block-end: 6rem;
+  }
+
+  ${from.desktop} {
+    margin-block-end: 10rem;
   }
 `;
 
@@ -61,10 +65,27 @@ export const Circle = styled(motion.span)`
 export const Title = styled(HeadingLBold).attrs({ as: 'h1' })`
   margin-block-end: 3rem;
   max-width: 36rem;
+
+  ${from.desktop} {
+    max-width: 42rem;
+  }
+
+  ${from.desktop} {
+    font-size: 3.75rem;
+    line-height: 1.1;
+  }
 `;
 
 export const Summary = styled(BodyL).attrs({ as: 'p' })`
   max-width: 36rem;
+
+  ${from.desktop} {
+    max-width: 42rem;
+  }
+
+  ${from.desktop} {
+    font-size: 1.5rem;
+  }
 `;
 
 export const Meta = styled.div`
@@ -130,4 +151,44 @@ export const Status = styled(Text)`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  white-space: wrap;
+`;
+
+export const StatusText = styled(Text)`
+  white-space: pre-wrap;
+`;
+
+export const Translations = styled.ul`
+  display: inline;
+  margin: 0;
+  padding: 0;
+`;
+
+export const Language = styled.li<{ $isActive?: boolean }>`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+
+  &:not(:last-child):after {
+    content: ', ';
+  }
+
+  ${({ $isActive }) => {
+    if ($isActive) {
+      return css`
+        a {
+          font-weight: 500;
+        }
+      `;
+    } else {
+      return css`
+        a:link,
+        a:visited,
+        a:active {
+          color: var(--theme-interactive);
+        }
+      `;
+    }
+  }}
 `;

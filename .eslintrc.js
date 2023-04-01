@@ -34,8 +34,8 @@ module.exports = {
         },
       },
       rules: {
-        '@typescript-eslint/no-unused-vars': 'off',
-        'arrow-body-style': 'warn',
+        // Disabled because Typescript takes care of that already.
+        '@typescript-eslint/no-unused-vars': 'warn',
         'import/no-unresolved': 'off',
         'jsx-a11y/anchor-is-valid': 'off',
         'no-void': 'off',

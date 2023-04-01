@@ -1,5 +1,16 @@
-import { getLatestFilesFromDirectory, getMarkdownContents } from './getFiles';
+import {
+  getFilesFromDirectory,
+  getMarkdownContents,
+  getTranslationsList,
+} from './getFiles';
 import contentConfig from '../../../content.config';
+
+export const languagesDictionary = {
+  en: 'English',
+  es: 'Spanish',
+} as const;
+
+export type Language = keyof typeof languagesDictionary;
 
 type NoteFrontmatter = {
   title: string;
@@ -7,8 +18,9 @@ type NoteFrontmatter = {
   lastUpdated: string;
   tags?: string[];
   comingSoon?: boolean;
+  hideFromList?: boolean;
   status: 'draft' | 'inProgress' | 'completed';
-  language?: 'Spanish' | 'English' | null;
+  language: Language | null;
   socialImage?: string | null;
   metaTitle?: string | null;
   metaDescription?: string | null;
@@ -20,34 +32,31 @@ export type Note = NoteFrontmatter & {
   content: string;
   references: string | null;
   backlinks: string | null;
+  translations: Language[] | null;
 };
 
 export type NoteCard = Pick<
   Note,
-  'slug' | 'title' | 'comingSoon' | 'tags' | 'language'
+  'slug' | 'title' | 'comingSoon' | 'tags' | 'translations' | 'language'
 >;
 
 export function listNotes() {
-  const notesList = getLatestFilesFromDirectory(contentConfig.notesDirectory);
+  const notesList = getFilesFromDirectory(contentConfig.notesDirectory);
 
   return notesList
     .map((fileName) => fileName.replace('.md', ''))
-    .filter((slug) => {
-      const { data: frontmatter } = getMarkdownContents(
-        contentConfig.notesDirectory,
-        slug,
-      );
+    .filter((path) => {
+      const { data: frontmatter } = getMarkdownContents(path);
 
       return !frontmatter.comingSoon;
     });
 }
 
-export function getNote(slug: string): Note | undefined {
-  const {
-    data,
-    content: rawContent,
-    excerpt,
-  } = getMarkdownContents(contentConfig.notesDirectory, slug);
+export function getNote(slug: string, locale?: string): Note {
+  const translationsList = getTranslationsList(slug) as Language[];
+
+  const path = translationsList?.length && locale ? `${slug}/${locale}` : slug;
+  const { data, content: rawContent, excerpt } = getMarkdownContents(path);
 
   // Right now only casting is posible to type frontmatter
   // https://github.com/jonschlinkert/gray-matter/issues/135
@@ -58,15 +67,21 @@ export function getNote(slug: string): Note | undefined {
 
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
+  const translations = translationsList.length
+    ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
+    : [frontmatter?.language ?? 'en'];
+
   const note: Note = {
     title: frontmatter.title,
     summary: excerpt ?? '',
     comingSoon: frontmatter.comingSoon ?? false,
+    hideFromList: frontmatter.hideFromList ?? false,
     tags: frontmatter.tags ?? [],
     published: frontmatter.published ?? '',
     lastUpdated: frontmatter?.lastUpdated ?? '',
     status: frontmatter?.status ?? 'draft',
-    language: frontmatter?.language ?? null,
+    translations,
+    language: frontmatter.language ?? 'en',
     socialImage: frontmatter?.socialImage ?? null,
     metaTitle: frontmatter?.metaTitle ?? frontmatter.title,
     metaDescription: frontmatter?.metaDescription ?? null,
@@ -76,26 +91,36 @@ export function getNote(slug: string): Note | undefined {
     backlinks: backlinks ?? null,
   };
 
-  return slug ? note : undefined;
+  return note;
 }
 
 export function getNotesCards(): NoteCard[] {
-  const latestNotesList = getLatestFilesFromDirectory(
-    contentConfig.notesDirectory,
-    4,
-  );
+  const latestNotesList = getFilesFromDirectory(contentConfig.notesDirectory)
+    .map((fileName) => fileName.replace('.md', ''))
+    .filter((path) => {
+      const { data: frontmatter } = getMarkdownContents(path);
+
+      return !frontmatter.hideFromList;
+    });
 
   return latestNotesList
+    .slice(0, 4)
     .map((fileName) => {
-      const slug = fileName.replace('.md', '');
-      const note = getNote(slug);
+      const [slug, locale] = fileName
+        .replace('.md', '')
+        .split('/')
+        .filter(Boolean);
+
+      const note = getNote(slug, locale);
 
       return {
         title: note?.title ?? '',
         slug: slug,
         tags: note?.tags,
         comingSoon: note?.comingSoon,
-        language: note?.language ?? null,
+        hideFromList: note?.hideFromList,
+        translations: note?.translations ?? [note.language ?? 'en'],
+        language: note?.language,
         date: !note?.comingSoon && (note?.lastUpdated || note?.published),
       };
     })

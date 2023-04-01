@@ -8,6 +8,7 @@ export const sizes = {
   tabletPortrait: 767,
   tabletLandscape: 960,
   laptop: 1200,
+  desktop: 1441,
 };
 
 const minWidthQuery = (width: number) => `@media (min-width: ${width}px)`;

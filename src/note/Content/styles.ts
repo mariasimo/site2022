@@ -150,6 +150,7 @@ const ContentStyles = css`
 export const Title2 = styled(HeadingMBold).attrs({ as: 'h2' })`
   grid-column: 1/7;
   padding-block-end: 2rem;
+  scroll-margin-block-start: 2rem;
 
   ${from.tabletPortrait} {
     grid-column: 1/3;

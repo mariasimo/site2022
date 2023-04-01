@@ -7,6 +7,7 @@ import {
   DateInfo,
   Text,
   Status,
+  StatusText,
   Cover,
   ScrollButton,
   ScrollButtonContainer,
@@ -16,6 +17,8 @@ import {
   Circle,
   GoHomeBlock,
   LearnMoreLink,
+  Translations,
+  Language,
 } from './styles';
 import scrollToContent from '$/common/utils/scrollToContent';
 import type { Props } from './types';
@@ -30,6 +33,8 @@ import { useAnimation } from 'framer-motion';
 import MarkdownParser from '../../common/components/MarkdownParser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { languagesDictionary } from '../../common/utils/notes';
+import NextLink from 'next/link';
 
 const statusDictionary: { [key: string]: string } = {
   draft: "Draft, I'm still learning about this",
@@ -43,7 +48,7 @@ export default function NoteHero({
   contentRef,
   published,
   lastUpdated,
-  language,
+  translations,
   status: rawStatus,
   socialImage,
   metaTitle,
@@ -53,7 +58,9 @@ export default function NoteHero({
   const magnetRef = useRef(null);
   const { x, y } = useMagnetEffect(magnetRef, { strength: 0.7 });
   const controls = useAnimation();
-  const { asPath } = useRouter();
+  const { asPath, query, locale } = useRouter();
+
+  const slug = typeof query.slug === 'string' ? query.slug : undefined;
 
   return (
     <Container>
@@ -97,7 +104,7 @@ export default function NoteHero({
         </Title>
         <FadeInBlock slideValue={50} delay={0.5}>
           <Summary>
-            <MarkdownParser children={summary} />
+            <MarkdownParser children={summary} components={{ p: 'span' }} />
           </Summary>
         </FadeInBlock>
         <FadeInBlock slideValue={0} delay={0.75}>
@@ -141,9 +148,8 @@ export default function NoteHero({
           ) : null}
         </DateInfo>
         <StatusInfo>
-          <Text>Status</Text>
           <Status>
-            {status}
+            Status{' '}
             <Tooltip>
               <Paragraph>
                 The <Bold>epistemic status</Bold> is the degree of certainty or
@@ -163,8 +169,26 @@ export default function NoteHero({
               </Paragraph>
             </Tooltip>
           </Status>
+          <StatusText>{status}</StatusText>
         </StatusInfo>
-        <Block>{language ? <Text>Language: {language}</Text> : null}</Block>
+        <Block>
+          {' '}
+          {translations && translations?.length > 1 && slug ? (
+            <Translations role="list">
+              {translations?.map((translation) => (
+                <Language key={translation} $isActive={locale === translation}>
+                  <NextLink href={`/${slug}`} locale={translation}>
+                    {languagesDictionary[translation]}
+                  </NextLink>
+                </Language>
+              ))}
+            </Translations>
+          ) : (
+            <Language key={translations?.[0]}>
+              {languagesDictionary[translations?.[0] ?? 'en']}
+            </Language>
+          )}
+        </Block>
       </Meta>
     </Container>
   );

@@ -18,7 +18,7 @@ import { useRef } from 'react';
 import type { Note } from '$/common/utils/notes';
 import { externalLinks } from '$/common/utils/links';
 
-function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
+function NoteView({ note }: { note?: Note }): JSX.Element | null {
   const contentRef = useRef<HTMLDivElement>(null);
   if (!note) return null;
 
@@ -30,7 +30,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
     backlinks,
     published,
     lastUpdated,
-    language,
+    translations,
     socialImage,
     status,
     metaDescription,
@@ -52,7 +52,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
         contentRef={contentRef}
         published={published}
         lastUpdated={lastUpdated}
-        language={language}
+        translations={translations}
         status={status}
         socialImage={socialImage}
         metaTitle={metaTitle}
@@ -62,7 +62,7 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
         <Contents>
           <Content children={content} />
         </Contents>
-        <TableOfContents sections={sections} contentRef={contentRef} />
+        <TableOfContents sections={sections} />
       </Container>
       {references || backlinks ? (
         <LinksSection>
@@ -101,4 +101,4 @@ function BlogEntryPage({ note }: { note?: Note }): JSX.Element | null {
   );
 }
 
-export default BlogEntryPage;
+export default NoteView;

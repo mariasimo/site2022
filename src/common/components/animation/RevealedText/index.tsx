@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import type { ComponentType } from 'react';
+import { from } from '../../../../styles/responsive';
 
 const Container = styled(motion.span)`
   * {
     line-height: 1.4;
+  }
+
+  ${from.desktop} {
+    * {
+      line-height: 1.2;
+    }
   }
 `;
 
@@ -46,8 +53,8 @@ const RevealedText = ({
   staggerWords?: number;
 }) => {
   const Style = content.style;
-
   const words = content.text.split(' ').map((w) => `${w} `);
+
   return (
     <Container
       initial="hidden"
@@ -56,7 +63,7 @@ const RevealedText = ({
       custom={{ staggerWords }}
     >
       {words.map((word, index) => (
-        <WordMask key={`${word}+${index}`}>
+        <WordMask key={`${word}+${index}+${content.text}`}>
           <Word variants={item} custom={{ duration }}>
             {Style ? <Style>{word}</Style> : word}
           </Word>

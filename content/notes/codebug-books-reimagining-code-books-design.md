@@ -5,7 +5,7 @@ metaDescription: 'Así serían las cubiertas de algunos de mis libros favoritos 
 socialImage: '/images/codebug-books-23-03-2023/og.png'
 published: '23/03/2023'
 status: 'completed'
-language: 'Spanish'
+language: 'es'
 tags:
   - 'Code fiction'
   - 'Programming books'
