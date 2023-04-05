@@ -12,7 +12,7 @@ tags:
   - 'UI development'
 ---
 
-_Storybook_ is about to release a new major after two years, which introduces meaningful changes related to the writing of stories, new ways of documentation, and lots of possibilities for testing inside the tool.
+_Storybook_ is about to release a new major update after two years, which introduces meaningful changes related to the writing of stories, new ways of documentation, and lots of possibilities for testing inside the tool.
 
 ---
 
