@@ -12,7 +12,7 @@ tags:
   - 'UI development'
 ---
 
-_Storybook_ is about to release a new mayor after two years, which introduces meaningful changes related to the writing of stories, new ways of documentation, and lots of possibilities for testing inside the tool.
+_Storybook_ is about to release a new major after two years, which introduces meaningful changes related to the writing of stories, new ways of documentation, and lots of possibilities for testing inside the tool.
 
 ---
 
@@ -270,9 +270,11 @@ _Storybook_ features a complete section of [documentation about testing](https:/
 
 ## So, when do we start?
 
-At the moment, _Storybook_ stable version remains 6.5. and the team is polishing [the finishing details](https://github.com/orgs/storybookjs/projects/8?ref=storybook-blog) before the release. We can start testing the new version by installing `storybook@next`. If we want to start learning about the migration process, _Storybook_ has provided [a guide](https://chromatic-ui.notion.site/Storybook-7-migration-guide-dbf41fa347304eb2a5e9c69b34503937) a guide covering all the necessary changes.
+Well, what about now? When I originally wrote [the original article in Spanish](es.md), the stable version of Storybook was 6.5, and the team was polishing [the finishing details](https://github.com/orgs/storybookjs/projects/8?ref=storybook-blog) before its release.
 
-Although the new version presents numerous interesting changes, just the time and code savings that the new format for writing stories will bring, makes me eager to have the opportunity to integrate it into a new project.
+Now the latest version has been launched 🎉, and we can start benefiting from all its new features. If you have a codebase that you would like to update to the new version, _Storybook_ has provided [a guide](https://storybook.js.org/docs/react/migration-guide) to help you make the necessary changes.
+
+This new version is packed with lots of good stuff, and just the time and code savings that the new story format will bring, makes me eager to start integrating it into my side projects and company's projects.
 
 ## References
 
