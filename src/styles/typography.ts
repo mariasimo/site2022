@@ -43,7 +43,7 @@ export const HeadingMBold = styled(HeadingMBase)`
 
 const BodyLBase = styled.span`
   font-family: var(--theme-font-display);
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   line-height: 1.5;
   letter-spacing: 0.015rem;
   word-spacing: 0.0625rem;
@@ -76,6 +76,26 @@ export const BodyM = styled(BodyMBase)`
 `;
 
 export const BodyMBold = styled(BodyMBase)`
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+`;
+
+const BodySMBase = styled.span`
+  font-family: var(--theme-font-text);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0.02rem;
+  word-spacing: 0.0625rem;
+`;
+
+export const BodySM = styled(BodySMBase)`
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+`;
+
+export const BodySMBold = styled(BodySMBase)`
   font-weight: 500;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

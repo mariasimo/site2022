@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { from } from '$/styles/responsive';
-import { BodyM, BodyMBold } from '$/styles/typography';
+import { BodySMBold, BodySM } from '$/styles/typography';
 
 export const Container = styled.div`
   padding-block: 4rem;
@@ -36,7 +36,7 @@ export const TitleColumn = styled.div`
   }
 `;
 
-export const Title = styled(BodyMBold).attrs({ as: 'h2' })``;
+export const Title = styled(BodySMBold).attrs({ as: 'h2' })``;
 
 export const ContentColumns = styled.div`
   min-width: 0;
@@ -68,5 +68,5 @@ export const LinksContainer = styled.div`
   gap: 1rem;
 `;
 
-export const Text = styled(BodyM)``;
-export const Bold = styled(BodyMBold)``;
+export const Text = styled(BodySM)``;
+export const Bold = styled(BodySMBold)``;
