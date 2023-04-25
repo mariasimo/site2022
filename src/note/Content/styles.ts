@@ -35,6 +35,7 @@ export const Container = styled.article`
 
     ol {
       padding-left: 1rem;
+      scroll-margin-block-start: 2rem;
 
       > li {
         font-family: var(--theme-font-text);
@@ -165,7 +166,11 @@ export const Title3 = styled(BodyLBold).attrs({ as: 'h3' })`
 
 export const Title4 = styled(BodyMBold).attrs({ as: 'h4' })`
   ${ContentStyles}
-  margin-block: 1rem 0;
+  margin-block: 1rem 1rem;
+
+  ${from.mobile} {
+    font-size: 1.25rem;
+  }
 `;
 
 export const Text = styled(BodyM).attrs({ as: 'p' })`

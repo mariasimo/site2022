@@ -3,12 +3,8 @@ import { from } from './responsive';
 
 const HeadingLBase = styled.span`
   font-family: var(--theme-font-display);
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   line-height: 1.2;
-
-  ${from.mobile} {
-    font-size: 1.8rem;
-  }
 
   ${from.tabletPortrait} {
     font-size: 2.625rem;
