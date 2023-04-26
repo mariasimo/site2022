@@ -45,7 +45,11 @@ async function convertMarkdownToJson() {
       `${fileName}-${data.language ?? 'en'}.json`,
     );
 
-    const json = JSON.stringify(data);
+    const json = JSON.stringify({
+      title: data.title,
+      language: data.language,
+      kudosCount: data.kudosCount,
+    });
 
     fs.appendFile(
       jsonFilePath,
