@@ -68,6 +68,8 @@ export function getNote(slug: string, locale?: string): Note {
 
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
+  // Move this to a recommendation function
+  // Take language in account. If currently at /en recommend en, if /es, recommend es
   const otherNotesLinks = getFilesFromDirectory(contentConfig.notesDirectory, 2)
     .map((fileName) => {
       const notePath = fileName.replace('.md', '');

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 import ErrorView from '../../containers/404';
 
 interface Props {

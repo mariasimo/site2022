@@ -1,0 +1,11 @@
+{
+  "title": "Guía de EsLint, parte 2: migrar a Flat Config",
+  "metaTitle": "Guía de EsLint, parte 2: migrar a Flat Config",
+  "metaDescription": "El linter más popular del ecosistema de Javascript se renueva con flat config, una nueva API de configuración más simple y potente. En este artículo, aprenderemos sobre las mejoras del nuevo sistema y nos adelantaremos para adoptarlo en nuestros proyectos.",
+  "socialImage": "/images/eslint-guide-04-2023/og.png",
+  "published": "19/04/2023",
+  "status": "draft",
+  "language": "es",
+  "hideFromList": true,
+  "tags": ["Tools", "DX", "Linter", "Code standards", "NPM dependency"]
+}

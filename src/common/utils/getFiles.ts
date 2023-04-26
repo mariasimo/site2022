@@ -1,14 +1,15 @@
 import fs from 'fs';
+import path from 'path';
 import matter from 'gray-matter';
 import contentConfig from '../../../content.config';
 
 const readSubDirsRecursive = function (
-  path: string,
+  dir: string,
   files: string[] = [],
   maxFiles?: number,
 ) {
-  fs.readdirSync(path).forEach(function (file) {
-    const subpath = path + '/' + file;
+  fs.readdirSync(dir).forEach(function (file) {
+    const subpath = path.join(dir, file);
 
     if (fs.lstatSync(subpath).isDirectory()) {
       readSubDirsRecursive(subpath, files);
@@ -32,9 +33,9 @@ export function getFilesFromDirectory(dir: string, maxFiles?: number) {
     .map((file) => file.replace(dir, ''));
 }
 
-export function getMarkdownContents(path: string) {
+export function getMarkdownContents(filePath: string) {
   const fileName = fs.readFileSync(
-    `${contentConfig.notesDirectory}${path}.md`,
+    `${contentConfig.notesDirectory}${filePath}.md`,
     'utf-8',
   );
   const contents = matter(fileName, {
@@ -44,8 +45,8 @@ export function getMarkdownContents(path: string) {
   return contents;
 }
 
-export function getTranslationsList(path: string): string[] {
-  const dir = `${contentConfig.notesDirectory}${path.replace('/', '')}`;
+export function getTranslationsList(filePath: string): string[] {
+  const dir = `${contentConfig.notesDirectory}${filePath.replace('/', '')}`;
 
   if (
     !fs.existsSync(dir) ||
