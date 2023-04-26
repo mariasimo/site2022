@@ -26,6 +26,8 @@ export default async function handler(
       const newData = { ...data, kudosCount: count };
       const newJsonContent = JSON.stringify(newData);
 
+      // eslint-disable-next-line no-console
+      console.log({ jsonFilePath, jsonContent, data, newData });
       await fs.promises.writeFile(jsonFilePath, newJsonContent, 'utf8');
 
       res.status(200).send({ success: true });
