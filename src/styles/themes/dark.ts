@@ -6,7 +6,7 @@ const dark = {
   colors: {
     paper: '#16181d',
     ink: '#cfc4c4',
-    inkHighConstrast: '#ffffff',
+    inkHighContrast: '#ffffff',
     accent: 'blue',
     interactive: '#ffbc00',
     line: '#707070',

@@ -5,6 +5,7 @@ const light = {
   ...base,
   colors: {
     ink: '#242832',
+    inkHighContrast: '#000000',
     paper: '#f5f5f5',
     accent: '#ffbc00',
     interactive: 'blue',

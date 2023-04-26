@@ -36,19 +36,24 @@ async function convertMarkdownToJson() {
 
   for (const filePath of filePaths) {
     const { data } = getMarkdownContents(filePath);
+
     const fileName = path
       .relative(postsDirectory, filePath)
       .replace('.md', '')
       .split('/')[0];
+
     const jsonFilePath = path.join(
       dataDirectory,
       `${fileName}-${data.language ?? 'en'}.json`,
     );
 
+    const fileContents = await fs.promises.readFile(jsonFilePath, 'utf8');
+    const currentKudos = JSON.parse(fileContents).kudosCount ?? 0;
+
     const json = JSON.stringify({
       title: data.title,
       language: data.language,
-      kudosCount: data.kudosCount,
+      kudosCount: currentKudos,
     });
 
     fs.appendFile(

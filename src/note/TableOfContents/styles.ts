@@ -58,7 +58,7 @@ export const Footer = styled.footer`
 export const KudosContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
 `;
 
 export const KudosEmoji = styled.span`
@@ -68,6 +68,7 @@ export const KudosEmoji = styled.span`
 export const KudosText = styled(BodyS)`
   font-variant-numeric: tabular-nums;
   width: 2rem;
+  transition: color ease 0.15s;
 `;
 
 export const KudosButton = styled.button`
@@ -79,8 +80,11 @@ export const KudosButton = styled.button`
 
   &:hover {
     ${KudosEmoji} {
-      display: flex;
-      transform: scale(1.2);
+      transform: scale(1.3);
+      transition: transform ease 0.15s;
     }
+  }
+  &:active + * {
+    color: var(--theme-inkHighContrast);
   }
 `;
