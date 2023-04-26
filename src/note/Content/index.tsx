@@ -78,17 +78,31 @@ function RenderTitleWithLine({
   );
 }
 
+export type Width = 'full' | 'content' | `${number}rem` | null;
+
+const getWidth = (value: string | null): Width => {
+  if (value === 'full' || value === 'content' || value?.includes('rem')) {
+    return value as Width;
+  }
+
+  return null;
+};
+
 function RenderImageWithCaption({
   node,
 }: {
   node: Element;
 }): JSX.Element | null {
   if (!node.properties) return null;
-  const { alt = '', src, title } = node?.properties;
+  const { alt = '', src, title } = node?.properties ?? {};
+
+  const [imageSrc, imageExtraParams] = (src as string).split('?');
+  const params = new URLSearchParams(imageExtraParams);
+  const width = getWidth(params.get('width'));
 
   return (
-    <ImageContainer>
-      {src ? <Image src={src as string} alt={alt as string} /> : null}
+    <ImageContainer $width={width}>
+      {src ? <Image src={imageSrc} alt={alt as string} /> : null}
       {title ? <Caption>{title} </Caption> : null}
     </ImageContainer>
   );

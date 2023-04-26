@@ -2,7 +2,7 @@
 title: 'Guía de EsLint, parte 2: migrar a Flat Config'
 metaTitle: 'Guía de EsLint, parte 2: migrar a Flat Config'
 metaDescription: 'El linter más popular del ecosistema de Javascript se renueva con flat config, una nueva API de configuración más simple y potente. En este artículo, aprenderemos sobre las mejoras del nuevo sistema y nos adelantaremos para adoptarlo en nuestros proyectos.'
-socialImage: '/images/eslint-flat-config-19-04-2023/og.png'
+socialImage: '/images/eslint-guide-04-2023/og.png'
 published: '19/04/2023'
 status: 'draft'
 language: 'es'
@@ -96,7 +96,7 @@ La configuración de cascada tiene algunos problemas:
 
 - **Aumenta la complejidad de la API**. Posteriormente a la configuración en cascada, se añadieron nuevas propiedades al objeto de configuración, como `overrides`, que cumplen con un objetivo similar, especificar reglas para un conjunto de archivos. Tener varias estrategias para solucionar el mismo problema resulta confuso y aumenta la complejidad de tanto de la interfaz como de la implementación.
 
-![EsLint solo usará la configuración de /cypress para los archivos de este directorio, porque hemos añadido `root: true` en la línea 2](/images/eslint-flat-config-19-04-2023/cascade-file-tree.png 'EsLint solo usará la configuración de /cypress para los archivos de este directorio, porque hemos añadido `root: true` en la línea 2')
+![EsLint solo usará la configuración de /cypress para los archivos de este directorio, porque hemos añadido `root: true` en la línea 2](/images/eslint-guide-04-2023/cascade-file-tree.png 'EsLint solo usará la configuración de /cypress para los archivos de este directorio, porque hemos añadido `root: true` en la línea 2')
 
 También en este caso la **flat config** opta por la simplificación. Con dos cambios principales:
 
@@ -108,7 +108,7 @@ También en este caso la **flat config** opta por la simplificación. Con dos ca
 
   La ventaja de esto es que la visibilidad es muy superior, al estar todas las configuraciones contenidas en un único archivo. En caso de conflicto, la precedencia es para las reglas definidas con posterioridad, lo cual es fácil de entender.
 
-![La estructura de la Flat config es un array donde definimos reglas especificas para distintos conjuntos de archivos](/images/eslint-flat-config-19-04-2023/glob-pattern-system.png 'La estructura de la Flat config es un array donde definimos reglas especificas para distintos conjuntos de archivos')
+![La estructura de la Flat config es un array donde definimos reglas especificas para distintos conjuntos de archivos](/images/eslint-guide-04-2023/glob-pattern-system.png 'La estructura de la Flat config es un array donde definimos reglas especificas para distintos conjuntos de archivos')
 
 -> ESTOS SON LOS CAMBIOS EVIDENTES O FUNDAMENTALES. OTROS SE PUEDEN CONSULTAR EN EL ARTICULO Y LA DOC. OTROS LOS IREMOS VIENDO AL MIGRAR LA CONFIGURACIÓN
 
