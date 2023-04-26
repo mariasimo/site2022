@@ -54,37 +54,3 @@ export const Footer = styled.footer`
   margin-block-start: auto;
   gap: 2rem;
 `;
-
-export const KudosContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`;
-
-export const KudosEmoji = styled.span`
-  display: flex;
-`;
-
-export const KudosText = styled(BodyS)`
-  font-variant-numeric: tabular-nums;
-  width: 2rem;
-  transition: color ease 0.15s;
-`;
-
-export const KudosButton = styled.button`
-  background: transparent;
-  box-shadow: none;
-  border: none;
-  cursor: pointer;
-  transition: transform ease 0.15s;
-
-  &:hover {
-    ${KudosEmoji} {
-      transform: scale(1.3);
-      transition: transform ease 0.15s;
-    }
-  }
-  &:active + * {
-    color: var(--theme-inkHighContrast);
-  }
-`;

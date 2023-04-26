@@ -17,7 +17,6 @@ import {
 import { useRef } from 'react';
 import type { Note } from '$/common/utils/notes';
 import { externalLinks } from '$/common/utils/links';
-import { useNoteData } from './connect';
 
 function NoteView({
   note,
@@ -26,7 +25,6 @@ function NoteView({
   jsonPath?: string;
 }): JSX.Element | null {
   const contentRef = useRef<HTMLDivElement>(null);
-  const { kudosCount, handleAddKudos } = useNoteData();
 
   if (!note) return null;
 
@@ -71,11 +69,7 @@ function NoteView({
         <Contents>
           <Content children={content} />
         </Contents>
-        <TableOfContents
-          sections={sections}
-          onKudosClick={handleAddKudos}
-          kudosCount={kudosCount}
-        />
+        <TableOfContents sections={sections} />
       </Container>
       {references || backlinks ? (
         <LinksSection>
