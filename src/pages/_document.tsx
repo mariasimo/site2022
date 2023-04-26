@@ -6,7 +6,6 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document';
-import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 import { fallbackStyles, loadTheme } from '$/styles/themes';
 
@@ -52,32 +51,58 @@ export default class AppDocument extends Document {
     }
   }
 
-  render = (): JSX.Element => (
-    <Html lang="en">
-      <Head>
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="shortcut icon" href="/icon.png" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        {fontsAssets.map((font) => (
-          <link
-            key={font}
-            rel="preload"
-            href={`/fonts/${font}`}
-            as="font"
-            crossOrigin=""
-            type="font/woff2"
-          />
-        ))}
+  render = (): JSX.Element => {
+    const G_ANALYTICS_ID: string | undefined =
+      process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
 
-        <style>{fallbackStyles()}</style>
-        <script dangerouslySetInnerHTML={{ __html: loadTheme }} />
-      </Head>
-      <body>
-        <Main />
-        <div id="portal-root" />
-        <NextScript />
-      </body>
-    </Html>
-  );
+    if (!G_ANALYTICS_ID) {
+      throw new Error('missing GA env var');
+    }
+
+    return (
+      <Html lang="en">
+        <Head>
+          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/icon.png" type="image/svg+xml" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="manifest" href="/manifest.json" />
+          {fontsAssets.map((font) => (
+            <link
+              key={font}
+              rel="preload"
+              href={`/fonts/${font}`}
+              as="font"
+              crossOrigin=""
+              type="font/woff2"
+            />
+          ))}
+
+          <style>{fallbackStyles()}</style>
+          <script dangerouslySetInnerHTML={{ __html: loadTheme }} />
+
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${G_ANALYTICS_ID}`}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${G_ANALYTICS_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+            }}
+          />
+        </Head>
+        <body>
+          <Main />
+          <div id="portal-root" />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  };
 }
