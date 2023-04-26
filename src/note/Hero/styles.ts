@@ -64,11 +64,7 @@ export const Circle = styled(motion.span)`
 
 export const Title = styled(HeadingLBold).attrs({ as: 'h1' })`
   margin-block-end: 3rem;
-  max-width: 36rem;
-
-  ${from.desktop} {
-    max-width: 42rem;
-  }
+  max-width: 44rem;
 
   ${from.desktop} {
     font-size: 3.75rem;
@@ -76,12 +72,9 @@ export const Title = styled(HeadingLBold).attrs({ as: 'h1' })`
   }
 `;
 
-export const Summary = styled(BodyL).attrs({ as: 'p' })`
-  max-width: 36rem;
-
-  ${from.desktop} {
-    max-width: 42rem;
-  }
+export const Summary = styled(BodyL).attrs({ as: 'div' })`
+  max-width: 44rem;
+  white-space: pre-wrap;
 
   ${from.desktop} {
     font-size: 1.5rem;

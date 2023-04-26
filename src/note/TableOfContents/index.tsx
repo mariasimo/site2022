@@ -1,15 +1,26 @@
 import formatKebabCase from '$/common/utils/formatKebabCase';
 import ArrowLink from '$/common/components/ArrowLink';
-import { Container, Title, Section, Links, AnchorLink } from './styles';
+import {
+  Container,
+  Title,
+  Section,
+  Links,
+  AnchorLink,
+  Footer,
+  KudosButton,
+  KudosEmoji,
+  KudosText,
+  KudosContainer,
+} from './styles';
 import { useRouter } from 'next/router';
+import { Props } from './types';
 
 export default function TableOfContents({
   className,
   sections,
-}: {
-  className?: string;
-  sections: string[];
-}) {
+  onKudosClick,
+  kudosCount,
+}: Props) {
   const { replace, ...query } = useRouter();
 
   const handleSmoothScroll = (str: string) => {
@@ -37,10 +48,20 @@ export default function TableOfContents({
           </div>
         </>
       ) : null}
-      <Links>
-        <ArrowLink label="Go to Top" link="#" backlink />
-        <ArrowLink label="Go Home" link="/" backlink />
-      </Links>
+      <Footer>
+        <Links>
+          <ArrowLink label="Go to Top" link="#" backlink />
+          <ArrowLink label="Go Home" link="/" backlink />
+        </Links>
+        <KudosContainer>
+          <KudosButton onClick={onKudosClick}>
+            <KudosEmoji role="img" aria-label="clap">
+              👏
+            </KudosEmoji>
+          </KudosButton>
+          <KudosText>{kudosCount}</KudosText>
+        </KudosContainer>
+      </Footer>
     </Container>
   );
 }

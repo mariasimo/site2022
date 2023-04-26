@@ -1,11 +1,12 @@
 import base from './base';
 
-const light = {
+const dark = {
   name: 'dark',
   ...base,
   colors: {
     paper: '#16181d',
     ink: '#cfc4c4',
+    inkHighContrast: '#ffffff',
     accent: 'blue',
     interactive: '#ffbc00',
     line: '#707070',
@@ -19,4 +20,4 @@ const light = {
   },
 };
 
-export default light;
+export default dark;

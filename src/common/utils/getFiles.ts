@@ -2,13 +2,19 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import contentConfig from '../../../content.config';
 
-const readSubDirsRecursive = function (path: string, files: string[] = []) {
+const readSubDirsRecursive = function (
+  path: string,
+  files: string[] = [],
+  maxFiles?: number,
+) {
   fs.readdirSync(path).forEach(function (file) {
     const subpath = path + '/' + file;
 
     if (fs.lstatSync(subpath).isDirectory()) {
       readSubDirsRecursive(subpath, files);
     } else {
+      if (maxFiles && files.length >= maxFiles) return;
+
       if (typeof file === 'string') {
         files.push(subpath);
       }
@@ -18,8 +24,8 @@ const readSubDirsRecursive = function (path: string, files: string[] = []) {
   return files;
 };
 
-export function getFilesFromDirectory(dir: string) {
-  return readSubDirsRecursive(dir)
+export function getFilesFromDirectory(dir: string, maxFiles?: number) {
+  return readSubDirsRecursive(dir, [], maxFiles)
     .sort(function (a, b) {
       return fs.statSync(b).mtime.getTime() - fs.statSync(a).mtime.getTime();
     })

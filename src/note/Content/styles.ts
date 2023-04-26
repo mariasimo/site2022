@@ -7,6 +7,7 @@ import {
   BodyMBold,
 } from '$/styles/typography';
 import { from } from '$/styles/responsive';
+import type { Width } from '.';
 
 export const Container = styled.article`
   display: grid;
@@ -42,6 +43,9 @@ export const Container = styled.article`
         line-height: 1.7;
         font-weight: 400;
 
+        &:first-child {
+          padding-block-start: 2rem;
+        }
         &:not(:last-child) {
           margin-bottom: 1rem;
         }
@@ -114,8 +118,11 @@ export const Divider = styled.hr`
   }
 `;
 
-export const ImageContainer = styled.div`
-  grid-column: 1/7;
+export const Image = styled.img`
+  width: 100%;
+`;
+
+export const ImageContainer = styled.div<{ $width: Width }>`
   padding-block: 0 2rem;
   width: 100%;
 
@@ -126,10 +133,32 @@ export const ImageContainer = styled.div`
   ${from.tabletPortrait} {
     padding-inline-end: 3.5rem;
   }
-`;
 
-export const Image = styled.img`
-  width: 100%;
+  ${({ $width }) => {
+    if ($width === 'full') {
+      return css`
+        grid-column: 1/7;
+      `;
+    }
+    if ($width === 'content') {
+      return css`
+        grid-column: 3/7;
+      `;
+    }
+
+    if (typeof $width === 'string' && $width.includes('rem')) {
+      return css`
+        grid-column: 1/7;
+
+        ${Image} {
+          width: ${$width};
+        }
+      `;
+    }
+    return css`
+      grid-column: 1/7;
+    `;
+  }}
 `;
 
 export const Caption = styled(BodySBold).attrs({ as: 'p' })`
@@ -165,7 +194,11 @@ export const Title3 = styled(BodyLBold).attrs({ as: 'h3' })`
 
 export const Title4 = styled(BodyMBold).attrs({ as: 'h4' })`
   ${ContentStyles}
-  margin-block: 1rem 0;
+  margin-block: 1rem 1rem;
+
+  ${from.mobile} {
+    font-size: 1.25rem;
+  }
 `;
 
 export const Text = styled(BodyM).attrs({ as: 'p' })`

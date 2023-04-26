@@ -104,7 +104,7 @@ export default function NoteHero({
         </Title>
         <FadeInBlock slideValue={50} delay={0.5}>
           <Summary>
-            <MarkdownParser children={summary} components={{ p: 'span' }} />
+            <MarkdownParser children={summary} />
           </Summary>
         </FadeInBlock>
         <FadeInBlock slideValue={0} delay={0.75}>

@@ -12,7 +12,7 @@ export const languagesDictionary = {
 
 export type Language = keyof typeof languagesDictionary;
 
-type NoteFrontmatter = {
+export type NoteFrontmatter = {
   title: string;
   published: string;
   lastUpdated: string;
@@ -24,6 +24,7 @@ type NoteFrontmatter = {
   socialImage?: string | null;
   metaTitle?: string | null;
   metaDescription?: string | null;
+  kudosCount?: number;
 };
 
 export type Note = NoteFrontmatter & {
@@ -32,6 +33,7 @@ export type Note = NoteFrontmatter & {
   content: string;
   references: string | null;
   backlinks: string | null;
+  otherNotesLinks: string | null;
   translations: Language[] | null;
 };
 
@@ -67,6 +69,25 @@ export function getNote(slug: string, locale?: string): Note {
 
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
+  // Move this to a recommendation function
+  // Take language in account. If currently at /en recommend en, if /es, recommend es
+  const otherNotesLinks = getFilesFromDirectory(contentConfig.notesDirectory, 2)
+    .map((fileName) => {
+      const notePath = fileName.replace('.md', '');
+      const { data: noteFrontmatter } = getMarkdownContents(notePath);
+
+      return { noteFrontmatter, notePath };
+    })
+    .filter(({ noteFrontmatter }) => {
+      return !noteFrontmatter.hideFromList;
+    })
+    .map(({ noteFrontmatter, notePath }) => {
+      return typeof noteFrontmatter?.title === 'string'
+        ? `- [${noteFrontmatter.title}](${notePath})`
+        : null;
+    })
+    .join('\n');
+
   const translations = translationsList.length
     ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
     : [frontmatter?.language ?? 'en'];
@@ -89,6 +110,7 @@ export function getNote(slug: string, locale?: string): Note {
     content,
     references: references,
     backlinks: backlinks ?? null,
+    otherNotesLinks: otherNotesLinks ?? null,
   };
 
   return note;
