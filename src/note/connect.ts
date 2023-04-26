@@ -36,7 +36,7 @@ export const useNoteData = () => {
     };
     fetchInitialKudos().catch(() => {
       // eslint-disable-next-line no-console
-      console.log('Error fetching kudos');
+      console.log('Error fetching initial kudos');
     });
   }, [filename]);
 
