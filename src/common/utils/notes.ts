@@ -32,6 +32,7 @@ export type Note = NoteFrontmatter & {
   content: string;
   references: string | null;
   backlinks: string | null;
+  otherNotesLinks: string | null;
   translations: Language[] | null;
 };
 
@@ -67,6 +68,23 @@ export function getNote(slug: string, locale?: string): Note {
 
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
+  const otherNotesLinks = getFilesFromDirectory(contentConfig.notesDirectory, 2)
+    .map((fileName) => {
+      const notePath = fileName.replace('.md', '');
+      const { data: noteFrontmatter } = getMarkdownContents(notePath);
+
+      return { noteFrontmatter, notePath };
+    })
+    .filter(({ noteFrontmatter }) => {
+      return !noteFrontmatter.hideFromList;
+    })
+    .map(({ noteFrontmatter, notePath }) => {
+      return typeof noteFrontmatter?.title === 'string'
+        ? `- [${noteFrontmatter.title}](${notePath})`
+        : null;
+    })
+    .join('\n');
+
   const translations = translationsList.length
     ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
     : [frontmatter?.language ?? 'en'];
@@ -89,6 +107,7 @@ export function getNote(slug: string, locale?: string): Note {
     content,
     references: references,
     backlinks: backlinks ?? null,
+    otherNotesLinks: otherNotesLinks ?? null,
   };
 
   return note;

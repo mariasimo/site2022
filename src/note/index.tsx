@@ -35,6 +35,7 @@ function NoteView({ note }: { note?: Note }): JSX.Element | null {
     status,
     metaDescription,
     metaTitle,
+    otherNotesLinks,
   } = note;
 
   const sections = note.content
@@ -76,6 +77,12 @@ function NoteView({ note }: { note?: Note }): JSX.Element | null {
             <Item>
               <Title>Backlinks</Title>
               <NoteLinks children={backlinks} />
+            </Item>
+          ) : null}
+          {!backlinks && otherNotesLinks ? (
+            <Item>
+              <Title>Keep exploring</Title>
+              <NoteLinks children={otherNotesLinks} />
             </Item>
           ) : null}
         </LinksSection>
