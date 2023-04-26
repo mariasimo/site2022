@@ -6,5 +6,13 @@
   "published": "19/04/2023",
   "status": "draft",
   "language": "es",
-  "tags": ["Guide", "Tools", "DX", "Linter", "Code standards", "NPM dependency"]
+  "tags": [
+    "Guide",
+    "Tools",
+    "DX",
+    "Linter",
+    "Code standards",
+    "NPM dependency"
+  ],
+  "kudosCount": 9
 }

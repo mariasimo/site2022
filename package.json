@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "convertMarkdownToJson": "node scripts/convertMarkdownToJson.js",
-    "build": "next build",
+    "build": "yarn convertMarkdownToJson && next build",
     "dev": "next dev",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --max-warnings=0",
     "lint:fix": "yarn lint --fix",

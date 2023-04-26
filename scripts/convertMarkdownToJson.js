@@ -39,8 +39,11 @@ async function convertMarkdownToJson() {
     const fileName = path
       .relative(postsDirectory, filePath)
       .replace('.md', '')
-      .replace('/', '-');
-    const jsonFilePath = path.join(dataDirectory, `${fileName}.json`);
+      .split('/')[0];
+    const jsonFilePath = path.join(
+      dataDirectory,
+      `${fileName}-${data.language ?? 'en'}.json`,
+    );
 
     const json = JSON.stringify(data);
 
@@ -49,10 +52,14 @@ async function convertMarkdownToJson() {
       json,
       { encoding: 'utf8', flag: 'w' },
       function (err) {
-        throw err;
+        if (err) {
+          throw err;
+        }
       },
     );
   }
+  // eslint-disable-next-line no-console
+  console.log('🎉 Notes data updated successfully!');
 }
 
 convertMarkdownToJson();

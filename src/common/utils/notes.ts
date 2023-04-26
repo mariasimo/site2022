@@ -12,7 +12,7 @@ export const languagesDictionary = {
 
 export type Language = keyof typeof languagesDictionary;
 
-type NoteFrontmatter = {
+export type NoteFrontmatter = {
   title: string;
   published: string;
   lastUpdated: string;
@@ -24,6 +24,7 @@ type NoteFrontmatter = {
   socialImage?: string | null;
   metaTitle?: string | null;
   metaDescription?: string | null;
+  kudosCount?: number;
 };
 
 export type Note = NoteFrontmatter & {
