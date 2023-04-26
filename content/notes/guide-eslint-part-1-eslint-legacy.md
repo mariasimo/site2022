@@ -7,6 +7,7 @@ published: '19/04/2023'
 status: 'draft'
 language: 'es'
 tags:
+  - 'Guide'
   - 'Tools'
   - 'DX'
   - 'Linter'
@@ -728,24 +729,13 @@ En la parte 2 de esta guía, veremos como migrar nuestra configuración al nuevo
 
 ## References
 
-Más información sobre el release de Flat config:
-
 - [Flat config announcement, part 1](https://eslint.org/blog/2022/08/new-config-system-part-1/)
 - [Flat config announcement, part 2](https://eslint.org/blog/2022/08/new-config-system-part-2/)
 - [Flat config implementation roadmap](https://github.com/eslint/eslint/issues/13481)
-
-Más información sobre la diferencia entre plugins y configs:
-
 - [ESLint Docs: Using a configuration from a plugin](https://eslint.org/docs/latest/use/configure/configuration-files#using-a-configuration-from-a-plugin)
 - [ESLint Docs: Ways to extend](https://eslint.org/docs/latest/extend/ways-to-extend)
 - [Different between extends and plugins](https://prateeksurana.me/blog/difference-between-eslint-extends-and-plugins/)
-
-Más información sobre como usar Prettier y EsLint juntos:
-
 - ["Prettier vs. Linters" - Prettier docs](https://prettier.io/docs/en/comparison.html)
 - ["Stop using _ESLint_ for formatting" - Joshua K. Goldberg at React Miami 2023](https://www.youtube.com/live/mPPZ-NUnR-4?feature=share&t=26572)
-
-Otros:
-
 - [Usar tabs en prettier por accesibilidad](https://github.com/prettier/prettier/issues/7475)
 - [No-floating-promises vs no-void](https://mikebifulco.com/posts/eslint-no-floating-promises)

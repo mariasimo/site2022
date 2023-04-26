@@ -6,6 +6,7 @@ socialImage: '/images/eslint-flat-config-19-04-2023/og.png'
 published: '25/04/2023'
 status: 'draft'
 language: 'es'
+hideFromList: true
 tags:
   - 'Tools'
   - 'DX'
