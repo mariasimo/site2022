@@ -3,7 +3,7 @@ title: 'Guía de ESLint, parte 1: cómo usar ESLint con confianza'
 metaTitle: 'Guía de ESLint, parte 1: cómo usar ESLint con confianza'
 metaDescription: 'El linter más popular del ecosistema de Javascript se renueva con flat config, una nueva API de configuración más simple y potente. En este artículo, revisamos el sistema legacy para sacar el mayor partido de la migración a flat config'
 socialImage: '/images/eslint-guide-04-2023/og.png'
-published: '19/04/2023'
+published: '26/04/2023'
 status: 'draft'
 language: 'es'
 tags:
@@ -23,9 +23,9 @@ _ESLint_ es una herramienta con la que convive cualquier persona que desarrolla 
 
 El objetivo de esta serie de artículos es explicar **cómo compartir nuestra configuración de _ESLint_ como una dependencia externa** para automatizar los estándares de código del equipo de front de [Z1 Digital Studio](https://z1.digital/).
 
-Al empezar a investigar para hacer esto, descubrí que _ESLint_ está en el proceso de lanzar un nuevo sistema de configuración llamado **_flat config_** (que traduciría en algo así como "configuración plana"). Este sistema ya es funcional, tiene soporte en la CLI y documentación oficial disponible desde la versión 8.23.0. Viene a sustituir a **eslintrc** (en adelante el sistema _legacy_ o tradicional), que perderá soporte a partir de la versión 9. En [este enlace](https://github.com/eslint/eslint/issues/13481) puedes consultar del proceso de implementación.
+Al comenzar a investigar cómo hacer esto, descubrí que _ESLint_ está en el proceso de lanzar un nuevo sistema de configuración llamado **_flat config_** (que se traduciría en algo así como "configuración plana"). Este sistema ya es funcional, tiene soporte en la CLI y documentación oficial disponible desde la versión 8.23.0. Viene a sustituir a **eslintrc** (en adelante el sistema _legacy_ o tradicional), que perderá soporte a partir de la versión 9. En [este enlace](https://github.com/eslint/eslint/issues/13481) puedes consultar del proceso de implementación.
 
-**_Flat config_** propone cambios drásticos en la manera en la que configuramos _ESLint_ en los proyectos. Así que merece la pena hacer una pequeña disgresión para aprender sobre la nueva configuración antes de lanzarnos a crear nuestra dependencia externa. Así podemos liderar su adopción y evitamos refactorizar cuando el cambio sea efectivo.
+**_Flat config_** propone cambios drásticos en la manera en la que configuramos _ESLint_ en los proyectos. Por ello, merece la pena hacer una pequeña disgresión para aprender sobre la nueva configuración antes de lanzarnos a crear nuestra dependencia externa. Así podemos liderar su adopción y evitar refactorizar cuando el cambio sea efectivo.
 
 Este artículo asume que has usado _ESLint_ con anterioridad, aunque quizás no hayas entrado en el detalle de cómo funciona o todo lo que puede ofrecer.
 
@@ -37,7 +37,7 @@ El plan para esta serie de artículos es el siguiente:
 
 **Parte 3. Creando una shareable config de _ESLint_**. Profundizamos en las _shareable configs_ y el ecosistema de dependencias de _ESLint_. Incorporamos otras herramientas de análisis estático. Empezamos a configurar nuestro repositorio como dependencia NPM.
 
-**Parte 4. Mejorando la experiencia con herramientas adicionales**. Añadimos gestión de versiones y de dependencias. Creamos un READMe para documentar y facilitar el uso de nuestra dependencia. Exploramos la creación de una CLI para complementarla.
+**Parte 4. Mejorando la experiencia con herramientas adicionales**. Añadimos gestión de versiones y de dependencias. Creamos un README para documentar y facilitar el uso de nuestra dependencia. Exploramos la creación de una CLI para complementarla.
 
 ## Qué es ESLint y porqué es importante
 
