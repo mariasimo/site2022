@@ -41,9 +41,9 @@ El plan para esta serie de artículos es el siguiente:
 
 ## Qué es ESLint y porqué es importante
 
-_ESLint_ es una herramienta de análisis estático de código. Frente a las herramientas de análisis dinámico, como el testing, que necesita ejecutar el código para darnos un resultado, es capaz de analizar nuestro código sin ejecutarlo. De forma que nos ayuda a mantener y mejorar la calidad del código que escribimos al tiempo que lo escribimos.
+_ESLint_ es una herramienta de análisis estático de código. Frente a las herramientas de análisis dinámico, como el testing, que necesita ejecutar el código para darnos un resultado, _ESLint_ es capaz de analizar nuestro código sin ejecutarlo. De forma que nos ayuda a mantener y mejorar la calidad del código que escribimos al tiempo que lo escribimos.
 
-> _ESLint_ es una herramienta que nos ayuda a mantener y mejorar la calidad del código que escribimos al tiempo que lo escribimos
+> _ESLint_ automatiza nuestras opiniones en base a reglas, y nos advierte cuando una de estas reglas se incumple.
 
 Es la herramienta más popular en su categoría, que incluye otras como _Prettier_, _StyleLint_, _CommitLint_... o el _type checker_ de _Typescript_. Vamos a configurar estas herramientas en el inicio del proyecto y nos van a asistir de manera continuada durante su desarrollo. Lo ideal es ejecutarlas en diferentes fase del proceso (en el IDE, al hacer commit, en nuestro pipeline de integración continua...), para asegurarnos de que cumplimos con los estándares de calidad que hemos establecido.
 
@@ -59,9 +59,14 @@ Pero cuando lo usamos de la manera correcta, _ESLint_ es un super poder. Nos ayu
 
 > Si, una y otra vez, nos encontramos corrigiendo o comentando un error recurrente con el equipo, es probable que exista una regla de _ESLint_ que podemos añadir para automatizar la solución. Las mejores convenciones son las que se automatizan.
 
-Escribir software es una actividad de equipo. Como equipo, acordamos buenas prácticas y convenciones que nos permitan trabajar juntos y avanzar con paso rápido y seguro. Estas convenciones pueden incluir preferencias de sintaxis y nombrado, convenciones de estilo, prevención de errores lógicos o de sintaxis, detección de usos obsoletos de código, uso o evitación de ciertos patrones, entre otros.
+Escribir software es una actividad de equipo. Como equipo, acordamos buenas prácticas y convenciones que nos permitan trabajar juntos y avanzar con paso rápido y seguro.
+Pero cualquier norma, por buena que sea, no sirve de nada si el equipo no es capaz de aplicarla de manera constante.
 
-Pero cualquier norma, por buena que sea, no sirve de nada si el equipo no es capaz de aplicarla de manera constante. Aquí es donde _ESLint_ brilla, porque permite **alinear al equipo en torno a estas convenciones, que quedan documentadas en el archivo de configuración, y al mismo tiempo les libera de tener que recodarlas** y aplicarlas cada vez.
+Aquí es donde _ESLint_ brilla, porque permite **alinear al equipo en torno a estas convenciones, que quedan documentadas en el archivo de configuración, y al mismo tiempo les libera de tener que recodarlas** y aplicarlas cada vez.
+
+Estas convenciones pueden incluir preferencias de sintaxis y nombrado, convenciones de estilo, prevención de errores lógicos o de sintaxis, detección de usos obsoletos de código, uso o evitación de ciertos patrones, entre otros.
+
+Si, una y otra vez, nos encontramos corrigiendo o comentando un error recurrente con el equipo, es probable que exista una regla de _ESLint_ que podemos añadir para automatizar la solución. Las mejores convenciones son las que se automatizan.
 
 ## Anatomía de la configuración de ESLint
 
@@ -69,7 +74,7 @@ Antes de empezar con el caso práctico, revisamos las principales propiedades de
 
 ### Las reglas
 
-Las [reglas de _ESLint_](https://eslint.org/docs/latest/use/configure/rules) (`rules`) están pensadas para ser completamente independientes las unas de las otras, activarse y desactivarse de forma individual. _ESLint_ es una herramienta con la que imponer automáticamente nuestras visiones sobre el código, así que no hay regla que no podamos desactivar. Todo está sujeto a opinión, y dependerá de nuestras necesidades. Las reglas adminten tres posibles grados de severidad: "error", "warn" y "off". Pueden aceptar un array para configurar algunas opciones de forma más precisa. Muchas de ellas cuentan con capacidad de _autofix_, para corregir el error de forma automática.
+Las [reglas de _ESLint_](https://eslint.org/docs/latest/use/configure/rules) (`rules`) están pensadas para ser completamente independientes las unas de las otras, activarse y desactivarse de forma individual. _ESLint_ es una herramienta con la que imponer automáticamente nuestras visiones sobre el código, así que no hay regla que no podamos desactivar. Todo está sujeto a opinión, y dependerá de nuestras necesidades. Las reglas adminten tres posibles grados de severidad: "error", "warn" y "off", y pueden aceptar un array para configurar algunas opciones de forma más precisa. Muchas de ellas cuentan con capacidad de _autofix_, para corregir el error de forma automática.
 
 ### Overrides
 
@@ -155,7 +160,7 @@ En resumen:
 
 ### Otras root keys
 
-Además de `rules`, `overrides`, `extends` y `plugins`, la configuración de _ESLint_ incluye otras propiedades, como `env`, `settings`, `parser`, `parserOptions`, etc., que son esenciales para la funcionalidad de _ESLint_, a la hora de definir el comportamiento de plugins, hacer que **ESLint** sea capaz de interpretar diferentes sintaxis, reconozca variables de entorno, etc. Veremos las más habituales a continuación, en nuestro caso práctico. Podemos fijarnos en su configuración, porque en la **flat config** (parte 2) se van a transformar y reorganizar.
+Además de `rules`, `overrides`, `extends` y `plugins`, la configuración de _ESLint_ incluye otras propiedades, como `env`, `settings`, `parser`, `parserOptions`, etc., que son esenciales para la funcionalidad de _ESLint_. Por ejemplo, a la de definir el comportamiento de plugins, de hacer que **ESLint** sea capaz de interpretar diferentes sintaxis, de que reconozca variables de entorno, etc. Veremos las más habituales a continuación, en nuestro caso práctico. Podemos fijarnos en su configuración, porque en la **flat config** (parte 2) se van a transformar y reorganizar.
 
 ## Un caso práctico
 
@@ -186,9 +191,9 @@ module.exports = {
 
 _Prettier_ es un formateador, _ESLint_ es un linter. Los formateadores son más rápidos y menos "inteligentes" que los linters, porque no entran a valorar la lógica del código. Se encargan reescribirlo siguiendo reglas de formateo puramente visual (tabs, espacios, puntos y comas, largos de línea...). Mientras que los linters entienden la lógica y la sintáxis, y nos dan indicaciones de acuerdo a cada una de las reglas activadas.
 
-Cuando usamos _Prettier_ y _ESLint_ juntos, dado que _Eslint_ contiene reglas de formateo, necesitamos instalar algo como `eslint-config-prettier`, para desactivar esas reglas e indicar a _ESLint_ que _Prettier_ va a ser el encargado del formateo. `prettier` deberá figurar como la última de nuestras extensiones, para resolver cualquier posible conflicto a su favor.
+Cuando usamos _Prettier_ y _ESLint_ juntos, dado que _Eslint_ contiene reglas de formateo, necesitamos instalar algo como `eslint-config-prettier`, para desactivar esas reglas e indicar a _ESLint_ que _Prettier_ va a ser el encargado del formateo.
 
-El plugin `eslint-plugin-prettier` y variantes no están recomendandas en la gran mayoría de casos. Hacen que _Prettier_ se comporte como una regla del linter, lo cual es mucho más lento. No hay necesidad de hacerlo así cuando tenemos configurado _Prettier_ como herramienta independiente.
+El plugin `eslint-plugin-prettier` y variantes no están recomendadas en la gran mayoría de casos. Hacen que _Prettier_ se comporte como una regla del linter, lo cual es mucho más lento. No hay necesidad de hacerlo así cuando tenemos configurado _Prettier_ como herramienta independiente.
 
 **Cuando usamos _Prettier_ y _ESLint_ en el mismo proyecto, es importante que permitamos que cada herramienta realice la tarea que mejor sabe hacer**.
 
@@ -198,7 +203,7 @@ El plugin `eslint-plugin-prettier` y variantes no están recomendandas en la gra
 module.exports = {
   extends: [
     'eslint:recommended',
-    // otras extensiones que usemos
+    // prettier debe figurar último, para resolver cualquier posible conflicto a su favor.
     'prettier',
   ],
 };
@@ -246,7 +251,7 @@ module.exports = {
 
 Para que _ESLint_ sea capaz de entender los archivos de _Typescript_, necesitamos instalar `@typescript-eslint`, que contiene un parser y un montón de reglas recomendadas para trabajar con _Typescript_. En este caso, necesitamos hacer uso de `overrides` y crear un bloque donde pasamos _globs_ para capturar los archivos con extensiones `.ts` y `.tsx`.
 
-Vamos a extender la configuración recomendada, `plugin:@typescript-eslint/recommended`, pero también un segundo grupo de reglas, `plugin:@typescript-eslint/recommended-requiring-type-checking`, que hacen que _ESLint_ sea capaz de [usar la información de tipos para detectar errores](https://typescript-eslint.io/linting/typed-linting). Para que funcione, tenemos que facilitar a _ESLint_ la información de tipos. Lo hacemos con `project: true`, que indica a _ESLint_ que busque el `tsconfig.json` más cercano.
+Vamos a extender la configuración recomendada, `plugin:@typescript-eslint/recommended`, pero también una segunda configuración, `plugin:@typescript-eslint/recommended-requiring-type-checking`, que hacen que _ESLint_ sea mucho más potente al [usar la información de tipos para detectar errores](https://typescript-eslint.io/linting/typed-linting). Para que funcione, tenemos que facilitar a _ESLint_ la información de tipos. Lo hacemos con `project: true`, que indica a _ESLint_ que busque el `tsconfig.json` más cercano.
 
 También vamos a extender `plugin:@typescript-eslint/eslint-recommended`. Lo que hace es desactivar las reglas de `eslint:recommended` que ya están controladas por _Typescript_, para evitar duplicidades.
 
@@ -338,8 +343,8 @@ Con `eslint-plugin-import` podemos prevenir una serie de errores relaciones con 
 
 Activamos algunas reglas específicas para este plugin:
 
-- A nivel estilístico, `import/sort` nos va a servir para ordernar y dividir en grupos los imports al principio de nuestros archivos de manera automática, con lo cual va a ser mucho más facil entender las importaciones y evitar mantenerlas manualmente.
-- Activamos `import/no-extraneous-dependencies` para lanzar un error si importamos dependencias que no estén definidas en nuestro package.json
+- A nivel estilístico, `import/sort` nos va a servir para ordernar y dividir en grupos los imports al principio de nuestros archivos de manera automática (es una regla con _autofix_), con lo cual va a ser mucho más facil entender las importaciones y evitar mantenerlas manualmente.
+- Activamos `import/no-extraneous-dependencies` para lanzar un error si importamos dependencias que no estén definidas en `package.json`.
 - Activamos `import/no-default-export` porque preferimos usar _named exports_. En algunos casos, como en las historias necesitamos permitir los _default exports_, así que vamos a habilitar un bloque en _overrides_ para manejar este tipo de excepciones.
 
 ```js
@@ -677,9 +682,9 @@ module.exports = {
 
 Ahora que tenemos lista la configuración para el proyecto, podemos atender a otros aspectos que nos ayuden a la experiencia de uso de ESLint.
 
-En primer lugar, podemos configurar Visual Studio Code en el contexto de nuestro proyecto, para que todos los miembros del equipo trabajen en un entorno con el mismo comportamiento. En la raíz del proyecto, creamos un directorio `.vscode` con dos archivos:
+En primer lugar, podemos configurar _Visual Studio Code_ en el contexto de nuestro proyecto, para que todos los miembros del equipo trabajen en un entorno con el mismo comportamiento. En la raíz del proyecto, creamos un directorio `.vscode` con dos archivos:
 
-- Uno llamado `extensions.json`, en el que podemos incluir las extensiones que recomendamos instalar, _ESLint_ y _Prettier_. Estas extensiones integran las capacidades de estas herramientas en nuestro IDE, para informarnos de errores y warnings, y facilitar su resolución.
+- Uno llamado `extensions.json`, en el que podemos incluir las extensiones que recomendamos instalar, _ESLint_ y _Prettier_ (asumiendo que estamos usando ambas herramientas, como suele ocurrir). Estas extensiones integran las capacidades de estas herramientas en nuestro IDE, para informarnos de errores y warnings, y facilitar su resolución.
 
 ```json
 //.vscode/extensions.json
@@ -718,14 +723,14 @@ Por último necesitamos configurar un par de scripts de _ESLint_ en nuestro `pac
 Éstas son algunas opciones útiles que podemos pasar al comando:
 
 - `--max-warnings 0`. En _ESLint_, una regla activada con un nivel de severidad `warn`, va a dar un aviso pero va a permitir que nuestro código compile. Esto puede hacer que el equipo interiorice que es posible y está bien ignorar las advertencias de _ESLint_. Como no queremos eso, no permitimos warnings.
-- `--report-unused-disable-directives`.En ocasiones, tenemos casos donde nos vemos obligados a desactivar alguna regla para un archivo o una línea concreta con un comentario tipo `/* eslint-disable */`. Esta opción es muy útil, porque nos va a avisar de los comentarios de desactivación de _ESLint_ que hayan quedado obsoletos debido a refactors, etc.
+- `--report-unused-disable-directives`.En ocasiones, tenemos casos donde nos vemos obligados a desactivar alguna regla para un archivo o una línea concreta con un comentario tipo `/* eslint-disable */`. Esta opción nos avisa de los comentarios de desactivación de _ESLint_ que hayan quedado obsoletos debido a refactors, etc.
 - `--ignore-path .gitignore` nos permite indicar a _ESLint_ qué archivos no nos interesa analizar, por ejemplo `node_modules`.
 
 **Siguientes pasos 👋**
 
 En la parte 2 de esta guía, veremos como migrar nuestra configuración al nuevo sistema de _ESLint_, la **flat config**.
 
-[^1]: Además de los plugins y configuraciones que se mencionan a continuación, otros que podrían ser interesante revisar para incluir nuestra aplicación son el plugin de NextJs, el plugin de SonarLint para escribir código limpio y `eslint-plugin-filenames` para ayudarnos a establecer convenciones de nombrado de archivos y directorios.
+[^1]: Además de los plugins y configuraciones mencionados, otros que podrían ser interesante revisar para incluir en este tipo de aplicación: el plugin de NextJs, el plugin de SonarLint para escribir código limpio y `eslint-plugin-filenames` para ayudarnos a establecer convenciones de nombrado de archivos y directorios.
 
 ## References
 

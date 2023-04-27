@@ -18,7 +18,6 @@ export default function CodeSnippet({
       style={nord}
       showLineNumbers
       lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
-      wrapLines={true}
     />
   );
 }
