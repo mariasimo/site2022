@@ -74,11 +74,11 @@ Antes de empezar con el caso práctico, revisamos las principales propiedades de
 
 ### Las reglas
 
-Las [reglas de _ESLint_](https://eslint.org/docs/latest/use/configure/rules) (`rules`) están pensadas para ser completamente independientes las unas de las otras, activarse y desactivarse de forma individual. _ESLint_ es una herramienta con la que imponer automáticamente nuestras visiones sobre el código, así que no hay regla que no podamos desactivar. Todo está sujeto a opinión, y dependerá de nuestras necesidades. Las reglas adminten tres posibles grados de severidad: "error", "warn" y "off", y pueden aceptar un array para configurar algunas opciones de forma más precisa. Muchas de ellas cuentan con capacidad de _autofix_, para corregir el error de forma automática.
+Las [reglas de _ESLint_](https://eslint.org/docs/latest/use/configure/rules) (`rules`) están pensadas para ser completamente independientes las unas de las otras, activarse y desactivarse de forma individual. _ESLint_ es una herramienta con la que imponer automáticamente nuestras visiones sobre el código, así que no hay regla que no podamos desactivar. Todo está sujeto a opinión, y dependerá de nuestras necesidades. Las reglas admiten tres posibles grados de severidad: "error", "warn" y "off", y pueden aceptar un array para configurar algunas opciones de forma más precisa. Muchas de ellas cuentan con capacidad de _autofix_, para corregir el error de forma automática.
 
 ### Overrides
 
-La propiedad `overrides` es muy importante en el sistema legacy, y también va a tener un papel destacado en la **flat config**. Se trata es un array que acepta una lista de objetos que nos sirven para definir configuraciones específicas para subconjuntos de archivos. Para definir cada subconjunto usamos las propiedades `files` y `excludeFiles`. Estas propiedades toman como valor expresiones _globs_ **relativas al directorio** donde se localiza el archivo de configuración.
+La propiedad `overrides` es muy importante en el sistema legacy, y también va a tener un papel destacado en la **flat config**. Es un array que acepta objetos en los que definimos configuraciones específicas para subconjuntos de archivos. Para definir cada subconjunto usamos las propiedades `files` y `excludeFiles`. Estas propiedades toman como valor expresiones _globs_ **relativas al directorio** donde se localiza el archivo de configuración.
 
 ```js
 module.exports = {
@@ -107,7 +107,7 @@ Overrides es una funcionalidad alternativa y más entendible frente al diseño e
 
 ### Extends key vs plugins key
 
-Hay algo que resulta bastante extraño en _ESLint_, y que más de una vez me ha causado confusión, es porque tenemos dependencias llamas `eslint-plugin-foo` y otras llamadas `eslint-config-foo`. Y porque en unas ocasiones se indica que tenemos que usarlas con `extends`, y otras con `plugins`.
+Hay algo que resulta bastante extraño en _ESLint_, y que más de una vez me ha causado confusión, es porque tenemos dependencias llamadas `eslint-plugin-foo` y otras llamadas `eslint-config-foo`. Y porque en unas ocasiones se indica que tenemos que usarlas con `extends`, y otras con `plugins`.
 
 Como hemos dicho, _ESLint_ es un sistema modular y configurable. Podemos instalar reglas adicionales para configurar nuestro caso de uso perfecto. Estas reglas vienen empaquetadas en dependencias NPM con el nombre de `eslint-plugin-[my-plugin]`. Para usarlas, las instalamos y pasamos el nombre al array de plugins: `plugins: ["my-plugin"]` (no es necesario usar el prefijo `eslint-plugin-`).
 
@@ -154,7 +154,7 @@ module.exports = {
 
 En resumen:
 
-- Las **_configs_** pueden contener todo lo que se pueda añadir a un archivo de configuración de _ESLint_, vienen paquetizadas como `eslint-config-<my-config>` y se pasan a la propiedad `extends`. Son la manera en la podemos compartir y reusar configuraciones "listas para consumir", y ahorrarnos el trabajo de crearlas nosotros.
+- Las **_configs_** pueden contener todo lo que se pueda añadir a un archivo de configuración de _ESLint_, vienen paquetizadas como `eslint-config-<my-config>` y se pasan a la propiedad `extends`. Son la manera en la que podemos compartir y reusar configuraciones "listas para consumir", y ahorrarnos el trabajo de crearlas nosotros.
 
 - Los **_plugins_** añaden nuevas reglas al sistema. Vienen paquetizados como `eslint-plugin-<my-plugin>` y se pasan a la propiedad `plugins`, para poder activar reglas de forma individual en `rules`. También pueden exportar configs para activar conjuntos pre-definidos de esas reglas.
 
@@ -171,7 +171,7 @@ Además de `rules`, `overrides`, `extends` y `plugins`, la configuración de _ES
 - Storybook
 - Testing
 
-Una de los signos de identidad de ESLint, responsable en buena medida de su éxito, es su extensibilidad. El ecosistema de _ESLint_ está formado por una gran variedad de plugins y configuraciones disponibles como paquetes NPM que podemos importar para establecer nuestro caso de uso.
+Uno de los signos de identidad de ESLint, responsable en buena medida de su éxito, es su extensibilidad. El ecosistema de _ESLint_ está formado por una gran variedad de plugins y configuraciones disponibles como paquetes NPM que podemos importar para establecer nuestro caso de uso.
 
 En ocasiones puede abrumar la cantidad de dependencias que tenemos que instalar para configurar un proyecto[^1]. A cambio, la ventaja es que podemos instalar exactamente lo que necesitemos:
 
