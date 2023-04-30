@@ -1,7 +1,9 @@
 import {
   getFilesFromDirectory,
+  getRandomFilesFromDirectory,
   getMarkdownContents,
   getTranslationsList,
+  getSlugFromFilePath,
 } from './getFiles';
 import contentConfig from '../../../content.config';
 
@@ -46,19 +48,22 @@ export function listNotes() {
   const notesList = getFilesFromDirectory(contentConfig.notesDirectory);
 
   return notesList
-    .map((fileName) => fileName.replace('.md', ''))
     .filter((path) => {
       const { data: frontmatter } = getMarkdownContents(path);
-
       return !frontmatter.comingSoon;
-    });
+    })
+    .map((file) => file.replace('.md', ''));
 }
 
 export function getNote(slug: string, locale?: string): Note {
   const translationsList = getTranslationsList(slug) as Language[];
 
   const path = translationsList?.length && locale ? `${slug}/${locale}` : slug;
-  const { data, content: rawContent, excerpt } = getMarkdownContents(path);
+  const {
+    data,
+    content: rawContent,
+    excerpt,
+  } = getMarkdownContents(`${path}.md`);
 
   // Right now only casting is posible to type frontmatter
   // https://github.com/jonschlinkert/gray-matter/issues/135
@@ -69,24 +74,7 @@ export function getNote(slug: string, locale?: string): Note {
 
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
-  // Move this to a recommendation function
-  // Take language in account. If currently at /en recommend en, if /es, recommend es
-  const otherNotesLinks = getFilesFromDirectory(contentConfig.notesDirectory, 2)
-    .map((fileName) => {
-      const notePath = fileName.replace('.md', '');
-      const { data: noteFrontmatter } = getMarkdownContents(notePath);
-
-      return { noteFrontmatter, notePath };
-    })
-    .filter(({ noteFrontmatter }) => {
-      return !noteFrontmatter.hideFromList;
-    })
-    .map(({ noteFrontmatter, notePath }) => {
-      return typeof noteFrontmatter?.title === 'string'
-        ? `- [${noteFrontmatter.title}](${notePath})`
-        : null;
-    })
-    .join('\n');
+  const otherNotesLinks = getRecommendedLinks(slug);
 
   const translations = translationsList.length
     ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
@@ -117,13 +105,13 @@ export function getNote(slug: string, locale?: string): Note {
 }
 
 export function getNotesCards(): NoteCard[] {
-  const latestNotesList = getFilesFromDirectory(contentConfig.notesDirectory)
-    .map((fileName) => fileName.replace('.md', ''))
-    .filter((path) => {
-      const { data: frontmatter } = getMarkdownContents(path);
+  const latestNotesList = getFilesFromDirectory(
+    contentConfig.notesDirectory,
+  ).filter((path) => {
+    const { data: frontmatter } = getMarkdownContents(path);
 
-      return !frontmatter.hideFromList;
-    });
+    return !frontmatter.hideFromList;
+  });
 
   return latestNotesList
     .slice(0, 4)
@@ -165,6 +153,31 @@ function extractReferencesAndBacklinks(content: string) {
   const backlinks = content.split(/## backlinks/i)[1];
 
   return { references, backlinks };
+}
+
+function getRecommendedLinks(slug: string) {
+  const recommendedLinks = getRandomFilesFromDirectory(
+    contentConfig.notesDirectory,
+    3,
+    slug,
+  )
+    .map((fileName) => {
+      const noteSlug = getSlugFromFilePath(fileName);
+      const { data: noteFrontmatter } = getMarkdownContents(fileName);
+
+      return { noteFrontmatter, noteSlug };
+    })
+    .filter(({ noteFrontmatter }) => {
+      return !noteFrontmatter.hideFromList;
+    })
+    .map(({ noteFrontmatter, noteSlug }) => {
+      return typeof noteFrontmatter?.title === 'string'
+        ? `- [${noteFrontmatter.title}](${noteSlug})`
+        : null;
+    })
+    .join('\n');
+
+  return recommendedLinks;
 }
 
 /**
