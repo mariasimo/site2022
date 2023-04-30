@@ -142,7 +142,11 @@ export const ImageContainer = styled.div<{ $width: Width }>`
     }
     if ($width === 'content') {
       return css`
-        grid-column: 3/7;
+        grid-column: 1/7;
+
+        ${from.tabletPortrait} {
+          grid-column: 3/7;
+        }
       `;
     }
 

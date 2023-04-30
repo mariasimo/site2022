@@ -4,7 +4,7 @@ metaTitle: 'Recursos y lecturas del mes de Abril'
 metaDescription: 'Este mes de abril me ha dejado mucho tiempo para leer, pensar e investigar. Reúno aquí algunos de los artículos y lecturas que no quiero perder.'
 socialImage: '/images/resources-04-2023/og.png'
 published: '30/04/2023'
-status: 'draft'
+status: 'completed'
 language: 'es'
 tags:
   - 'Resources'
