@@ -158,9 +158,10 @@ export function getNotesCards(): NoteCard[] {
 }
 
 function extractReferencesAndBacklinks(content: string) {
-  const references = content
-    .split(/## references/i)[1]
-    ?.split(/## backlinks/i)[0];
+  const hasReferences = /## references/i.test(content);
+  const references = hasReferences
+    ? content.split(/## references/i)[1]?.split(/## backlinks/i)[0]
+    : '';
   const backlinks = content.split(/## backlinks/i)[1];
 
   return { references, backlinks };
