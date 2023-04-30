@@ -25,11 +25,11 @@ Este mes de abril me ha dejado mucho tiempo para leer, pensar e investigar sobre
 
 #### 📝 _Modularizing React Applications with Established UI Patterns_, Juntao QIU. Martin Fowler's blog (Inglés)
 
-Total highlight of the month. Si leeis un sólo artículo de esta lista que sea [éste](https://martinfowler.com/articles/modularizing-react-apps.html). Es difícil encontrar información sobre arquitectura en el front, especialmente aplicada a React. Este artículo conecta realmente bien la teoría con direcciones prácticas sobre como estructurar nuestra aplicación.
+_Total highlight of the month_. Si leeis un sólo artículo de esta lista que sea [éste](https://martinfowler.com/articles/modularizing-react-apps.html). Es difícil encontrar información sobre arquitectura en el front, especialmente aplicada a React. Este artículo conecta realmente bien la teoría con direcciones prácticas sobre como estructurar nuestra aplicación.
 
 #### 📝 _PresentationDomainData layering_, Martin Fowler. Martin Fowler's blog (Inglés)
 
-¿He dicho ya que amo a este señor? Referido en el artículo anterior, está [este otro artículo](https://martinfowler.com/bliki/PresentationDomainDataLayering.html) en el que Fowler apunta su propuesta de capas para una aplicación web. También muy interesante.
+¿He dicho ya que amo a este señor? Referido en el primer artículo, está [este otro artículo](https://martinfowler.com/bliki/PresentationDomainDataLayering.html) en el que Fowler apunta su propuesta de capas para una aplicación web. También muy interesante.
 
 #### 🎥 _The Art of Front-end Architecture_, Adrià Fontcuberta. JS World 2021 (Español)
 
@@ -37,9 +37,9 @@ En relación con lo anterior, el amigo [Pedro Mareke](https://twitter.com/pmarek
 
 #### 📖 🎥 _Domain modeling made functional_, Scott Wlaschin (Inglés)
 
-Por mi trayectoría, mi experiencia con la programación orientada es prácticamente nula. Es por eso que me cuesta conectar con mucha de la información que existe sobre DDD y arquitecturas limpias, que suelen articularse usando clases y orientación a objetos.
+Por mi trayectoría, mi experiencia con la programación orientada a objetos es prácticamente nula. Es por eso que me cuesta conectar con mucha de la información que existe sobre DDD y arquitecturas limpias, que suelen articularse usando clases y orientación a objetos.
 
-[@MarcosNASAG](https://twitter.com/MarcosNASAG) me recomendó un libro que acerca el DDD al paradigma de la programación funcional. Ya he leído los primeros capítulos y me está encantando. Especialmente, cómo pone el acento en crear un lenguaje común con el cliente y los miembros no técnicos del equipo, y cómo el código debe (y puede) hablar en estos mismos términos.
+[@MarcosNASAG](https://twitter.com/MarcosNASAG) me recomendó un libro que acerca el DDD al paradigma de la programación funcional. Ya he leído los primeros capítulos y me está encantando. Especialmente, cómo pone el acento en crear un lenguaje común con el cliente y los miembros no técnicos del equipo, y en que el código debe (y puede) hablar en estos mismos términos.
 
 > What if the domain experts, the development team, other stakeholders, and (most importantly) the code source itself all share the same model?
 
@@ -66,7 +66,7 @@ Con su profusión habitual, Dan Abramov ha estado hablando de este tema durante 
 
 #### 📝 _The Web’s Next Transition_, Kent C. Dodds (Inglés)
 
-El bueno de Kent no podía faltar. Un [artículo](https://www.epicweb.dev/the-webs-next-transition) salpicado de acrónimos que te cuenta de donde venimos y, según él, hacia donde vamos. Según él, hacia algo que ha acuñado como PESPAs.
+El bueno de Kent no podía faltar. Un [artículo](https://www.epicweb.dev/the-webs-next-transition) salpicado de acrónimos que te cuenta de donde venimos y hacia donde vamos. Según él, hacia algo que ha acuñado como PESPAs.
 
 #### 📝 _How to start a React Project in 2023_, Robin Wieruch (Inglés)
 
@@ -113,7 +113,7 @@ Una [refutación](https://blog.ploeh.dk/2023/04/24/are-pull-requests-bad-because
 
 #### 📝 _Lo nuevo de la nueva versión Storybook_
 
-Lo de mi romance con Storybook este mes. Storybook publicó su versión 7 hace unas semanas. Como venía cargada de novedades, me vi la presentación que hicieron para [Storybook day](https://www.youtube.com/watch?v=P0hJm5v8TJw) y escribí un artículo con mis notas. Para mi sorpresa, el equipo de Storybook me contactó para hacer una traducción al inglés y compartirlo en sus redes. Lo mejor de todo ha sido descubrir _Storybook_ como comunidad: un equipo super talentoso, generoso y dispuesto a recibir de la forma más calida a los que empezamos a hacer nuestras primeras contribuciones _open source_.
+Lo de mi romance con Storybook este mes. Storybook publicó su versión 7 hace unas semanas. Como venía cargada de novedades, me vi la presentación que hicieron para [Storybook day](https://www.youtube.com/watch?v=P0hJm5v8TJw) y escribí un artículo con mis notas. Para mi sorpresa, el equipo de Storybook me contactó para hacer una traducción al inglés que pudieran compartir en sus redes. Lo mejor de todo ha sido descubrir _Storybook_ como comunidad: un equipo super talentoso, generoso y dispuesto a recibir de la forma más calida a los que empezamos a hacer nuestras primeras contribuciones _open source_.
 
 - [Articulo](http://localhost:3000/es/storybook-7-new-release)
 - [Storybook Discord](https://discord.com/invite/storybook)
