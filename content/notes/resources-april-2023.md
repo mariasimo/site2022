@@ -33,24 +33,26 @@ Total highlight of the month. Si leeis un sólo artículo de esta lista que sea 
 
 #### 🎥 _The Art of Front-end Architecture_, Adrià Fontcuberta. JS World 2021 (Español)
 
-En relación con lo anterior, el amigo [Pedro Mareke](https://twitter.com/pmareke) me recomendó [esta charla](https://www.youtube.com/watch?v=HtLAWkVTWgs) de Adrià Fontcuberta. Para empezar a pensar en tratar el framework de UI como un mecanismo de entrega, en lugar de como el core de la aplicación.
+En relación con lo anterior, el amigo [Pedro Mareke](https://twitter.com/pmareke) me recomendó [esta charla](https://www.youtube.com/watch?v=HtLAWkVTWgs) de Adrià Fontcuberta. Para empezar a pensar en tratar el _framework_ de UI como un mecanismo de entrega, en lugar de como el centro mismo de la aplicación.
 
 #### 📖 🎥 _Domain modeling made functional_, Scott Wlaschin (Inglés)
 
-Por mi trayectoría, mi experiencia con la programación orientada es prácticamente nula. Es por eso que me cuesta mucho conectar con mucha de la información que existe sobre DDD y arquitecturas limpias. [@MarcosNASAG](https://twitter.com/MarcosNASAG) me recomendó un libro que acerca el DDD al paradigma de la programación funcional. Ya he leído los primeros capítulos y me está encantando. Especialmente, cómo pone el acento en crear un lenguaje común con el cliente y los miembros no técnicos del equipo, y el código debe (y puede) hablar en estos mismos términos.
+Por mi trayectoría, mi experiencia con la programación orientada es prácticamente nula. Es por eso que me cuesta conectar con mucha de la información que existe sobre DDD y arquitecturas limpias, que suelen articularse usando clases y orientación a objetos.
+
+[@MarcosNASAG](https://twitter.com/MarcosNASAG) me recomendó un libro que acerca el DDD al paradigma de la programación funcional. Ya he leído los primeros capítulos y me está encantando. Especialmente, cómo pone el acento en crear un lenguaje común con el cliente y los miembros no técnicos del equipo, y cómo el código debe (y puede) hablar en estos mismos términos.
 
 > What if the domain experts, the development team, other stakeholders, and (most importantly) the code source itself all share the same model?
 
 El autor además tiene una capacidad increíble para trasladar estas ideas de manera que parecen simples y evidentes.
 
-Si tenéis dudas sobre conseguir el libro, [Dani Santamaría](https://twitter.com/dsantaka) me recomendó una charla en la que el autor presenta las ideas principales.
+Si tenéis dudas sobre si conseguir el libro, [Dani Santamaría](https://twitter.com/dsantaka) me recomendó una charla en la que el autor presenta las ideas principales.
 
 - [Charla - KanDDDinsky 2019](https://www.youtube.com/watch?v=2JB1_e5wZmU)
 - [Libro - The Pragmatic Bookshelf](https://pragprog.com/titles/swdddf/domain-modeling-made-functional/)
 
 #### 🎥 _Una historia de testing_, Julio César Pérez (Español)
 
-No había visto [esta charla](https://www.youtube.com/watch?v=nv9ZPEsBVw4) de [Julio César](https://twitter.com/jcesarperez) y me ha encantado.Las conversaciones en torno al testing suelen estar repletas de _buzzwords_ y superioridad moral. La charla de Julio relata una experiencia realista y cercana sobre el viaje de un equipo para aprender testing y mejorar el modo en que trabajan.
+No había visto [esta charla](https://www.youtube.com/watch?v=nv9ZPEsBVw4) de [Julio César](https://twitter.com/jcesarperez) y me ha encantado. Las conversaciones en torno al testing suelen estar plagadas de _buzzwords_ y superioridad moral. La charla de Julio relata una experiencia realista y cercana sobre el viaje de un equipo para aprender testing y mejorar el modo en que trabajan.
 
 ### React and the one with the dead SPAs
 
@@ -87,31 +89,25 @@ Sobre el fin del dominio absoluto del _client-side only_ en React, la vuelta al 
 
 ### Un poco de esto y de aquello
 
-#### 📝 Developers way
+#### 📝 Developer way
+
+El blog de Nadia Makarevich es oro puro. Artículos sobre el funcionamiento de React con una bajada a detalle realmente buena. Como muestra, [éste sobre refs](https://www.developerway.com/posts/refs-from-dom-to-api) seguro que te hace aprender cosas nuevas.
 
 #### 📝 Rebuilding a featured news section with modern CSS: Vox news, Ahmad Shadeed
 
-- Rebuilding a featured news section with modern CSS: Vox news, Ahmad Shadeed - https://ishadeed.com/article/rebuild-featured-news-modern-css/
+Ahmad Shadeed simple publica contenido de muchísima calidad sobre CSS. En [este artículo](https://ishadeed.com/article/rebuild-featured-news-modern-css/), reconstruye un layout usando las nuevas características de CSS.
 
 #### 📝 Crafting the new Nextjs
 
-https://rauno.me/craft/nextjs
+Rauno explica, con ejemplos de código, un montón de niceties que han introducido en la nuevo web de NextJs. Verdadera artesanía. [Enlace](https://rauno.me/craft/nextjs)
 
-#### Don't become an architect astrounat
+#### 📝 Don't become an architect astrounat
 
-- Don't become an architect astrounat - Maxi Ferreira https://www.maxiferreira.com/blog/architecture-astronauts/
+Una [reflexión](https://www.maxiferreira.com/blog/architecture-astronauts/) de Maxi Ferreira sobre cómo es importante mantener los pies en la realidad del código.
 
-#### Are pull requests bad because they originate from open-source development? by Mark Seemann
+#### 📝 Are pull requests bad because they originate from open-source development? by Mark Seemann
 
-https://blog.ploeh.dk/2023/04/24/
-
-#### Lo de chakra
-
-https://blog.ploeh.dk/2023/04/24/
-
-#### La charla de Jaime Obregon
-
-- Chakra y sus planes de futuro https://www.adebayosegun.com/blog/the-future-of-chakra-ui
+Una [refutación](https://blog.ploeh.dk/2023/04/24/are-pull-requests-bad-because-they-originate-from-open-source-development/) del argumento de que las pull request son malas para los equipos porque su origen está en el open source.
 
 ### Tooling y Shameless plug
 
