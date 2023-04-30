@@ -99,7 +99,7 @@ Ahmad Shadeed simple publica contenido de muchísima calidad sobre CSS. En [este
 
 #### 📝 Crafting the new Nextjs
 
-Rauno explica, con ejemplos de código, un montón de niceties que han introducido en la nuevo web de NextJs. Verdadera artesanía. [Enlace](https://rauno.me/craft/nextjs)
+Rauno explica, con ejemplos de código, un montón de _niceties_ que han introducido en la nueva web de NextJs. Verdadera artesanía. [Enlace](https://rauno.me/craft/nextjs)
 
 #### 📝 Don't become an architect astrounat
 
@@ -107,20 +107,20 @@ Una [reflexión](https://www.maxiferreira.com/blog/architecture-astronauts/) de 
 
 #### 📝 Are pull requests bad because they originate from open-source development? by Mark Seemann
 
-Una [refutación](https://blog.ploeh.dk/2023/04/24/are-pull-requests-bad-because-they-originate-from-open-source-development/) del argumento de que las pull request son malas para los equipos porque su origen está en el open source.
+Una [refutación](https://blog.ploeh.dk/2023/04/24/are-pull-requests-bad-because-they-originate-from-open-source-development/) del argumento de que las _pull request_ son malas para los equipos porque su origen está en el _open source_.
 
 ### Tooling y Shameless plug
 
 #### 📝 _Lo nuevo de la nueva versión Storybook_
 
-Lo de mi romance con Storybook este mes. Storybook publicó su versión 7 hace unas semanas. Cómo venía cargada de novedades, me vi la presentación que hicieron para [Storybook day](https://www.youtube.com/watch?v=P0hJm5v8TJw) y escribí un artículo con mis notas. Para mi sorpresa, el equipo de Storybook me contactó para proponerme hacer una traducción al inglés y compartirlo en sus redes. Lo mejor de todo ha sido descubrir _Storybook_ como comunidad: un equipo super talentoso, generoso y dispuesto a recibir de la forma más calida a los que empezamos a hacer nuestras primeras contribuciones open source.
+Lo de mi romance con Storybook este mes. Storybook publicó su versión 7 hace unas semanas. Como venía cargada de novedades, me vi la presentación que hicieron para [Storybook day](https://www.youtube.com/watch?v=P0hJm5v8TJw) y escribí un artículo con mis notas. Para mi sorpresa, el equipo de Storybook me contactó para hacer una traducción al inglés y compartirlo en sus redes. Lo mejor de todo ha sido descubrir _Storybook_ como comunidad: un equipo super talentoso, generoso y dispuesto a recibir de la forma más calida a los que empezamos a hacer nuestras primeras contribuciones _open source_.
 
 - [Articulo](http://localhost:3000/es/storybook-7-new-release)
 - [Storybook Discord](https://discord.com/invite/storybook)
 
 #### 📝 _Guía de ESLint, parte 1: cómo usar ESLint con confianza_
 
-La primera parte de una guía sobre ESLint que va desde las bases hasta la creación de una dependencia para externalizar la configuración y reusarla entre proyectos. Me gustaba ESLint y he aprendido mucho más sobre la herramienta, documentándome para escribir el artículo. En el artículo podéis encontrar un montón de referencias adicionales, entre ellas la muy reciente charla que Josh Golberg, uno de los maintainers de `typescript-eslint` dio en la React Miami hace apenas una semana.
+La primera parte de una guía sobre _ESLint_ que va desde las bases hasta la creación de una dependencia para externalizar la configuración y reusarla entre proyectos. Me gustaba _ESLint_ y he aprendido mucho más sobre la herramienta documentándome para escribir el artículo. En el artículo podéis encontrar un montón de referencias adicionales, entre ellas la muy reciente charla que Josh Golberg, uno de los maintainers de `typescript-eslint`, dio en la _React Miami_ hace apenas una semana.
 
 - [Articulo](http://localhost:3000/es/guide-eslint-part-1-eslint-legacy)
 - [Josh Golberg talk](https://www.youtube.com/live/mPPZ-NUnR-4?feature=share&t=25765)
@@ -129,11 +129,11 @@ La primera parte de una guía sobre ESLint que va desde las bases hasta la creac
 
 #### 📝 _La carretera fanstasma, Nacional III_
 
-Un reportaje sobre una de las antiguas carreteras nacionales que llevaban a los madrileños a la playa en los 90, y sobre las formas de vida que se han extinguido con la construcción de la autovía. Los testimonios y las fotos cuentan una historia nostálgica pero sin sentimentalismos sobre el progreso de ayer y el progreso de hoy.
+Un [reportaje](https://www.elconfidencial.com/espana/2018-04-20/carretera-fantasma-nacional-iii-valencia-madrid_1552420/) sobre una de las antiguas carreteras nacionales que llevaban a los madrileños a la playa en los 90, y sobre las formas de vida que se han extinguido con la construcción de la autovía. Los testimonios y las fotos cuentan una historia nostálgica pero sin sentimentalismos sobre el progreso de ayer y el progreso de hoy.
 
 #### 🎥 Jorge Luis Borges sobre el inglés
 
-Estas semanas, que he estado leyendo, escribiendo y traduciendo del español al inglés, y de vuelta, me han hecho pensar en las limitaciones (y posibilidades) de cada lenguaje. La experiencia de cómo un idioma que aprendemos nos transforma, cómo nos abre caminos para pensar. Hay cosas que pueden ser pensadas y dichas más fácilmente en unos idiomas que en otros. [El lenguaje configura el pensamiento](https://es.wikipedia.org/wiki/Hip%C3%B3tesis_de_Sapir-Whorf?useskin=vector) — “la lengua no es la envoltura del pensamiento, sino el pensamiento mismo”, dijo Unamuno. Creo que esto, como programadores, lo sabemos bien.
+Estas semanas, que he estado leyendo, escribiendo y traduciendo del español al inglés, y de vuelta, me han hecho pensar en las limitaciones y posibilidades de cada lenguaje. La experiencia de cómo un idioma que aprendemos nos transforma, cómo nos abre caminos para pensar. Hay cosas que pueden ser pensadas y dichas más fácilmente en unos idiomas que en otros. [El lenguaje configura el pensamiento](https://es.wikipedia.org/wiki/Hip%C3%B3tesis_de_Sapir-Whorf?useskin=vector). O, en palabras de Unamuno, “la lengua no es la envoltura del pensamiento, sino el pensamiento mismo”. Creo que esto, como programadores, lo sabemos bien.
 
 Aquí [un video Jorge Luis Borges](https://twitter.com/i/status/1645382039401816065) hablando sobre qué encuentra en el inglés que no encuentra en el castellano.
 
