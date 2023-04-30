@@ -71,7 +71,7 @@ function NoteView({
         </Contents>
         <TableOfContents sections={sections} />
       </Container>
-      {references || backlinks ? (
+      {references || backlinks || otherNotesLinks ? (
         <LinksSection>
           {references ? (
             <Item>
