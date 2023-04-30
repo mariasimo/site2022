@@ -33,7 +33,7 @@ Total highlight of the month. Si leeis un sólo artículo de esta lista que sea 
 
 #### 🎥 _The Art of Front-end Architecture_, Adrià Fontcuberta. JS World 2021 (Español)
 
-En relación con lo anterior, Pedro Mareke me recomendó [esta charla](https://www.youtube.com/watch?v=HtLAWkVTWgs) de Adrià Fontcuberta. Para empezar a pensar en tratar el framework de UI como un mecanismo de entrega, en lugar de como el core de la aplicación.
+En relación con lo anterior, el amigo [Pedro Mareke](https://twitter.com/pmareke) me recomendó [esta charla](https://www.youtube.com/watch?v=HtLAWkVTWgs) de Adrià Fontcuberta. Para empezar a pensar en tratar el framework de UI como un mecanismo de entrega, en lugar de como el core de la aplicación.
 
 #### 📖 🎥 _Domain modeling made functional_, Scott Wlaschin (Inglés)
 
