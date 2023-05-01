@@ -4,6 +4,7 @@ metaTitle: 'Recursos y lecturas del mes de Abril'
 metaDescription: 'Este mes de abril me ha dejado mucho tiempo para leer, pensar e investigar. Reúno aquí algunos de los artículos y lecturas que no quiero perder.'
 socialImage: '/images/resources-04-2023/og.png'
 published: '30/04/2023'
+lastUpdated: '01/05/2023'
 status: 'completed'
 language: 'es'
 tags:
@@ -13,7 +14,7 @@ tags:
   - 'Learning'
 ---
 
-Este mes de abril me ha dejado mucho tiempo para leer, pensar e investigar sobre temas nuevos y pendientes. Reúno aquí algunos de los artículos y lecturas que me parece interesante compartir, con vosotros y conmigo en algunas semanas o meses.
+Este mes de abril me ha dejado mucho tiempo para leer, pensar e investigar sobre temas nuevos y pendientes. Reúno aquí algunos de los artículos y lecturas que me parece interesante compartir con vosotros, y conmigo en algunas semanas o meses.
 
 ---
 
@@ -120,7 +121,7 @@ Lo de mi romance con Storybook este mes. Storybook publicó su versión 7 hace u
 
 #### 📝 _Guía de ESLint, parte 1: cómo usar ESLint con confianza_
 
-La primera parte de una guía sobre _ESLint_ que va desde las bases hasta la creación de una dependencia para externalizar la configuración y reusarla entre proyectos. Me gustaba _ESLint_ y he aprendido mucho más sobre la herramienta documentándome para escribir el artículo. En el artículo podéis encontrar un montón de referencias adicionales, entre ellas la muy reciente charla que Josh Golberg, uno de los maintainers de `typescript-eslint`, dio en la _React Miami_ hace apenas una semana.
+La primera parte de una guía sobre _ESLint_ que va desde las bases hasta la creación de una dependencia para externalizar la configuración y reusarla entre proyectos. Me gustaba _ESLint_ y he aprendido mucho más sobre la herramienta documentándome para escribir el artículo. En el artículo podéis encontrar un montón de referencias adicionales, entre ellas la charla que Josh Golberg, uno de los maintainers de `typescript-eslint`, dio en la _React Miami_ hace apenas una semana.
 
 - [Articulo](http://localhost:3000/es/guide-eslint-part-1-eslint-legacy)
 - [Josh Golberg talk](https://www.youtube.com/live/mPPZ-NUnR-4?feature=share&t=25765)
