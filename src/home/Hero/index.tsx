@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 const leadText = [
   { style: LeadBold, text: 'María Simó' },
   {
-    text: 'Front—end developer. Sharp and passionate individual coding since 2019. I’m a big fan of writing clean and expressive code, creating polished layouts and developing fine-grained interactions & animations.',
+    text: 'Front—end developer. Sharp and passionate individual coding since 2019. I’m a big fan of clean and expressive code, polished layouts and fine-grained interactions & animations.',
   },
 ];
 
