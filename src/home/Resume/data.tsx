@@ -42,10 +42,6 @@ const experience: Section = {
       ),
       links: [
         {
-          label: 'griddo.io',
-          link: 'https://griddo.io/',
-        },
-        {
           label: 'secuoyas.com',
           link: 'https://secuoyas.com/',
         },
