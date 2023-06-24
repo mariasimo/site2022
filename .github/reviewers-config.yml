@@ -1,0 +1,7 @@
+groups:
+  - name: devs
+    reviewers: 2
+    usernames:
+      - coponstudiocode
+      - damianfloresortega
+      - mariasimo
