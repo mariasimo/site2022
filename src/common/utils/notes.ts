@@ -101,44 +101,64 @@ export function getNote(slug: string, locale?: string): Note {
 }
 
 export function getNotesCards(): NoteCard[] {
-  const latestNotesList = getFilesFromDirectory(
-    contentConfig.notesDirectory,
-  ).filter((path) => {
-    const { data: frontmatter } = getMarkdownContents(path);
+  const notesList = getFilesFromDirectory(contentConfig.notesDirectory).filter(
+    (path) => {
+      const { data: frontmatter } = getMarkdownContents(path);
 
-    return !frontmatter.hideFromList;
-  });
+      return !frontmatter.hideFromList;
+    },
+  );
 
-  return latestNotesList
+  const formatNotes = (fileName: string) => {
+    const [slug, locale] = fileName
+      .replace('.md', '')
+      .split('/')
+      .filter(Boolean);
+
+    const note = getNote(slug, locale);
+
+    return {
+      title: note?.title ?? '',
+      slug: slug,
+      tags: note?.tags,
+      comingSoon: note?.comingSoon,
+      hideFromList: note?.hideFromList,
+      translations: note?.translations ?? [note.language ?? 'en'],
+      language: note?.language,
+      date: !note?.comingSoon && (note?.lastUpdated || note?.published),
+    };
+  };
+
+  const sortNotes = (
+    a: ReturnType<typeof formatNotes>,
+    b: ReturnType<typeof formatNotes>,
+  ) => {
+    if (a.date && b.date) {
+      return getDateMs(a.date) < getDateMs(b.date) ? 1 : -1;
+    }
+    if (a.date && !b.date) {
+      return -1;
+    }
+    return 1;
+  };
+
+  const removeLanguageDups = (notes: string[]) => {
+    return notes.reduce((acc: string[], note: string) => {
+      const [slug] = note.replace('.md', '').split('/').filter(Boolean);
+
+      if (!acc.includes(slug)) {
+        return [...acc, note];
+      }
+      return acc;
+    }, []);
+  };
+
+  const formattedLatestNotes = removeLanguageDups(notesList)
     .slice(0, 4)
-    .map((fileName) => {
-      const [slug, locale] = fileName
-        .replace('.md', '')
-        .split('/')
-        .filter(Boolean);
+    .map(formatNotes)
+    .sort(sortNotes);
 
-      const note = getNote(slug, locale);
-
-      return {
-        title: note?.title ?? '',
-        slug: slug,
-        tags: note?.tags,
-        comingSoon: note?.comingSoon,
-        hideFromList: note?.hideFromList,
-        translations: note?.translations ?? [note.language ?? 'en'],
-        language: note?.language,
-        date: !note?.comingSoon && (note?.lastUpdated || note?.published),
-      };
-    })
-    .sort((a, b) => {
-      if (a.date && b.date) {
-        return getDateMs(a.date) < getDateMs(b.date) ? 1 : -1;
-      }
-      if (a.date && !b.date) {
-        return -1;
-      }
-      return 1;
-    });
+  return formattedLatestNotes;
 }
 
 function extractReferencesAndBacklinks(content: string) {
