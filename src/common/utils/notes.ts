@@ -35,7 +35,6 @@ export type Note = NoteFrontmatter & {
   content: string;
   references: string | null;
   backlinks: string | null;
-  otherNotesLinks: string | null;
   translations: Language[] | null;
 };
 
@@ -74,8 +73,6 @@ export function getNote(slug: string, locale?: string): Note {
 
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
-  const otherNotesLinks = getRecommendedLinks(slug);
-
   const translations = translationsList.length
     ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
     : [frontmatter?.language ?? 'en'];
@@ -98,7 +95,6 @@ export function getNote(slug: string, locale?: string): Note {
     content,
     references: references,
     backlinks: backlinks ?? null,
-    otherNotesLinks: otherNotesLinks ?? null,
   };
 
   return note;
@@ -155,7 +151,7 @@ function extractReferencesAndBacklinks(content: string) {
   return { references, backlinks };
 }
 
-function getRecommendedLinks(slug: string) {
+export function getRecommendedLinks(slug: string) {
   const recommendedLinks = getRandomFilesFromDirectory(
     contentConfig.notesDirectory,
     3,

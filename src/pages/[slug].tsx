@@ -4,7 +4,7 @@ import type {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next';
-import { getNote, listNotes } from '../common/utils/notes';
+import { getNote, getRecommendedLinks, listNotes } from '../common/utils/notes';
 
 function NotePage({
   note,
@@ -37,9 +37,10 @@ export function getStaticPaths({ locales }: GetStaticPathsContext) {
 export function getStaticProps({ params, locale }: GetStaticPropsContext) {
   const slug = params?.slug as string;
   const note = getNote(slug, locale);
+  const otherNotesLinks = getRecommendedLinks(slug);
 
   if (note) {
-    return { props: { note } };
+    return { props: { note: { ...note, otherNotesLinks } } };
   }
 
   return { props: {} };
