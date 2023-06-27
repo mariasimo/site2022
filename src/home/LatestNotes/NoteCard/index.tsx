@@ -2,28 +2,50 @@ import {
   languagesDictionary,
   NoteCard as NoteCardType,
 } from '$/common/utils/notes';
-import { Container, Title, Details, Header, Arrow, Language } from './styles';
+import { sortAlphabetical } from '../../../common/utils/sort';
+import {
+  Container,
+  Title,
+  Details,
+  Header,
+  Arrow,
+  LanguagesList,
+} from './styles';
 import NextLink from 'next/link';
 
 export default function NoteCard({ note }: { note: NoteCardType }) {
-  const { title, comingSoon, tags, slug, language } = note;
+  const { title, comingSoon, tags, slug, translations, language } = note;
+
+  const availableTranslations = sortAlphabetical(
+    translations?.map((tr) => {
+      return languagesDictionary[tr];
+    }) ?? [],
+  );
 
   return (
     <Container $disabled={comingSoon ?? false}>
-      <NextLink href={slug} locale={language ?? 'en'} passHref>
-        <a>
-          <Header>
-            <Title>{title}</Title>
-            <Arrow />
-          </Header>
-          <Details>
-            {comingSoon ? 'Coming Soon' : tags?.join(', ')}{' '}
-            {!comingSoon ? (
-              <Language>{languagesDictionary[language ?? 'en']}</Language>
-            ) : null}
-          </Details>
-        </a>
-      </NextLink>
+      <Header>
+        <Title>
+          <NextLink key={slug} href={slug} locale={language ?? 'en'} passHref>
+            <a>{title}</a>
+          </NextLink>
+        </Title>
+        <Arrow />
+      </Header>
+      <Details>
+        {comingSoon ? 'Coming Soon' : tags?.join(', ')}{' '}
+        {!comingSoon ? (
+          <LanguagesList>
+            {availableTranslations.map((translation) => {
+              return (
+                <NextLink key={slug} href={slug} locale={language ?? 'en'}>
+                  {translation}
+                </NextLink>
+              );
+            })}
+          </LanguagesList>
+        ) : null}
+      </Details>
     </Container>
   );
 }
