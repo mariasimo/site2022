@@ -146,7 +146,7 @@ export function getNotesCards(): NoteCard[] {
     return notes.reduce((acc: string[], note: string) => {
       const [slug] = note.replace('.md', '').split('/').filter(Boolean);
 
-      if (!acc.includes(slug)) {
+      if (!acc.some((n) => n.includes(slug))) {
         return [...acc, note];
       }
       return acc;
