@@ -1,7 +1,7 @@
 ---
 title: 'ESLint Guide, part 1: how to use ESLint with confidence'
 metaTitle: 'ESLint Guide, part 1: how to use ESLint with confidence'
-metaDescription: 'El linter más popular del ecosistema de Javascript se renueva con flat config, una nueva API de configuración más simple y potente. En este artículo, revisamos el sistema legacy para sacar el mayor partido de la migración a flat config'
+metaDescription: 'The most popular linter in the Javascript ecosystem is being updated with flat config, a new, simpler, and more powerful configuration API. In this article, we review the legacy system to get the most out of migrating to flat config.'
 socialImage: '/images/eslint-guide-04-2023/og-1-en.png'
 published: '26/06/2023'
 status: 'draft'
@@ -19,99 +19,98 @@ _ESLint_ is a tool that complements anyone who develops in the Javascript ecosys
 
 ---
 
-## Motivaciones y plan para esta guía
+## Motivations and plan for this guide
 
-El objetivo de esta serie de artículos es explicar **cómo compartir nuestra configuración de _ESLint_ como una dependencia externa** para automatizar los estándares de código del equipo de front de [Z1 Digital Studio](https://z1.digital/).
+The goal of this series of articles is to explain **how to share our ESLint configuration as an external dependency** to automate the [Z1 Digital Studio](https://z1.digital/) front-end team's code standards.
 
-Al comenzar a investigar cómo hacer esto, descubrí que _ESLint_ está en el proceso de lanzar un nuevo sistema de configuración llamado **_flat config_** (que se traduciría en algo así como "configuración plana"). Este sistema ya es funcional, tiene soporte en la CLI y documentación oficial disponible desde la versión 8.23.0. Viene a sustituir a **eslintrc** (en adelante el sistema _legacy_ o tradicional), que perderá soporte a partir de la versión 9. En [este enlace](https://github.com/eslint/eslint/issues/13481) puedes consultar del proceso de implementación.
+When starting to investigate how to do this, I discovered that _ESLint_ is in the process of releasing a new configuration system called _flat config_. This system is already functional, has support in CLI, and official documentation available from version 8.23.0. It replaces **eslintrc** (from now on the _legacy_ or traditional system), which will lose support from version 9. In [this link](https://github.com/eslint/eslint/issues/13481) you can read about the implementation process.
 
-**_Flat config_** propone cambios drásticos en la manera en la que configuramos _ESLint_ en los proyectos. Por ello, merece la pena hacer una pequeña disgresión para aprender sobre la nueva configuración antes de lanzarnos a crear nuestra dependencia externa. Así podemos liderar su adopción y evitar refactorizar cuando el cambio sea efectivo.
+_Flat config_ proposes drastic changes in the way we configure _ESLint_ in projects. Therefore, it is worth making a small digression to learn about the new configuration before jumping into creating our external dependency. This way we can lead its adoption and avoid refactoring when the change is effective.
 
-Este artículo asume que has usado _ESLint_ con anterioridad, aunque quizás no hayas entrado en el detalle de cómo funciona o todo lo que puede ofrecer.
+This article assumes that you have used _ESLint_ before, although you may not have gone into detail about how it works or all that it can offer.
 
-El plan para esta serie de artículos es el siguiente:
+The plan for this series of articles is as follows:
 
-**Parte 1. Dominando _ESLint_**. Primero aprenderemos todo lo necesario del sistema legacy para sacar el mayor partido del proceso de migración. Así podemos usar _ESLint_ con confianza y control.
+**‍Part 1. Mastering _ESLint_**. First, we will learn everything we need to know about the legacy system to get the most out of the migration process. So, we can use _ESLint_ with confidence and control.
 
-**Parte 2. Migrando a flat config**. Descubrimos los cambios esenciales que propone la flat config, y migramos nuestro caso práctico al nuevo sistema.
+**Part 2. Migrating to flat config**. We discover the essential changes proposed by flat config and migrate our case study to the new system.
 
-**Parte 3. Creando una shareable config de _ESLint_**. Profundizamos en las _shareable configs_ y el ecosistema de dependencias de _ESLint_. Incorporamos otras herramientas de análisis estático. Empezamos a configurar nuestro repositorio como dependencia NPM.
+**Part 3. Creating an _ESLint_ shareable config**. We go deeper into shareable configs and the _ESLint_ dependency ecosystem. We incorporate other static analysis tools. We start configuring our repository as an NPM dependency.
 
-**Parte 4. Mejorando la experiencia con herramientas adicionales**. Añadimos gestión de versiones y de dependencias. Creamos un README para documentar y facilitar el uso de nuestra dependencia. Exploramos la creación de una CLI para complementarla.
+**Part 4. Improving the experience with additional tools**. We add version and dependency management. We create a README to document and facilitate the use of our dependency. We explore creating a CLI to complement it.
 
-## Qué es ESLint y porqué es importante
+## What is ESLint and why is it important?
 
-_ESLint_ es una herramienta de análisis estático de código. Frente a las herramientas de análisis dinámico, como el testing, que necesita ejecutar el código para darnos un resultado, _ESLint_ es capaz de analizar nuestro código sin ejecutarlo. De forma que nos ayuda a mantener y mejorar la calidad del código que escribimos al tiempo que lo escribimos.
+_ESLint_ is a static code analysis tool. Unlike dynamic analysis tools, such as testing, which needs to execute the code to give us a result, _ESLint_ is capable of analyzing our code without executing it. This way, it helps us to maintain and improve the quality of the code we write as we write it.
 
-> _ESLint_ automatiza nuestras opiniones en base a reglas, y nos advierte cuando una de estas reglas se incumple.
+> _ESLint_ automates our opinions based on rules, and warns us when one of these rules is breached.
 
-Es la herramienta más popular en su categoría, que incluye otras como _Prettier_, _StyleLint_, _CommitLint_... o el _type checker_ de _Typescript_. Vamos a configurar estas herramientas en el inicio del proyecto y nos van a asistir de manera continuada durante su desarrollo. Lo ideal es ejecutarlas en diferentes fase del proceso (en el IDE, al hacer commit, en nuestro pipeline de integración continua...), para asegurarnos de que cumplimos con los estándares de calidad que hemos establecido.
+It is the most popular tool in its category, which includes others like _Prettier_, _StyleLint_, _CommitLint_... or the type checker of _Typescript_. We configure these tools at the beginning of the project, and they continuously assist us during its development. Ideally, we should run them at different stages of the process (in the IDE, when committing, in our continuous integration pipeline...), to ensure that we meet the quality standards we have established.
 
-Y, ¿de qué manera nos ayuda _ESLint_ a crear y mantener estándares de calidad? Lo primero es que **no toma decisiones por nosotros**, sino que deja de nuestra mano, de la mano del equipo, convenir en qué va a definir la calidad del código. Automatiza nuestras opiniones en base a reglas, y nos advierte cuando una de estas reglas se incumple.
+And how does _ESLint_ help us create and maintain quality standards? First of all, **it doesn't make decisions for us**, but rather leaves it in our hands, in the hands of the team, to agree on what will define code quality. It automates our opinions based on rules and warns us when one of these rules is broken.
 
-Todo esto se expresa en uno o más archivos de configuración, donde declaramos las reglas que van a aplicar al proyecto. Normalmente también nos vamos a apoyar en una extensión de _ESLint_ para nuestro IDE, para obtener un feedback inmediato. Sin esta extensión, tendríamos que confiar únicamente en la CLI de _ESLint_ para la revisión del código.
+All this is expressed in one or more configuration files, where we declare the rules that will apply to the project. We will usually also rely on an _ESLint_ extension for our IDE to get immediate feedback. Without this extension, we would only have the _ESLint_ CLI to rely on for code review.
 
-El valor que obtenemos de _ESLint_ depende en gran medida del esfuerzo que invertimos en entenderlo. Muchas veces se adopta por inercia, trasladando de manera ciega las mismas configuraciones de un proyecto a otro, sin control sobre qué dicen esas reglas sobre el diseño de nuestro proyecto.
+The value we get from _ESLint_ depends largely on the effort we invest in understanding it. A lot of the time it is adopted by inertia, blindly transferring the same setting from one project to another, with no control over what those rules say about our project design.
 
-En los peores casos, _ESLint_ se puede convertir en un enemigo que nos grita y no entendemos porqué: "si mi código funciona, ¿de qué se queja _ESLint_ ahora?". Entonces se comporta como una sobrecarga de configuraciones que no sabemos cómo manejar y que nos hará odiar la amalgama de líneas onduladas rojas y amarillas que campa a sus anchas por los archivos del proyecto.
+Even in the worst cases, _ESLint_ can become an enemy that shouts at us, and we don't understand why: "if my code works, what is _ESLint_ complaining about now?". Then it behaves like an overload of configurations that we don't know how to handle, and that will make us hate the blend of red and yellow wavy lines that roam freely through the project files.
 
-Pero cuando lo usamos de la manera correcta, _ESLint_ es un super poder. Nos ayuda a mantener una consistencia a lo largo de la base de código y durante toda la vida de la aplicación, mejorando su diseño y mantenibilidad.
+But when we use it the right way, _ESLint_ is a superpower. It helps us maintain consistency throughout the codebase during the entire life of the app, improving its design and maintainability.
 
-> Si, una y otra vez, nos encontramos corrigiendo o comentando un error recurrente con el equipo, es probable que exista una regla de _ESLint_ que podemos añadir para automatizar la solución. Las mejores convenciones son las que se automatizan.
+> If we find ourselves repeatedly correcting or commenting on a recurring error with the team, there is probably an _ESLint_ rule we can add to automate the solution. The best conventions are the ones that are automated.
 
-Escribir software es una actividad de equipo. Como equipo, acordamos buenas prácticas y convenciones que nos permitan trabajar juntos y avanzar con paso rápido y seguro.
-Pero cualquier norma, por buena que sea, no sirve de nada si el equipo no es capaz de aplicarla de manera constante.
+Writing software is a team activity. As a team, we agree on good practices and conventions that allow us to work together and move forward quickly and safely. But any rule, no matter how good it is, is useless if the team is not able to apply it consistently.
 
-Aquí es donde _ESLint_ brilla, porque permite **alinear al equipo en torno a estas convenciones, que quedan documentadas en el archivo de configuración, y al mismo tiempo les libera de tener que recodarlas** y aplicarlas cada vez.
+This is where _ESLint_ shines, because it allows you to **align the team around these conventions, which are documented in the configuration file, and at the same time frees them from having to remember them** and apply them every time.
 
-Estas convenciones pueden incluir preferencias de sintaxis y nombrado, convenciones de estilo, prevención de errores lógicos o de sintaxis, detección de usos obsoletos de código, uso o evitación de ciertos patrones, entre otros.
+These conventions can include syntax and naming preferences, style conventions, prevention of logical or syntax errors, detection of obsolete code usage, use or avoidance of certain patterns, among others.
 
-Si, una y otra vez, nos encontramos corrigiendo o comentando un error recurrente con el equipo, es probable que exista una regla de _ESLint_ que podemos añadir para automatizar la solución. Las mejores convenciones son las que se automatizan.
+Whether we find ourselves repeatedly correcting or commenting on a recurring error with the team, there is probably an _ESLint_ rule we can add to automate the solution. The best conventions are the ones that are automated.
 
-## Anatomía de la configuración de ESLint
+## Anatomy of ESLint Configuration
 
-Antes de empezar con el caso práctico, revisamos las principales propiedades del objeto de configuración de _ESLint_:
+Before starting with the case study, we review the main properties of the _ESLint_ configuration object:
 
-### Las reglas
+### The rules
 
-Las [reglas de _ESLint_](https://eslint.org/docs/latest/use/configure/rules) (`rules`) están pensadas para ser completamente independientes las unas de las otras, activarse y desactivarse de forma individual. _ESLint_ es una herramienta con la que imponer automáticamente nuestras visiones sobre el código, así que no hay regla que no podamos desactivar. Todo está sujeto a opinión, y dependerá de nuestras necesidades. Las reglas admiten tres posibles grados de severidad: "error", "warn" y "off", y pueden aceptar un array para configurar algunas opciones de forma más precisa. Muchas de ellas cuentan con capacidad de _autofix_, para corregir el error de forma automática.
+[The _ESLint_ rules](https://eslint.org/docs/latest/use/configure/rules) are designed to be completely independent of each other, activated and deactivated individually. _ESLint_ is a tool with which to automatically impose our views on the code, so there is no rule that we cannot deactivate. Everything is subject to opinion and will depend on our needs. Rules accept three possible severity levels: "error", "warn" and "off", and can accept an array to configure some options more precisely. Many of them have autofix capability, to automatically correct the error.
 
 ### Overrides
 
-La propiedad `overrides` es muy importante en el sistema legacy, y también va a tener un papel destacado en la **flat config**. Es un array que acepta objetos en los que definimos configuraciones específicas para subconjuntos de archivos. Para definir cada subconjunto usamos las propiedades `files` y `excludeFiles`. Estas propiedades toman como valor expresiones _globs_ **relativas al directorio** donde se localiza el archivo de configuración.
+The `overrides` property is very important in the legacy system, and will also play a prominent role in the **flat config**. It is an array that accepts objects in which we define specific configurations for subsets of files. To define each subset, we use the `files` and `excludeFiles` properties. These properties take globs expressions as a value **relative to the directory** where the configuration file is located.
 
 ```js
 module.exports = {
   rules: {
-    // Reglas generales
+    // General rules
   },
   overrides: [
     {
       files: ['**/*.{ts,tsx}'],
       excludeFiles: '*.test.ts',
       rules: {
-        // Reglas para archivos de Typescript
+        // Rules for Typescript files
       },
     },
     {
       files: ['**/*stories.*'],
       rules: {
-        // Reglas para archivos de Storybook
+        // Rules for Storybook files
       },
     },
   ],
 };
 ```
 
-Overrides es una funcionalidad alternativa y más entendible frente al diseño en cascada, muy característico de _ESLint_, en el que profundizaremos en la parte 2 de esta serie.
+Overrides is an alternative and more understandable functionality compared to the cascading design, very characteristic of _ESLint_, which we will delve into in part 2 of this series.
 
 ### Extends key vs plugins key
 
-Hay algo que resulta bastante extraño en _ESLint_, y que más de una vez me ha causado confusión, es porque tenemos dependencias llamadas `eslint-plugin-foo` y otras llamadas `eslint-config-foo`. Y porque en unas ocasiones se indica que tenemos que usarlas con `extends`, y otras con `plugins`.
+There is something that is quite strange in _ESLint_, and that has caused me confusion more than once, because we have dependencies called `eslint-plugin-foo` and others called `eslint-config-foo`. And because in some occasions it is indicated that we have to use them with `extends`, and others with `plugins`.
 
-Como hemos dicho, _ESLint_ es un sistema modular y configurable. Podemos instalar reglas adicionales para configurar nuestro caso de uso perfecto. Estas reglas vienen empaquetadas en dependencias NPM con el nombre de `eslint-plugin-[my-plugin]`. Para usarlas, las instalamos y pasamos el nombre al array de plugins: `plugins: ["my-plugin"]` (no es necesario usar el prefijo `eslint-plugin-`).
+As we have said, _ESLint_ is a modular and configurable system. We can install additional rules to configure our perfect use case. These rules come packaged in NPM dependencies with the name `eslint-plugin-[my-plugin]`. To use them, we install them and pass the name to the plugin array: `plugins: ["my-plugin"]` (it is not necessary to use the prefix `eslint-plugin-`).
 
-Pero esto no hace que nuestras reglas estén activas automáticamente. Cuando pasamos el valor al array de `plugins`, simplemente las estamos haciendo disponibles al sistema para su uso. Entonces podemos activar las que queramos en la propiedad `rules`:
+But this does not automatically activate our rules. When we pass the value to the `plugins` array, we are simply making them available to the system for use. Then we can activate the ones we want in the `rules` property:
 
 ```js
 // .eslintrc.js
@@ -119,15 +118,15 @@ Pero esto no hace que nuestras reglas estén activas automáticamente. Cuando pa
 module.exports = {
   plugins: ['my-plugin'],
   rules: {
-    // Las reglas van prefijadas con el nombre del plugin
+    // Rules need to be prefixed with the name of the plugin
     'my-plugin/some-available-rule': 'error',
   },
 };
 ```
 
-Aquí es donde entran en juego las _shareable configs_ (en adelante, _configs_). Para ahorrarnos el trabajo tedioso de tener que activar reglas una a una, existen otras dependencias de NPM con el nombre de `eslint-config-[my-config]`, que activan directamente un conjunto de reglas pre-definidas al incluirlas en en array de `extends`: `extends: ["my-config"]` (no es necesario usar el prefijo `eslint-config-`)
+This is where _shareable configs_ (hereafter _configs_) come into play. To save us the tedious work of having to activate rules one by one, there are other NPM dependencies with the name `eslint-config-[my-config]` that directly activate a set of predefined rules when included in the `extends` array: `extends: ["my-config"]` (it is not necessary to use the prefix `eslint-config-`).
 
-Las _configs_ pueden usar uno o varios _plugins_ por debajo, pueden extenderse de otras _configs_ y añadir por nosotros, además de reglas, cualquier otra configuración necesaria para su buen funcionamiento.
+_Configs_ can use one or several _plugins_ underneath, can be extended from other _configs_ and add for us, in addition to rules, any other configuration necessary for their proper functioning.
 
 ```js
 module.exports = {
@@ -136,11 +135,11 @@ module.exports = {
 };
 ```
 
-Finalmente, es habitual que los plugins que se comparten como dependencias traigan también consigo un set de _configs_ que los autores han considerado de utilidad y que podemos usar en `extends`. Por ejemplo, `eslint-plugin-react` incluye como configs `recommended`, `typescript`, `jsx-runtime`, etc.
+Finally, it is common for plugins that are shared as dependencies to also bring a set of _configs_ with them that the authors have considered useful and that we can use in extends. For example, `eslint-plugin-react` includes as configs `recommended`, `typescript`, `jsx-runtime`, etc.
 
-Esto puede resultar confuso, al exportar en una misma dependencia, de tipo plugin, tanto el propio plugin como un conjunto de configs. Pero resulta de lo más conveniente, porque nos permite tanto extender de una configuración pre-definida como aplicar reglas individuales.
+This can be confusing, as both the plugin itself and a set of configs are exported in the same plugin dependency. But it is highly convenient because it allows us to both extend from a predefined configuration and apply individual rules.
 
-Para usar una config importada de un plugin, seguimos la sintáxis: `plugin:[name-plugin]/[name-config]`
+To use an imported config from a plugin, we follow the syntax: `plugin:[name-plugin]/[name-config]`.
 
 ```js
 module.exports = {
@@ -152,32 +151,32 @@ module.exports = {
 };
 ```
 
-En resumen:
+In summary:
 
-- Las **_configs_** pueden contener todo lo que se pueda añadir a un archivo de configuración de _ESLint_, vienen paquetizadas como `eslint-config-<my-config>` y se pasan a la propiedad `extends`. Son la manera en la que podemos compartir y reusar configuraciones "listas para consumir", y ahorrarnos el trabajo de crearlas nosotros.
+- **Configs** can contain anything that can be added to an _ESLint_ configuration file, they come packaged as `eslint-config-<my-config>`, and are passed to the `extends` property. They are the way we can share and reuse "ready-to-consume" configurations and save us the work of creating them ourselves.
 
-- Los **_plugins_** añaden nuevas reglas al sistema. Vienen paquetizados como `eslint-plugin-<my-plugin>` y se pasan a la propiedad `plugins`, para poder activar reglas de forma individual en `rules`. También pueden exportar configs para activar conjuntos pre-definidos de esas reglas.
+- **Plugins** add new rules to the system. They come packaged as `eslint-plugin-<my-plugin>` and are passed to the `plugins` property, so that rules can be activated individually in `rules`. They can also export configs to activate pre-defined sets of those rules.
 
-### Otras root keys
+### Other root keys
 
-Además de `rules`, `overrides`, `extends` y `plugins`, la configuración de _ESLint_ incluye otras propiedades, como `env`, `settings`, `parser`, `parserOptions`, etc., que son esenciales para la funcionalidad de _ESLint_. Por ejemplo, a la de definir el comportamiento de plugins, de hacer que **ESLint** sea capaz de interpretar diferentes sintaxis, de que reconozca variables de entorno, etc. Veremos las más habituales a continuación, en nuestro caso práctico. Podemos fijarnos en su configuración, porque en la **flat config** (parte 2) se van a transformar y reorganizar.
+In addition to `rules`, `overrides`, `extends` and `plugins`, the _ESLint_ settings includes other properties, such as `env`, `settings`, `parser`, `parserOptions`, etc., which are essential to the functionality of _ESLint_. For example, defining the behavior of plugins, making _ESLint_ able to interpret different syntaxes, recognizing environment variables, etc. We will see the most common ones below, in our practical case. We can pay attention to their configuration, because in the **flat config** (part 2) they will be transformed and reorganized.
 
-## Un caso práctico
+## A case study
 
-¡Pasemos a la acción! En esta sección, vamos a crear incrementalmente una configuración de _ESLint_ real, aunque simplificada para fines de ejemplo, que usamos para proyectos en producción con el siguiente _stack_:
+Let's turn to action! In this section, we are going to incrementally create a real, although simplified for example purposes, _ESLint_ configuration that we use for production projects with the following stack:
 
 - React
 - Typescript
 - Storybook
 - Testing
 
-Uno de los signos de identidad de ESLint, responsable en buena medida de su éxito, es su extensibilidad. El ecosistema de _ESLint_ está formado por una gran variedad de plugins y configuraciones disponibles como paquetes NPM que podemos importar para establecer nuestro caso de uso.
+One of the hallmarks of _ESLint_, responsible for much of its success, is its extensibility. The _ESLint_ ecosystem is made up of a wide variety of plugins and configurations available as NPM packages that we can import to establish our use case.
 
-En ocasiones puede abrumar la cantidad de dependencias que tenemos que instalar para configurar un proyecto[^1]. A cambio, la ventaja es que podemos instalar exactamente lo que necesitemos:
+Sometimes the number of dependencies that we have to install to configure a project[^1] can be overwhelming. But the reward is that we can install exactly what we need:
 
-### Recomendaciones de _ESLint_
+### ESLint recommendations
 
-`eslint:recommended` contiene una serie de reglas que el equipo de _ESLint_, después de analizar muchísimos proyectos, considera de utilidad en la mayoría de casos. Así que lo primero que hacemos es incluir estas reglas en nuestra configuración. En el sistema tradicional, están incluidas dentro de _ESLint_, así que no es necesario instalar nada.
+`eslint:recommended` contains a series of rules that the _ESLint_ team, after analyzing many projects, considers useful in most cases. So the first thing we do is include these rules in our configuration. In the traditional system, they are included within _ESLint_, so nothing needs to be installed.
 
 ```js
 //.eslintrc.js
@@ -189,13 +188,13 @@ module.exports = {
 
 ### Prettier
 
-_Prettier_ es un formateador, _ESLint_ es un linter. Los formateadores son más rápidos y menos "inteligentes" que los linters, porque no entran a valorar la lógica del código. Se encargan reescribirlo siguiendo reglas de formateo puramente visual (tabs, espacios, puntos y comas, largos de línea...). Mientras que los linters entienden la lógica y la sintáxis, y nos dan indicaciones de acuerdo a cada una de las reglas activadas.
+_Prettier_ is a formatter, _ESLint_ is a linter. Formatters are faster and less "intelligent" than linters, because they do not evaluate the code logic. They are responsible for rewriting it following purely visual formatting rules (tabs, spaces, dots and commas, line lengths...). While linters understand the logic and syntax, and give us indications according to each of the activated rules.
 
-Cuando usamos _Prettier_ y _ESLint_ juntos, dado que _Eslint_ contiene reglas de formateo, necesitamos instalar algo como `eslint-config-prettier`, para desactivar esas reglas e indicar a _ESLint_ que _Prettier_ va a ser el encargado del formateo.
+When we use _Prettier_ and _ESLint_ together, since Eslint contains formatting rules, we need to install something like `eslint-config-prettier`, to deactivate those rules and indicate to _ESLint_ that _Prettier_ will be in charge of formatting.
 
-El plugin `eslint-plugin-prettier` y variantes no están recomendadas en la gran mayoría de casos. Hacen que _Prettier_ se comporte como una regla del linter, lo cual es mucho más lento. No hay necesidad de hacerlo así cuando tenemos configurado _Prettier_ como herramienta independiente.
+The `eslint-plugin-prettier` and related plugins are not recommended in the vast majority of cases. They make _Prettier_ behave like a linter rule, which is much slower. There is no need to do this when we have _Prettier_ configured as a stand-alone tool.
 
-**Cuando usamos _Prettier_ y _ESLint_ en el mismo proyecto, es importante que permitamos que cada herramienta realice la tarea que mejor sabe hacer**.
+**When using _Prettier_ and _ESLint_ in the same project, it is important that we allow each tool to perform the task it does best.**.
 
 ```js
 //.eslintrc.js
@@ -203,7 +202,7 @@ El plugin `eslint-plugin-prettier` y variantes no están recomendadas en la gran
 module.exports = {
   extends: [
     'eslint:recommended',
-    // prettier debe figurar último, para resolver cualquier posible conflicto a su favor.
+    // prettier should be listed last to resolve any possible conflicts in its favor
     'prettier',
   ],
 };
@@ -211,13 +210,13 @@ module.exports = {
 
 ### React
 
-Instalaremos un par de plugins para incluir las reglas relacionadas con React y para que _ESLint_ sea capaz de entender `jsx`, que no es una sintáxis nativa en Javascript: `eslint-plugin-react` y `eslint-plugin-react-hooks`. Éste último viene de manera separada porque hubo un tiempo en que los hooks no eran parte de React.
+We will install a couple of plugins to include React-related rules and to make _ESLint_ able to understand `jsx`, which is not a native syntax in JavaScript: `eslint-plugin-react` and `eslint-plugin-react-hooks`. The latter is separate because there was a time when hooks were not part of React.
 
-Los plugins necesitan conocer la version de React, porque de ello puede depender su funcionamiento, así que usamos `settings` para indicar a _ESLint_ que mire en el `package.json`.
+Plugins need to know the React version, because their performance may depend on it, so we use `settings` to tell _ESLint_ to look in the `package.json`.
 
-Usamos las configuraciones recomendadas en `extends`. Además añadimos a `extends` `plugin:react/jsx-runtime`, otra configuración que nos ayuda a desactivar las reglas que requieren que importemos `React` al inicio de cada archivo, lo cual no es necesario a partir de React 17.
+We use the recommended settings in `extends`. In addition, we add to `extends` `plugin:react/jsx-runtime`, another configuration that helps us disable the rules that require us to import React at the beginning of each file, which is not necessary from React 17.
 
-Todas las configuraciones que hemos extendido, incluyen la opciones de parseo para que _ESLint_ sea capaz de interpretar `jsx`. Aún así, lo añadimos de forma explícita al archivo para mayor claridad.
+All the configurations we have extended include parsing options so that _ESLint_ can interpret `jsx`. Even so, we add it explicitly to the file for greater clarity.
 
 ```js
 //.eslintrc.js
@@ -242,24 +241,24 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks'],
   rules: {
-    // Aquí podemos activar manualmente reglas para los archivos de React
+    // Here we can manually activate rules for our React files
   },
 };
 ```
 
 ### Typescript
 
-Para que _ESLint_ sea capaz de entender los archivos de _Typescript_, necesitamos instalar `@typescript-eslint`, que contiene un parser y un montón de reglas recomendadas para trabajar con _Typescript_. En este caso, necesitamos hacer uso de `overrides` y crear un bloque donde pasamos _globs_ para capturar los archivos con extensiones `.ts` y `.tsx`.
+For _ESLint_ to be able to understand _Typescript_ files, we need to install `@typescript-eslint`, which contains a parser and a bunch of recommended rules for working with _Typescript_. In this case, we need to use `overrides` and create a block where we pass globs to capture files with extensions `.ts` and `.tsx`.
 
-Vamos a extender la configuración recomendada, `plugin:@typescript-eslint/recommended`, pero también una segunda configuración, `plugin:@typescript-eslint/recommended-requiring-type-checking`, que hacen que _ESLint_ sea mucho más potente al [usar la información de tipos para detectar errores](https://typescript-eslint.io/linting/typed-linting). Para que funcione, tenemos que facilitar a _ESLint_ la información de tipos. Lo hacemos con `project: true`, que indica a _ESLint_ que busque el `tsconfig.json` más cercano.
+We will extend the recommended configuration, `plugin:@typescript-eslint/recommended`, but also a second configuration, `plugin:@typescript-eslint/recommended-requiring-type-checking`, which make _ESLint_ much more powerful by [using type information to detect errors](https://typescript-eslint.io/linting/typed-linting). To make it work, we have to provide _ESLint_ with type information. We do this with `project: true`, which tells _ESLint_ to look for the nearest `tsconfig.json`.
 
-También vamos a extender `plugin:@typescript-eslint/eslint-recommended`. Lo que hace es desactivar las reglas de `eslint:recommended` que ya están controladas por _Typescript_, para evitar duplicidades.
+We're also going to extend `plugin:@typescript-eslint/eslint-recommended`. What it does is disable `eslint:recommended` rules that are already controlled by _Typescript_, to avoid duplication.
 
 ```js
 // .eslintrc.js
 
 module.exports = {
-  // Aqui van las propiedades generales que definimos con anterioridad
+  // The rules we defined earlier goes here
   // ...
   overrides: [
     {
@@ -275,7 +274,7 @@ module.exports = {
       },
       plugins: ['typescript-eslint'],
       rules: {
-        // Aquí podemos activar manualmente reglas para los archivos de Typescript
+        // Here we can manually activate rules for our React files
       },
     },
   ],
@@ -284,9 +283,9 @@ module.exports = {
 
 ### Storybook
 
-Instalamos el plugin oficial de Storybook para _ESLint_, que contiene reglas con las mejores prácticas para el tratamiento de las historias y del directorio de configuración `.storybook`: `eslint-plugin-storybook`. Por defecto, las reglas de este plugin solo aplican a los archivos que coincidad con los patrones: `*.stories.*` (recomendado) o `*.story.*`. Así que es **muy importante que los nombres de los archivos de nuestras historias sigan esta convención**, o el plugin no tendrá efecto.
+We install the official _Storybook_ plugin for _ESLint_, which contains best practice rules for handling stories and the configuration directory .storybook : `eslint-plugin-storybook`. By default, the rules of this plugin only apply to files matching the patterns: `*.stories.*` (recommended) or `*.story.*`. So it is **very important that the names of our story files follow this convention**, or the plugin will not take effect.
 
-En _ESLint_, los archivos que empiezan por punto no se analizan por defecto. Así que también necesitamos añadir el directorio `.storybook` a la lista de archivos que queremos analizar. Usamos un patrón con negación en `ignorePatterns` para que _ESLint_ sea capaz de encontrar este directorio:
+In _ESLint_, files that start with a dot are not analyzed by default. So we also need to add the `.storybook` directory to the list of files we want to analyze. We use a negation pattern in `ignorePatterns` so that _ESLint_ is able to find this directory:
 
 ```js
 //.eslintrc.js
@@ -303,16 +302,16 @@ module.exports = {
   ignorePatterns: [
     '!.storybook'
   ]
-  // El resto de propiedades generales
+  // The rest of root keys goes here
   overrides: [
-    // Overrides para archivos Typescript
+    // Typescript files overrides goes here
   ],
 };
 ```
 
 ### Accesibilidad
 
-Usamos `eslint-plugin-jsx-a11y` para que nos ayude a detectar potenciales errores de accessibilidad en nuestros componentes de React. Simplemente extendemos las configuración recomendada.
+We use `eslint-plugin-jsx-a11y` to help us detect potential accessibility errors in our React components. We simply extend the recommended configuration.
 
 ```js
 //.eslintrc.js
@@ -330,22 +329,24 @@ module.exports = {
   ignorePatterns: [
     '!.storybook'
   ]
-  // El resto de propiedades definidas
+  // The rest of root keys goes here
   overrides: [
-    // Bloque para archivos Typescript
+    // Typescript files overrides goes here
   ],
 };
 ```
 
 ### Imports
 
-Con `eslint-plugin-import` podemos prevenir una serie de errores relaciones con la importación y exportación de módulos. Necesitaremos instalar `eslint-import-resolver-typescript` para tener soporte de Typescript.
+With `eslint-plugin-import` we can prevent a number of errors related to module import and export. We will need to install `eslint-import-resolver-typescript` to have Typescript support.
 
-Activamos algunas reglas específicas para este plugin:
+We activate some specific rules for this plugin:
 
-- A nivel estilístico, `import/sort` nos va a servir para ordernar y dividir en grupos los imports al principio de nuestros archivos de manera automática (es una regla con _autofix_), con lo cual va a ser mucho más facil entender las importaciones y evitar mantenerlas manualmente.
-- Activamos `import/no-extraneous-dependencies` para lanzar un error si importamos dependencias que no estén definidas en `package.json`.
-- Activamos `import/no-default-export` porque preferimos usar _named exports_. En algunos casos, como en las historias necesitamos permitir los _default exports_, así que vamos a habilitar un bloque en _overrides_ para manejar este tipo de excepciones.
+- At a stylistic level, `import/sort` will sort and group imports at the beginning of our files automatically (it is a rule with autofix), making it much easier to understand the imports and avoid maintaining them manually.
+
+- We activate `import/no-extraneous-dependencies` to throw an error if we import dependencies that are not defined in package.json.
+
+- We enable `import/no-default-export` because we prefer to use _named exports_. In some cases, such as in stories, we need to allow _default exports_, so we will enable a block in _overrides_ to handle this type of exception.
 
 ```js
 // .eslintrc.js
@@ -361,7 +362,7 @@ module.exports = {
     'import',
   ],
   settings: {
-    // Necesitamos estos settings para que ESLint sea capaz de resolver nuestros imports
+    // We need this so that ESLint can resolve our imports
     'import/resolver': {
       node: true,
       typescript: true,
@@ -424,17 +425,17 @@ module.exports = {
 
 ### Testing
 
-Para que nuestra configuración de _ESLint_ sea capaz de interpretar los archivos de testing, también necesitamos hacer algunas adiciones, que dependerán de las herramientas que estemos usando.
+For our _ESLint_ configuration to be able to interpret our testing files, we also need to make some additions, which will depend on the tools we are using.
 
-- **Jest**. Para usar Jest necesitamos activar en `env` la variable global jest, para que _ESLint_ sea capaz de reconocerla. También necesitamos permitir que nuestros `mocks` contengan `default exports`.
+- **Jest**. To use Jest we need to activate the global variable `jest` in `env`, so that _ESLint_ can recognize it. We also need to allow our `mocks` to contain default exports.
 
 ```js
 // .eslintrc.js
 
 module.exports = {
-  // Propiedades y reglas generales...
+  // General rules and properties...
   overrides: [
-    // Resto de bloques...
+    // Remaining blocks
     {
       files: ['**/__tests__/**', '**/__mocks__/**'],
       env: {
@@ -443,7 +444,7 @@ module.exports = {
     },
     {
       files: [
-        // Resto de paths...
+        // Remaining paths...
         '**/__mocks__/**',
       ],
       rules: {
@@ -455,15 +456,15 @@ module.exports = {
 };
 ```
 
-- **React Testing Library**. Instalamos dos plugins: `eslint-plugin-testing-library` y `eslint-plugin-jest-dom`. Los usamos solo para nuestros archivos de testing:
+- **React Testing Library**. We install two plugins: `eslint-plugin-testing-library` and `eslint-plugin-jest-dom`. We use them only for our testing files:
 
 ```js
 // .eslintrc.js
 
 module.exports = {
-  // Propiedades y reglas generales...
+  // General rules and properties...
   overrides: [
-    // Resto de bloques...
+    // Remaining blocks
     {
       files: ['**/__tests__/**', '**/__mocks__/**'],
       extends: ['plugin:testing-library/react', 'plugin:jest-dom/recommended'],
@@ -483,15 +484,15 @@ module.exports = {
 };
 ```
 
-- **Cypress**. Para Cypress instalaremos otro plugin que solo analizará los archivos de la carpeta `/cypress`. En las `parserOptions` del bloque de _Typescript_ vamos a modificar `project` para incluir la configuración de tipos de _Cypress_:
+- **Cypress**. We will install another plugin that will only analyze the files in the `/cypress` folder. In the `parserOptions` of the _Typescript_ block we will modify project to include the _Cypress_ type settings:
 
 ```js
 // .eslintrc.js
 
 module.exports = {
-  // Propiedades y reglas generales...
+  // General rules and properties...
   overrides: [
-    // Resto de bloques...
+    // Remaining blocks
     {
       files: ['*.ts', '*.tsx'],
       //...
@@ -511,7 +512,8 @@ module.exports = {
 ```
 
 ![Gif of Office's character Michael Scott doing a ta-da! gesture](/images/eslint-guide-04-2023/ta-freaking-da.gif?width=content)
-Et voilá 🎉! Aquí tenemos nuestro archivo final de configuración, integrando todas las partes que mencionamos y añadiendo algunos detalles, como la activación de un puñado de reglas individuales.
+
+Et voila 🎉! Here we have our final configuration file, integrating all the parts we mentioned and adding some details, such as the activation of a handful of individual rules.
 
 ```js
 //.eslintrc.js
@@ -678,13 +680,13 @@ module.exports = {
 };
 ```
 
-## Tips para configurar el IDE y los scripts
+## Tips for configuring the IDE and scripts
 
-Ahora que tenemos lista la configuración para el proyecto, podemos atender a otros aspectos que nos ayuden a la experiencia de uso de ESLint.
+Now that we have the configuration for the project ready, we can attend to other aspects that help us with the _ESLint_ user experience.
 
-En primer lugar, podemos configurar _Visual Studio Code_ en el contexto de nuestro proyecto, para que todos los miembros del equipo trabajen en un entorno con el mismo comportamiento. En la raíz del proyecto, creamos un directorio `.vscode` con dos archivos:
+First, we can configure _Visual Studio Code_ in the context of our project, so that all team members work in an environment with the same behavior. In the project root, we create a `.vscode` directory with two files:
 
-- Uno llamado `extensions.json`, en el que podemos incluir las extensiones que recomendamos instalar, _ESLint_ y _Prettier_ (asumiendo que estamos usando ambas herramientas, como suele ocurrir). Estas extensiones integran las capacidades de estas herramientas en nuestro IDE, para informarnos de errores y warnings, y facilitar su resolución.
+One called `extensions.json`, in which we can include the extensions we recommend installing, _ESLint_ and _Prettier_ (assuming we are using both tools, as is often the case). These extensions integrate the capabilities of these tools into our IDE, to inform us of errors and warnings, and facilitate their resolution.
 
 ```json
 //.vscode/extensions.json
@@ -693,9 +695,9 @@ En primer lugar, podemos configurar _Visual Studio Code_ en el contexto de nuest
 }
 ```
 
-![Screencapture of VSCode with a pop-up window which recommends to install ESLint extension](/images/eslint-guide-04-2023/vscode-recommended.png 'Visual Studio Code nos mostrará una ventana pop-up al abrir el proyecto con las extensiones recomendadas')
+![Screencapture of VSCode with a pop-up window which recommends to install ESLint extension](/images/eslint-guide-04-2023/vscode-recommended.png 'Visual Studio Code will show a pop-up window when opening the project with the recommended extensions')
 
-- Otro llamado `settings.json`, donde podemos configurar algunas funcionalidades que mejoren nuestra experiencia de desarrollo. Al guardar, _ESLint_ corregirá todos los errores posibles y _Prettier_ formateará nuestro código.
+- Another one called `settings.json`, where we can configure some functionalities that improve our development experience. When saving, _ESLint_ will correct all possible errors and _Prettier_ will format our code.
 
 ```json
 //.vscode/settings.json
@@ -709,7 +711,7 @@ En primer lugar, podemos configurar _Visual Studio Code_ en el contexto de nuest
 }
 ```
 
-Por último necesitamos configurar un par de scripts de _ESLint_ en nuestro `package.json`, a fin de poder integrarlo en las distintas fases del proceso de desarrollo: al hacer commit, en el pipeline de CI, etc.
+Finally, we need to configure a couple of _ESLint_ scripts in our `package.json`, in order to integrate it into the different phases of the development process: when committing, in the CI pipeline, etc.
 
 ```json
 {
@@ -720,17 +722,17 @@ Por último necesitamos configurar un par de scripts de _ESLint_ en nuestro `pac
 }
 ```
 
-Éstas son algunas opciones útiles que podemos pasar al comando:
+These are some useful options that we can pass to the command:
 
-- `--max-warnings 0`. En _ESLint_, una regla activada con un nivel de severidad `warn`, va a dar un aviso pero va a permitir que nuestro código compile. Esto puede hacer que el equipo interiorice que es posible y está bien ignorar las advertencias de _ESLint_. Como no queremos eso, no permitimos warnings.
-- `--report-unused-disable-directives`.En ocasiones, tenemos casos donde nos vemos obligados a desactivar alguna regla para un archivo o una línea concreta con un comentario tipo `/* eslint-disable */`. Esta opción nos avisa de los comentarios de desactivación de _ESLint_ que hayan quedado obsoletos debido a refactors, etc.
-- `--ignore-path .gitignore` nos permite indicar a _ESLint_ qué archivos no nos interesa analizar, por ejemplo `node_modules`.
+- `--max-warnings 0`. In _ESLint_, a rule activated with a warn severity level, will give a warning but will still allow our code to compile. This may cause the team to internalize that it is possible and okay to ignore _ESLint_ warnings. Since we don't want that, we don't allow warnings.
+- `--report-unused-disable-directives`. Sometimes, we have cases where we are forced to deactivate a rule for a specific file or line with a comment like `/*_ eslint-disable _/*`. This option notifies us of obsolete _ESLint_ deactivation comments due to refactors, etc.
+- `--ignore-path .gitignore` allows us to indicate to _ESLint_ which files we are not interested in analyzing, for example `node_modules`.
 
-**Siguientes pasos 👋**
+**Following steps 👋**
 
-En la parte 2 de esta guía, veremos como migrar nuestra configuración al nuevo sistema de _ESLint_, la **flat config**.
+In part 2 of this guide, we will see how to migrate our configuration to the new _ESLint_ system, the **flat config**.
 
-[^1]: Además de los plugins y configuraciones mencionados, otros que podrían ser interesante revisar para incluir en este tipo de aplicación: el plugin de NextJs, el plugin de SonarLint para escribir código limpio y `eslint-plugin-filenames` para ayudarnos a establecer convenciones de nombrado de archivos y directorios.
+[^1]: In addition to the mentioned plugins and configurations, other ones that could be interesting to review and include in this type of application are the Next.js plugin, the SonarLint plugin for writing clean code, and `eslint-plugin-filenames` to help establish file and directory naming conventions.
 
 ## References
 
@@ -742,5 +744,5 @@ En la parte 2 de esta guía, veremos como migrar nuestra configuración al nuevo
 - [Different between extends and plugins](https://prateeksurana.me/blog/difference-between-eslint-extends-and-plugins/)
 - ["Prettier vs. Linters" - Prettier docs](https://prettier.io/docs/en/comparison.html)
 - ["Stop using _ESLint_ for formatting" - Joshua K. Goldberg at React Miami 2023](https://www.youtube.com/live/mPPZ-NUnR-4?feature=share&t=26572)
-- [Usar tabs en prettier por accesibilidad](https://github.com/prettier/prettier/issues/7475)
+- [Using tabs in Prettier for accessibility](https://github.com/prettier/prettier/issues/7475)
 - [No-floating-promises vs no-void](https://mikebifulco.com/posts/eslint-no-floating-promises)
