@@ -21,7 +21,7 @@ import { externalLinks } from '$/common/utils/links';
 function NoteView({
   note,
 }: {
-  note?: Note;
+  note?: Note & { otherNotesLinks: string };
   jsonPath?: string;
 }): JSX.Element | null {
   const contentRef = useRef<HTMLDivElement>(null);

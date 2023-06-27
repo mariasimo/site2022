@@ -14,7 +14,7 @@ export const Container = styled.section`
 export const Lead = styled(HeadingL).attrs({ as: 'h1' })`
   max-width: 56rem;
   margin-block-end: 3.5rem;
-  line-height: 1.2;
+  line-height: 1.3;
 
   ${from.tabletPortrait} {
     margin-block-end: 2.6rem;
@@ -24,7 +24,7 @@ export const Lead = styled(HeadingL).attrs({ as: 'h1' })`
 export const LeadBold = styled(HeadingLBold).attrs({ as: 'span' })``;
 
 export const Summary = styled(BodyL).attrs({ as: 'p' })`
-  max-width: 48rem;
+  max-width: 56rem;
   display: none;
 
   ${from.tabletPortrait} {

@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 const leadText = [
   { style: LeadBold, text: 'María Simó' },
   {
-    text: 'Front—end developer. Sharp and passionate individual coding since 2019. I’m a big fan of clean and expressive code, polished layouts and fine-grained interactions & animations.',
+    text: 'Front—end developer. Sharp and passionate individual coding since 2019. Big fan of clean and expressive code, polished layouts and fine-grained interactions & animations.',
   },
 ];
 
@@ -46,7 +46,7 @@ export default function HomeHero() {
         <Summary>
           As a <SummaryBold>developer</SummaryBold>, I want to grow
           horizontally. Expand my knowledge to become a well-rounded specialist
-          and a better team player. As a former{' '}
+          and a valuable team player. As a former{' '}
           <SummaryBold>designer</SummaryBold>, I aim to champion the work of my
           colleagues to deliver a high quality product people enjoy using. As a
           <SummaryBold> woman</SummaryBold>, I hope to inspire others to follow

@@ -35,7 +35,6 @@ export type Note = NoteFrontmatter & {
   content: string;
   references: string | null;
   backlinks: string | null;
-  otherNotesLinks: string | null;
   translations: Language[] | null;
 };
 
@@ -74,8 +73,6 @@ export function getNote(slug: string, locale?: string): Note {
 
   const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
-  const otherNotesLinks = getRecommendedLinks(slug);
-
   const translations = translationsList.length
     ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
     : [frontmatter?.language ?? 'en'];
@@ -98,51 +95,70 @@ export function getNote(slug: string, locale?: string): Note {
     content,
     references: references,
     backlinks: backlinks ?? null,
-    otherNotesLinks: otherNotesLinks ?? null,
   };
 
   return note;
 }
 
 export function getNotesCards(): NoteCard[] {
-  const latestNotesList = getFilesFromDirectory(
-    contentConfig.notesDirectory,
-  ).filter((path) => {
-    const { data: frontmatter } = getMarkdownContents(path);
+  const notesList = getFilesFromDirectory(contentConfig.notesDirectory).filter(
+    (path) => {
+      const { data: frontmatter } = getMarkdownContents(path);
 
-    return !frontmatter.hideFromList;
-  });
+      return !frontmatter.hideFromList;
+    },
+  );
 
-  return latestNotesList
+  const formatNotes = (fileName: string) => {
+    const [slug, locale] = fileName
+      .replace('.md', '')
+      .split('/')
+      .filter(Boolean);
+
+    const note = getNote(slug, locale);
+
+    return {
+      title: note?.title ?? '',
+      slug: slug,
+      tags: note?.tags,
+      comingSoon: note?.comingSoon,
+      hideFromList: note?.hideFromList,
+      translations: note?.translations ?? [note.language ?? 'en'],
+      language: note?.language,
+      date: !note?.comingSoon && (note?.lastUpdated || note?.published),
+    };
+  };
+
+  const sortNotes = (
+    a: ReturnType<typeof formatNotes>,
+    b: ReturnType<typeof formatNotes>,
+  ) => {
+    if (a.date && b.date) {
+      return getDateMs(a.date) < getDateMs(b.date) ? 1 : -1;
+    }
+    if (a.date && !b.date) {
+      return -1;
+    }
+    return 1;
+  };
+
+  const removeLanguageDups = (notes: string[]) => {
+    return notes.reduce((acc: string[], note: string) => {
+      const [slug] = note.replace('.md', '').split('/').filter(Boolean);
+
+      if (!acc.some((n) => n.includes(slug))) {
+        return [...acc, note];
+      }
+      return acc;
+    }, []);
+  };
+
+  const formattedLatestNotes = removeLanguageDups(notesList)
     .slice(0, 4)
-    .map((fileName) => {
-      const [slug, locale] = fileName
-        .replace('.md', '')
-        .split('/')
-        .filter(Boolean);
+    .map(formatNotes)
+    .sort(sortNotes);
 
-      const note = getNote(slug, locale);
-
-      return {
-        title: note?.title ?? '',
-        slug: slug,
-        tags: note?.tags,
-        comingSoon: note?.comingSoon,
-        hideFromList: note?.hideFromList,
-        translations: note?.translations ?? [note.language ?? 'en'],
-        language: note?.language,
-        date: !note?.comingSoon && (note?.lastUpdated || note?.published),
-      };
-    })
-    .sort((a, b) => {
-      if (a.date && b.date) {
-        return getDateMs(a.date) < getDateMs(b.date) ? 1 : -1;
-      }
-      if (a.date && !b.date) {
-        return -1;
-      }
-      return 1;
-    });
+  return formattedLatestNotes;
 }
 
 function extractReferencesAndBacklinks(content: string) {
@@ -155,7 +171,7 @@ function extractReferencesAndBacklinks(content: string) {
   return { references, backlinks };
 }
 
-function getRecommendedLinks(slug: string) {
+export function getRecommendedLinks(slug: string) {
   const recommendedLinks = getRandomFilesFromDirectory(
     contentConfig.notesDirectory,
     3,

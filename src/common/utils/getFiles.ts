@@ -89,11 +89,7 @@ export const getRandomFilesFromDirectory = function (
 };
 
 export function getFilesFromDirectory(dir: string) {
-  return readSubDirsRecursive(dir, [])
-    .sort(function (a, b) {
-      return fs.statSync(b).mtime.getTime() - fs.statSync(a).mtime.getTime();
-    })
-    .map((file) => file.replace(dir, ''));
+  return readSubDirsRecursive(dir, []).map((file) => file.replace(dir, ''));
 }
 
 export function getMarkdownContents(path: string) {
