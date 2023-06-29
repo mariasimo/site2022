@@ -10,15 +10,6 @@ on:
     types: [opened, ready_for_review, reopened]
 
 jobs:
-  reviewer-lottery:
-    name: Pick reviewers
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: uesteibar/reviewer-lottery@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          config: '.github/reviewers-config.yml'
   slack-notification:
     name: Send Slack notification
     runs-on: ubuntu-latest
@@ -26,6 +17,6 @@ jobs:
       - uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: 'z1-front-operations'
-          slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+          slack-message: 'Test github action for reviewers lottery'
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.BOT_TOKEN_GITHUB }}
