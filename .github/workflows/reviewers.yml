@@ -1,5 +1,8 @@
 name: 'Reviewer lottery'
 on:
+  push:
+    branches:
+      - 'reviewers-test'
   pull_request:
     types:
       - opened
@@ -18,7 +21,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           config: '.github/reviewers-config.yml'
       - name: Get the output
-        run: echo "Outputs ${{ steps.reviewers.outputs.reviewers }}, ${{ steps.reviewers.outputs.test }}"
+        run: echo "Outputss ${{ steps }}, ${{ steps.reviewers.outputs.test }}"
   slack-notification:
     name: Send Slack notification
     runs-on: ubuntu-latest
