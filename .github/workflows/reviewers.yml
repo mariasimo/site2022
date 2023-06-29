@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: mariasimo/reviewer-lottery@master
+      - uses: mariasimo/reviewer-lottery@add-output
         id: reviewers
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
