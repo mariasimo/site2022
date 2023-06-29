@@ -21,7 +21,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           config: '.github/reviewers-config.yml'
       - name: Get the output
-        run: echo "Outputss ${{ steps }}, ${{ steps.reviewers.outputs.test }}"
+        run: echo "Outputss ${{ steps }}, ${{ JSON.stringify(steps)}}"
   slack-notification:
     name: Send Slack notification
     runs-on: ubuntu-latest
