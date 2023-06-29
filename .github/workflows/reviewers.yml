@@ -15,10 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: uesteibar/reviewer-lottery@v3
+      - uses: mariasimo/reviewer-lottery@v3
+        id: reviewers
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           config: '.github/reviewers-config.yml'
+      - name: Get the output
+        run: echo "Reviewers ${{ steps.reviewers.outputs.reviewers }}"
   slack-notification:
     name: Send Slack notification
     runs-on: ubuntu-latest
