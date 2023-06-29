@@ -1,5 +1,8 @@
 name: 'Reviewer lottery'
 on:
+  push:
+    branches:
+      - 'reviewers-test'
   pull_request:
     types:
       - opened
