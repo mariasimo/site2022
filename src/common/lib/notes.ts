@@ -43,8 +43,8 @@ export type NoteCard = Pick<
   'slug' | 'title' | 'comingSoon' | 'tags' | 'translations' | 'language'
 >;
 
-export function listNotes() {
-  const notesList = getFilesFromDirectory(contentConfig.notesDirectory);
+export async function listNotes() {
+  const notesList = await getFilesFromDirectory(contentConfig.notesDirectory);
 
   return notesList
     .filter((path) => {
@@ -100,13 +100,15 @@ export function getNote(slug: string, locale?: string): Note {
   return note;
 }
 
-export function getNotesCards(): NoteCard[] {
-  const notesList = getFilesFromDirectory(contentConfig.notesDirectory).filter(
-    (path) => {
+export async function getNotesCards(): Promise<NoteCard[]> {
+  const notesList = await getFilesFromDirectory(
+    contentConfig.notesDirectory,
+  ).then((f) =>
+    f.filter((path) => {
       const { data: frontmatter } = getMarkdownContents(path);
 
       return !frontmatter.hideFromList;
-    },
+    }),
   );
 
   const formatNotes = (fileName: string) => {

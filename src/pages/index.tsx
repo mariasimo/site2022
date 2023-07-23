@@ -20,13 +20,13 @@ function HomePage({
 
 export default HomePage;
 
-export function getStaticProps({ preview = false }) {
+export async function getStaticProps({ preview = false }) {
   const readLearningInPublicFile = fs.readFileSync(
     content.learningInPublicFile,
     'utf-8',
   );
   const { data: learningInPublic } = matter(readLearningInPublicFile);
-  const notes = getNotesCards();
+  const notes = await getNotesCards().then((n) => n);
 
   return {
     props: { preview, notes, learningInPublic },

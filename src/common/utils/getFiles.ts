@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { readdir } from 'fs/promises';
 import matter from 'gray-matter';
 import contentConfig from '../../../content.config';
 
@@ -34,23 +35,25 @@ function createUniqueRandomNumbers(
   return arr;
 }
 
-const readSubDirsRecursive = function (path: string, files: string[] = []) {
-  const filesInNotesDir = fs.readdirSync(path);
+async function readSubDirsRecursive(mainPath: string, files: string[] = []) {
+  const filesInDir = await readdir(mainPath).then((f) => f);
 
-  filesInNotesDir.forEach(function (file) {
-    const subpath = path + '/' + file;
+  await Promise.all(
+    filesInDir.map(async function (file) {
+      const subpath = mainPath + `/` + file;
 
-    if (isDirectory(subpath)) {
-      readSubDirsRecursive(subpath, files);
-    } else {
-      if (typeof file === 'string') {
-        files.push(subpath.replace('//', '/'));
+      if (isDirectory(subpath)) {
+        await readSubDirsRecursive(subpath, files).then((f) => f);
+      } else {
+        if (typeof file === 'string') {
+          files.push(subpath.replace('//', '/'));
+        }
       }
-    }
-  });
+    }),
+  );
 
   return files;
-};
+}
 
 const readDir = function (
   path: string,
@@ -88,8 +91,9 @@ export const getRandomFilesFromDirectory = function (
   });
 };
 
-export function getFilesFromDirectory(dir: string) {
-  return readSubDirsRecursive(dir, []).map((file) => file.replace(dir, ''));
+export async function getFilesFromDirectory(dir: string) {
+  const files = await readSubDirsRecursive(dir, []).then((f) => f);
+  return files.map((file) => file.replace(dir, ''));
 }
 
 export function getMarkdownContents(path: string) {
