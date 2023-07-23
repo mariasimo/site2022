@@ -1,7 +1,7 @@
 import {
   languagesDictionary,
   NoteCard as NoteCardType,
-} from '$/common/lib/notes';
+} from '$/common/lib/notes/types';
 import { sortAlphabetical } from '../../../common/utils/sort';
 import {
   Container,

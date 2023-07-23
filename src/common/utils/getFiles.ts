@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { readdir } from 'fs/promises';
+import path from 'path';
 import matter from 'gray-matter';
 import contentConfig from '../../../content.config';
 
@@ -40,7 +41,7 @@ async function readSubDirsRecursive(mainPath: string, files: string[] = []) {
 
   await Promise.all(
     filesInDir.map(async function (file) {
-      const subpath = mainPath + `/` + file;
+      const subpath = path.join(mainPath, file);
 
       if (isDirectory(subpath)) {
         await readSubDirsRecursive(subpath, files).then((f) => f);
@@ -56,11 +57,11 @@ async function readSubDirsRecursive(mainPath: string, files: string[] = []) {
 }
 
 const readDir = function (
-  path: string,
+  filePath: string,
   files: string[] = [],
   filterFunction?: (value: string, index: number, array: string[]) => boolean,
 ) {
-  const filesInNotesDir = fs.readdirSync(path);
+  const filesInNotesDir = fs.readdirSync(filePath);
 
   return filterFunction ? filesInNotesDir.filter(filterFunction) : files;
 };
@@ -71,8 +72,8 @@ export const getRandomFilesFromDirectory = function (
   currentSlug: string,
 ) {
   const filterFunction = (filename: string) => {
-    const path = filename.includes('.md') ? filename : `${filename}/en.md`;
-    const { data: noteFrontmatter } = getMarkdownContents(path);
+    const filePath = filename.includes('.md') ? filename : `${filename}/en.md`;
+    const { data: noteFrontmatter } = getMarkdownContents(filePath);
     return !noteFrontmatter.hideFromList && !filename.includes(currentSlug);
   };
 
@@ -96,11 +97,11 @@ export async function getFilesFromDirectory(dir: string) {
   return files.map((file) => file.replace(dir, ''));
 }
 
-export function getMarkdownContents(path: string) {
+export function getMarkdownContents(filePath: string) {
   const fileName = fs.readFileSync(
-    path.includes(contentConfig.notesDirectory)
-      ? path
-      : `${contentConfig.notesDirectory}${path}`,
+    filePath.includes(contentConfig.notesDirectory)
+      ? filePath
+      : `${contentConfig.notesDirectory}${filePath}`,
     'utf-8',
   );
 
@@ -111,8 +112,8 @@ export function getMarkdownContents(path: string) {
   return contents;
 }
 
-export function getTranslationsList(path: string): string[] {
-  const dir = `${contentConfig.notesDirectory}${path.replace('/', '')}`;
+export function getTranslationsList(filePath: string): string[] {
+  const dir = `${contentConfig.notesDirectory}${filePath.replace('/', '')}`;
 
   if (
     !fs.existsSync(dir) ||
@@ -128,11 +129,11 @@ export function getTranslationsList(path: string): string[] {
  * /content/notes/[filename]/[lang?].md -> /[filename]
  */
 export function getSlugFromFilePath(fileName: string): string {
-  const path = fileName
+  const filePath = fileName
     .replace(contentConfig.notesDirectory, '')
     .replace('.md', '');
 
-  const hasLanguage = path.includes('/');
+  const hasLanguage = filePath.includes('/');
 
-  return hasLanguage ? path.split('/').slice(0, -1).join('/') : path;
+  return hasLanguage ? filePath.split('/').slice(0, -1).join('/') : filePath;
 }
