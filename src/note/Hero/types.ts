@@ -1,5 +1,5 @@
 import type { MutableRefObject } from 'react';
-import type { Note } from '../../common/lib/notes';
+import type { Note } from '../../common/lib/notes/types';
 
 export type Props = {
   title: string;

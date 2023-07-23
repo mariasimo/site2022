@@ -14,8 +14,8 @@ function NotePage({
 
 export default NotePage;
 
-export function getStaticPaths({ locales }: GetStaticPathsContext) {
-  const notes = listNotes();
+export async function getStaticPaths({ locales }: GetStaticPathsContext) {
+  const notes = await listNotes();
 
   return {
     paths: notes.flatMap((note) => {

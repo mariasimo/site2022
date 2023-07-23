@@ -92,7 +92,7 @@ export const getRandomFilesFromDirectory = function (
 
 export async function getFilesFromDirectory(dir: string) {
   const files = await readSubDirsRecursive(dir, []).then((f) => f);
-  return files.map((file) => file.replace(dir, ''));
+  return files.map((file) => path.relative(dir, file));
 }
 
 export function getMarkdownContents(filePath: string) {

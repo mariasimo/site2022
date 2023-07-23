@@ -33,7 +33,7 @@ import { useAnimation } from 'framer-motion';
 import MarkdownParser from '../../common/components/MarkdownParser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { languagesDictionary } from '../../common/lib/notes';
+import { languagesDictionary } from '../../common/lib/notes/types';
 import NextLink from 'next/link';
 
 const statusDictionary: { [key: string]: string } = {
