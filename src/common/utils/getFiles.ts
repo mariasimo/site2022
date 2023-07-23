@@ -46,9 +46,7 @@ async function readSubDirsRecursive(mainPath: string, files: string[] = []) {
       if (isDirectory(subpath)) {
         await readSubDirsRecursive(subpath, files).then((f) => f);
       } else {
-        if (typeof file === 'string') {
-          files.push(subpath.replace('//', '/'));
-        }
+        files.push(subpath);
       }
     }),
   );
