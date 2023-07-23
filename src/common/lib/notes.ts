@@ -4,7 +4,7 @@ import {
   getMarkdownContents,
   getTranslationsList,
   getSlugFromFilePath,
-} from './getFiles';
+} from '../utils/getFiles';
 import contentConfig from '../../../content.config';
 
 export const languagesDictionary = {

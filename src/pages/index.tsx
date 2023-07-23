@@ -4,7 +4,7 @@ import content from '../../content.config';
 
 import fs from 'fs';
 import matter from 'gray-matter';
-import { getNotesCards } from '$/common/utils/notes';
+import { getNotesCards } from '$/common/lib/notes';
 
 function HomePage({
   notes,

@@ -4,7 +4,7 @@ import type {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next';
-import { getNote, getRecommendedLinks, listNotes } from '../common/utils/notes';
+import { getNote, getRecommendedLinks, listNotes } from '../common/lib/notes';
 
 function NotePage({
   note,
