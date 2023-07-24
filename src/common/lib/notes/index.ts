@@ -138,11 +138,19 @@ function extractReferencesAndBacklinks(content: string) {
   return { references, backlinks };
 }
 
-export async function getRecommendedLinks(slug: string): Promise<string> {
+export async function getRecommendedLinks(
+  currentPostSlug: string,
+): Promise<string> {
+  const filterCondition = (filename: string) => {
+    const filePath = filename.includes('.md') ? filename : `${filename}/en.md`;
+    const { data: noteFrontmatter } = getMarkdownContents(filePath);
+    return !noteFrontmatter.hideFromList && !filename.includes(currentPostSlug);
+  };
+
   const recommendedLinks = await getRandomFilesFromDirectory(
     contentConfig.notesDirectory,
     3,
-    slug,
+    filterCondition,
   );
 
   return recommendedLinks

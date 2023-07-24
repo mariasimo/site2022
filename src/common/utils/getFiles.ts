@@ -12,10 +12,14 @@ function createRandomIndex(max: number) {
   return Math.floor(Math.random() * max);
 }
 
+/**
+ * Return an array of random non-repeated numbers
+ * length {length} which highest number is {highestNum}
+ */
 function createUniqueRandomNumberList(
-  arr: number[],
   length: number,
   highestNum: number,
+  arr: number[] = [],
 ) {
   if (highestNum < length) {
     throw new Error(
@@ -30,7 +34,7 @@ function createUniqueRandomNumberList(
   }
 
   if (arr.length < length) {
-    createUniqueRandomNumberList(arr, length, highestNum);
+    createUniqueRandomNumberList(length, highestNum, arr);
   }
 
   return arr;
@@ -54,41 +58,20 @@ async function readSubDirsRecursive(mainPath: string, files: string[] = []) {
   return files;
 }
 
-async function readDir(
-  filePath: string,
-  files: string[] = [],
-  filterFunction?: (value: string, index: number, array: string[]) => boolean,
-) {
-  const filesInNotesDir = await readdir(filePath);
-
-  return filterFunction ? filesInNotesDir.filter(filterFunction) : files;
-}
-
-export const getRandomFilesFromDirectory = async function (
+export async function getRandomFilesFromDirectory(
   dir: string,
   maxFiles: number,
-  currentSlug: string,
+  filterCondition?: (value: string) => boolean,
 ) {
-  const filterFunction = (filename: string) => {
-    const filePath = filename.includes('.md') ? filename : `${filename}/en.md`;
-    const { data: noteFrontmatter } = getMarkdownContents(filePath);
-    return !noteFrontmatter.hideFromList && !filename.includes(currentSlug);
-  };
-
-  const filesInNotesDir = await readDir(dir, [], filterFunction);
-
-  const indexes = createUniqueRandomNumberList(
-    [],
-    maxFiles,
-    filesInNotesDir.length,
+  const fileListWithDups = (await getFilesFromDirectory(dir)).filter((slug) =>
+    filterCondition?.(slug),
   );
 
-  return indexes.map((i) => {
-    return filesInNotesDir[i].includes('.md')
-      ? filesInNotesDir[i]
-      : `${filesInNotesDir[i]}/en.md`;
-  });
-};
+  const fileList = [...new Set(fileListWithDups)] as string[];
+  const indexes = createUniqueRandomNumberList(maxFiles, fileList.length);
+
+  return indexes.map((i) => fileList[i]);
+}
 
 export async function getFilesFromDirectory(dir: string) {
   const files = await readSubDirsRecursive(dir, []).then((f) => f);
