@@ -138,12 +138,14 @@ function extractReferencesAndBacklinks(content: string) {
   return { references, backlinks };
 }
 
-export function getRecommendedLinks(slug: string) {
-  const recommendedLinks = getRandomFilesFromDirectory(
+export async function getRecommendedLinks(slug: string): Promise<string> {
+  const recommendedLinks = await getRandomFilesFromDirectory(
     contentConfig.notesDirectory,
     3,
     slug,
-  )
+  );
+
+  return recommendedLinks
     .map((fileName) => {
       const noteSlug = getSlugFromFilePath(fileName);
       const { data: noteFrontmatter } = getMarkdownContents(fileName);
@@ -159,8 +161,6 @@ export function getRecommendedLinks(slug: string) {
         : null;
     })
     .join('\n');
-
-  return recommendedLinks;
 }
 
 /**

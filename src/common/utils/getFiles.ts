@@ -12,7 +12,7 @@ function createRandomIndex(max: number) {
   return Math.floor(Math.random() * max);
 }
 
-function createUniqueRandomNumbers(
+function createUniqueRandomNumberList(
   arr: number[],
   length: number,
   highestNum: number,
@@ -30,7 +30,7 @@ function createUniqueRandomNumbers(
   }
 
   if (arr.length < length) {
-    createUniqueRandomNumbers(arr, length, highestNum);
+    createUniqueRandomNumberList(arr, length, highestNum);
   }
 
   return arr;
@@ -54,17 +54,17 @@ async function readSubDirsRecursive(mainPath: string, files: string[] = []) {
   return files;
 }
 
-const readDir = function (
+async function readDir(
   filePath: string,
   files: string[] = [],
   filterFunction?: (value: string, index: number, array: string[]) => boolean,
 ) {
-  const filesInNotesDir = fs.readdirSync(filePath);
+  const filesInNotesDir = await readdir(filePath);
 
   return filterFunction ? filesInNotesDir.filter(filterFunction) : files;
-};
+}
 
-export const getRandomFilesFromDirectory = function (
+export const getRandomFilesFromDirectory = async function (
   dir: string,
   maxFiles: number,
   currentSlug: string,
@@ -75,9 +75,9 @@ export const getRandomFilesFromDirectory = function (
     return !noteFrontmatter.hideFromList && !filename.includes(currentSlug);
   };
 
-  const filesInNotesDir = readDir(dir, [], filterFunction);
+  const filesInNotesDir = await readDir(dir, [], filterFunction);
 
-  const indexes = createUniqueRandomNumbers(
+  const indexes = createUniqueRandomNumberList(
     [],
     maxFiles,
     filesInNotesDir.length,

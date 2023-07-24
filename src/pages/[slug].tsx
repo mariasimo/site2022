@@ -34,10 +34,13 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   };
 }
 
-export function getStaticProps({ params, locale }: GetStaticPropsContext) {
+export async function getStaticProps({
+  params,
+  locale,
+}: GetStaticPropsContext) {
   const slug = params?.slug as string;
   const note = getNote(slug, locale);
-  const otherNotesLinks = getRecommendedLinks(slug);
+  const otherNotesLinks = await getRecommendedLinks(slug);
 
   if (note) {
     return { props: { note: { ...note, otherNotesLinks } } };
