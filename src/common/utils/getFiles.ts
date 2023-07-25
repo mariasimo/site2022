@@ -4,6 +4,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import contentConfig from '../../../content.config';
 
+// This functions should be agnostic, util functions using fs and path modules
+
 function isDirectory(pathOrDir: string) {
   return fs.lstatSync(pathOrDir).isDirectory();
 }
@@ -40,15 +42,21 @@ function createUniqueRandomNumberList(
   return arr;
 }
 
-async function readSubDirsRecursive(mainPath: string, files: string[] = []) {
-  const filesInDir = await readdir(mainPath).then((f) => f);
+async function readSubDirsRecursive(dir: string, files: string[] = []) {
+  const filesInDir = await readdir(dir);
 
   await Promise.all(
     filesInDir.map(async function (file) {
-      const subpath = path.join(mainPath, file);
+      const subpath = path.join(dir, file);
 
       if (isDirectory(subpath)) {
-        await readSubDirsRecursive(subpath, files).then((f) => f);
+        try {
+          await readSubDirsRecursive(subpath, files);
+        } catch {
+          // eslint-disable-next-line no-console
+          console.error(`Cannot read file or directory at ${subpath}`);
+          process.exit(1);
+        }
       } else {
         files.push(subpath);
       }
