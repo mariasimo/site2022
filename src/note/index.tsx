@@ -15,7 +15,7 @@ import {
   Text,
 } from './styles';
 import { useRef } from 'react';
-import type { Note } from '$/common/lib/notes';
+import type { Note } from '$/common/lib/notes/types';
 import { externalLinks } from '$/common/utils/links';
 
 function NoteView({
