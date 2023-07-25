@@ -5,6 +5,11 @@ export const languagesDictionary = {
 
 export type Language = keyof typeof languagesDictionary;
 
+export function isLanguage(locale?: string): locale is Language {
+  if (!locale) return false;
+  return Object.keys(languagesDictionary).includes(locale);
+}
+
 export type NoteFrontmatter = {
   title: string;
   published: string;

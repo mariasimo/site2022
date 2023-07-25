@@ -1,9 +1,9 @@
 import {
   getFilePathsFromDirectory,
-  getRandomFilesFromDirectory,
   getMarkdownContents,
   getTranslationsList,
   getSlugFromFilePath,
+  selectRandomItems,
 } from '../../utils/getFiles';
 import contentConfig from '../../../../content.config';
 import { NoteFrontmatter, Language, Note, NoteCard } from './types';
@@ -142,35 +142,33 @@ function extractReferencesAndBacklinks(content: string) {
 
 export async function getRecommendedLinks(
   currentPostSlug: string,
+  locale: Language = 'es',
+  numberOfRecommendations = 3,
 ): Promise<string> {
-  const filterCondition = (filename: string) => {
-    const filePath = filename.includes('.md') ? filename : `${filename}/en.md`;
-    const { data: noteFrontmatter } = getMarkdownContents(filePath);
-    return !noteFrontmatter.hideFromList && !filename.includes(currentPostSlug);
+  const filterFiles = (filename: string) => {
+    const {
+      data: { hideFromList, language },
+    } = getMarkdownContents(filename);
+    const isCurrentPost = filename.includes(currentPostSlug);
+    return !hideFromList && !isCurrentPost && language === locale;
   };
 
-  const recommendedLinks = await getRandomFilesFromDirectory(
-    contentConfig.notesDirectory,
-    3,
-    filterCondition,
-  );
+  const fileList = (
+    await getFilePathsFromDirectory(contentConfig.notesDirectory)
+  ).filter(filterFiles);
 
-  return recommendedLinks
-    .map((fileName) => {
-      const noteSlug = getSlugFromFilePath(fileName);
-      const { data: noteFrontmatter } = getMarkdownContents(fileName);
+  const recommendedList = selectRandomItems(fileList, numberOfRecommendations);
 
-      return { noteFrontmatter, noteSlug };
-    })
-    .filter(({ noteFrontmatter }) => {
-      return !noteFrontmatter.hideFromList;
-    })
-    .map(({ noteFrontmatter, noteSlug }) => {
-      return typeof noteFrontmatter?.title === 'string'
-        ? `- [${noteFrontmatter.title}](${noteSlug})`
-        : null;
-    })
-    .join('\n');
+  function formatAsMarkdownLink(filename: string) {
+    const noteSlug = getSlugFromFilePath(filename);
+    const { data: noteFrontmatter } = getMarkdownContents(filename);
+
+    return typeof noteFrontmatter?.title === 'string'
+      ? `- [${noteFrontmatter.title}](${noteSlug})`
+      : null;
+  }
+
+  return recommendedList.map(formatAsMarkdownLink).join('\n');
 }
 
 /**

@@ -5,6 +5,7 @@ import type {
   InferGetStaticPropsType,
 } from 'next';
 import { getNote, getRecommendedLinks, listNotes } from '../common/lib/notes';
+import { isLanguage } from '../common/lib/notes/types';
 
 function NotePage({
   note,
@@ -40,9 +41,9 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const slug = params?.slug as string;
   const note = getNote(slug, locale);
-  const otherNotesLinks = await getRecommendedLinks(slug);
 
-  if (note) {
+  if (isLanguage(locale) && note) {
+    const otherNotesLinks = await getRecommendedLinks(slug, locale);
     return { props: { note: { ...note, otherNotesLinks } } };
   }
 

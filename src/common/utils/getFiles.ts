@@ -11,35 +11,27 @@ function isDirectory(pathOrDir: string) {
 }
 
 function createRandomIndex(max: number) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max + 1);
 }
 
-/**
- * Return an array of random non-repeated numbers
- * length {length} which highest number is {highestNum}
- */
-function createUniqueRandomNumberList(
-  length: number,
-  highestNum: number,
-  arr: number[] = [],
-) {
-  if (highestNum < length) {
-    throw new Error(
-      `highest number needs to be greater or equal to length: (${length})`,
-    );
+export function selectRandomItems<T>(list: T[], numberOfItems: number) {
+  if (list.length <= numberOfItems) {
+    return list;
   }
 
-  const randomNum = createRandomIndex(highestNum);
+  const result = <typeof list>[];
+  let i = 0;
 
-  if (!arr.includes(randomNum)) {
-    arr.push(randomNum);
+  while (i < numberOfItems) {
+    const randomNum = createRandomIndex(numberOfItems);
+
+    if (!result.includes(list[randomNum])) {
+      result.push(list[randomNum]);
+      i++;
+    }
   }
 
-  if (arr.length < length) {
-    createUniqueRandomNumberList(length, highestNum, arr);
-  }
-
-  return arr;
+  return result;
 }
 
 async function readSubDirsRecursive(dir: string, files: string[] = []) {
@@ -74,21 +66,6 @@ export async function getFilePathsFromDirectory(dir: string) {
   return files.map((file) => path.relative(dir, file));
 }
 
-export async function getRandomFilesFromDirectory(
-  dir: string,
-  maxFiles: number,
-  filterCondition?: (value: string) => boolean,
-) {
-  const fileListWithDups = (await getFilePathsFromDirectory(dir)).filter(
-    (slug) => filterCondition?.(slug),
-  );
-
-  const fileList = [...new Set(fileListWithDups)] as string[];
-  const indexes = createUniqueRandomNumberList(maxFiles, fileList.length);
-
-  return indexes.map((i) => fileList[i]);
-}
-
 export function getMarkdownContents(filePath: string) {
   const fileName = fs.readFileSync(
     filePath.includes(contentConfig.notesDirectory)
@@ -110,8 +87,9 @@ export function getTranslationsList(filePath: string): string[] {
   if (
     !fs.existsSync(dir) ||
     (fs.existsSync(dir) && !fs.lstatSync(dir).isDirectory())
-  )
+  ) {
     return [];
+  }
 
   return fs.readdirSync(dir).map((item) => item.replace('.md', ''));
 }
