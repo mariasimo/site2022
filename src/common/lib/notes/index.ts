@@ -1,5 +1,5 @@
 import {
-  getFilesFromDirectory,
+  getFilePathsFromDirectory,
   getRandomFilesFromDirectory,
   getMarkdownContents,
   getTranslationsList,
@@ -9,7 +9,9 @@ import contentConfig from '../../../../content.config';
 import { NoteFrontmatter, Language, Note, NoteCard } from './types';
 
 export async function listNotes() {
-  const notesList = await getFilesFromDirectory(contentConfig.notesDirectory);
+  const notesList = await getFilePathsFromDirectory(
+    contentConfig.notesDirectory,
+  );
 
   return notesList
     .filter((path) => {
@@ -66,7 +68,7 @@ export function getNote(slug: string, locale?: string): Note {
 }
 
 export async function getNotesCards(): Promise<NoteCard[]> {
-  const notesList = await getFilesFromDirectory(
+  const notesList = await getFilePathsFromDirectory(
     contentConfig.notesDirectory,
   ).then((f) =>
     f.filter((path) => {

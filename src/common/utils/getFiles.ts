@@ -66,24 +66,27 @@ async function readSubDirsRecursive(dir: string, files: string[] = []) {
   return files;
 }
 
+export async function getFilePathsFromDirectory(dir: string) {
+  const files = await readSubDirsRecursive(dir, []);
+  // path.relative returns the part of the path relative to the dir
+  // dir: /content, filePath: /content/myFile.md -> result: myFile.md
+
+  return files.map((file) => path.relative(dir, file));
+}
+
 export async function getRandomFilesFromDirectory(
   dir: string,
   maxFiles: number,
   filterCondition?: (value: string) => boolean,
 ) {
-  const fileListWithDups = (await getFilesFromDirectory(dir)).filter((slug) =>
-    filterCondition?.(slug),
+  const fileListWithDups = (await getFilePathsFromDirectory(dir)).filter(
+    (slug) => filterCondition?.(slug),
   );
 
   const fileList = [...new Set(fileListWithDups)] as string[];
   const indexes = createUniqueRandomNumberList(maxFiles, fileList.length);
 
   return indexes.map((i) => fileList[i]);
-}
-
-export async function getFilesFromDirectory(dir: string) {
-  const files = await readSubDirsRecursive(dir, []).then((f) => f);
-  return files.map((file) => path.relative(dir, file));
 }
 
 export function getMarkdownContents(filePath: string) {
