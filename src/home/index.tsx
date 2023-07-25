@@ -2,7 +2,7 @@ import Hero from './Hero';
 import Resume from './Resume';
 import LatestNotes from './LatestNotes';
 import Layout from '$/common/layouts/Main';
-import type { NoteCard } from '$/common/lib/notes';
+import type { NoteCard } from '$/common/lib/notes/types';
 
 function HomeView({
   notes,
