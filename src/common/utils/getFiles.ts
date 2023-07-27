@@ -6,8 +6,13 @@ import contentConfig from '../../../content.config';
 
 // This functions should be agnostic, util functions using fs and path modules
 
-function isDirectory(pathOrDir: string) {
-  return fs.lstatSync(pathOrDir).isDirectory();
+async function isDirectory(pathOrDir: string) {
+  try {
+    const file = await readdir(pathOrDir);
+    return !!file;
+  } catch {
+    return false;
+  }
 }
 
 function createRandomIndex(max: number) {
@@ -40,8 +45,9 @@ async function readSubDirsRecursive(dir: string, files: string[] = []) {
   await Promise.all(
     filesInDir.map(async function (file) {
       const subpath = path.join(dir, file);
+      const isDir = await isDirectory(subpath);
 
-      if (isDirectory(subpath)) {
+      if (isDir) {
         try {
           await readSubDirsRecursive(subpath, files);
         } catch {
