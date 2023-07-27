@@ -16,13 +16,13 @@ export async function listNotes() {
   return notesList
     .filter((path) => {
       const { data: frontmatter } = getMarkdownContents(path);
-      return !frontmatter.comingSoon;
+      return !frontmatter.hideFromList;
     })
     .map((file) => file.replace('.md', ''));
 }
 
-export function getNote(slug: string, locale?: string): Note {
-  const translationsList = getTranslationsList(slug) as Language[];
+export async function getNote(slug: string, locale?: string): Promise<Note> {
+  const translationsList = (await getTranslationsList(slug)) as Language[];
 
   const path = translationsList?.length && locale ? `${slug}/${locale}` : slug;
   const {
@@ -44,63 +44,62 @@ export function getNote(slug: string, locale?: string): Note {
     ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
     : [frontmatter?.language ?? 'en'];
 
-  const note: Note = {
-    title: frontmatter.title,
-    summary: excerpt ?? '',
-    comingSoon: frontmatter.comingSoon ?? false,
-    hideFromList: frontmatter.hideFromList ?? false,
-    tags: frontmatter.tags ?? [],
-    published: frontmatter.published ?? '',
-    lastUpdated: frontmatter?.lastUpdated ?? '',
-    status: frontmatter?.status ?? 'draft',
-    translations,
-    language: frontmatter.language ?? 'en',
-    socialImage: frontmatter?.socialImage ?? null,
-    metaTitle: frontmatter?.metaTitle ?? frontmatter.title,
-    metaDescription: frontmatter?.metaDescription ?? null,
-    slug,
-    content,
-    references: references,
+  const note = {
     backlinks: backlinks ?? null,
+    content,
+    hideFromList: frontmatter.hideFromList ?? false,
+    language: frontmatter.language ?? ('en' as Language),
+    lastUpdated: frontmatter?.lastUpdated ?? '',
+    metaDescription: frontmatter?.metaDescription ?? null,
+    metaTitle: frontmatter?.metaTitle ?? frontmatter.title,
+    published: frontmatter.published ?? '',
+    references: references,
+    slug,
+    socialImage: frontmatter?.socialImage ?? null,
+    status: frontmatter?.status ?? 'draft',
+    summary: excerpt ?? '',
+    tags: frontmatter.tags ?? [],
+    title: frontmatter.title,
+    translations,
   };
 
   return note;
 }
 
-export async function getNotesCards(): Promise<NoteCard[]> {
+export async function getNotesCards(): Promise<
+  (NoteCard & { date?: string })[]
+> {
   const notesList = await getFilePathsFromDirectory(
     contentConfig.notesDirectory,
   ).then((f) =>
     f.filter((path) => {
       const { data: frontmatter } = getMarkdownContents(path);
-
       return !frontmatter.hideFromList;
     }),
   );
 
-  const formatNotes = (fileName: string) => {
+  const formatNotes = async (fileName: string) => {
     const [slug, locale] = fileName
       .replace('.md', '')
       .split('/')
       .filter(Boolean);
 
-    const note = getNote(slug, locale);
+    const note = await getNote(slug, locale);
 
     return {
-      title: note?.title ?? '',
+      date: note?.lastUpdated || note?.published,
+      hideFromList: note?.hideFromList,
+      language: note?.language,
       slug: slug,
       tags: note?.tags,
-      comingSoon: note?.comingSoon,
-      hideFromList: note?.hideFromList,
+      title: note?.title ?? '',
       translations: note?.translations ?? [note.language ?? 'en'],
-      language: note?.language,
-      date: !note?.comingSoon && (note?.lastUpdated || note?.published),
     };
   };
 
-  const sortNotes = (
-    a: ReturnType<typeof formatNotes>,
-    b: ReturnType<typeof formatNotes>,
+  const sortNotesByMostRecent = (
+    a: NoteCard & { date?: string },
+    b: NoteCard & { date?: string },
   ) => {
     if (a.date && b.date) {
       return getDateMs(a.date) < getDateMs(b.date) ? 1 : -1;
@@ -124,10 +123,11 @@ export async function getNotesCards(): Promise<NoteCard[]> {
 
   const formattedLatestNotes = removeLanguageDups(notesList)
     .slice(0, 4)
-    .map(formatNotes)
-    .sort(sortNotes);
+    .map(formatNotes);
 
-  return formattedLatestNotes;
+  return Promise.all(formattedLatestNotes).then((notes) =>
+    notes.sort(sortNotesByMostRecent),
+  );
 }
 
 function extractReferencesAndBacklinks(content: string) {

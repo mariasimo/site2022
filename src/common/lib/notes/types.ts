@@ -15,7 +15,6 @@ export type NoteFrontmatter = {
   published: string;
   lastUpdated: string;
   tags?: string[];
-  comingSoon?: boolean;
   hideFromList?: boolean;
   status: 'draft' | 'inProgress' | 'completed';
   language: Language | null;
@@ -36,5 +35,5 @@ export type Note = NoteFrontmatter & {
 
 export type NoteCard = Pick<
   Note,
-  'slug' | 'title' | 'comingSoon' | 'tags' | 'translations' | 'language'
+  'slug' | 'title' | 'tags' | 'translations' | 'language'
 >;

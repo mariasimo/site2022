@@ -2,7 +2,7 @@ import HomeView from '$/home';
 import type { InferGetStaticPropsType } from 'next';
 import content from '../../content.config';
 
-import fs from 'fs';
+import { readFile } from 'node:fs/promises';
 import matter from 'gray-matter';
 import { getNotesCards } from '$/common/lib/notes';
 
@@ -21,12 +21,12 @@ function HomePage({
 export default HomePage;
 
 export async function getStaticProps({ preview = false }) {
-  const readLearningInPublicFile = fs.readFileSync(
+  const readLearningInPublicFile = await readFile(
     content.learningInPublicFile,
     'utf-8',
   );
   const { data: learningInPublic } = matter(readLearningInPublicFile);
-  const notes = await getNotesCards().then((n) => n);
+  const notes = await getNotesCards();
 
   return {
     props: { preview, notes, learningInPublic },

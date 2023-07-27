@@ -47,11 +47,11 @@ export async function getStaticProps({
   locale,
 }: GetStaticPropsContext) {
   const slug = params?.slug as string;
-  const translations = getTranslationsList(slug);
+  const translations = await getTranslationsList(slug);
   const checkedLocale =
     locale && translations?.includes(locale) ? locale : translations[0];
 
-  const note = getNote(slug, checkedLocale);
+  const note = await getNote(slug, checkedLocale);
 
   if (isLanguage(locale) && note) {
     const otherNotesLinks = await getRecommendedLinks(slug, locale);

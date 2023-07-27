@@ -68,7 +68,6 @@ export async function getFilePathsFromDirectory(dir: string) {
   const files = await readSubDirsRecursive(dir, []);
   // path.relative returns the part of the path relative to the dir
   // dir: /content, filePath: /content/myFile.md -> result: myFile.md
-
   return files.map((file) => path.relative(dir, file));
 }
 
@@ -87,17 +86,17 @@ export function getMarkdownContents(filePath: string) {
   return contents;
 }
 
-export function getTranslationsList(filePath: string): string[] {
-  const dir = `${contentConfig.notesDirectory}${filePath.replace('/', '')}`;
+export async function getTranslationsList(filePath: string): Promise<string[]> {
+  const dir = path.join(contentConfig.notesDirectory, filePath);
 
-  if (
-    !fs.existsSync(dir) ||
-    (fs.existsSync(dir) && !fs.lstatSync(dir).isDirectory())
-  ) {
-    return [];
+  try {
+    const files = await readdir(dir);
+    return files.map((f) => path.basename(f, '.md'));
+  } catch {
+    // eslint-disable-next-line no-console
+    console.error(`Could not find file at ${filePath}}`);
+    process.exit(1);
   }
-
-  return fs.readdirSync(dir).map((item) => item.replace('.md', ''));
 }
 
 /**

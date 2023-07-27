@@ -15,7 +15,7 @@ export const Title = styled(HeadingMBold).attrs({ as: 'h2' })`
   }
 `;
 
-export const Container = styled.article<{ $disabled?: boolean }>`
+export const Container = styled.article`
   border-block-end: 1px solid var(--theme-line);
   padding-block: 1.5rem 2.75rem;
 
@@ -25,8 +25,7 @@ export const Container = styled.article<{ $disabled?: boolean }>`
 
   ${Arrow}, ${Title} {
     transition: color ease 0.3s;
-    color: ${({ $disabled }) =>
-      $disabled ? 'var(--theme-disabledText)' : 'var(--theme-ink)'};
+    color: var(--theme-ink);
   }
 
   p {
