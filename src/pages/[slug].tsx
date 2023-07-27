@@ -4,7 +4,11 @@ import type {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next';
-import { getNote, getRecommendedLinks, listNotes } from '../common/lib/notes';
+import {
+  getNote,
+  getRecommendedLinks,
+  listPublicNotes,
+} from '../common/lib/notes';
 import { isLanguage } from '../common/lib/notes/types';
 import { getTranslationsList } from '../common/utils/getFiles';
 
@@ -17,7 +21,7 @@ function NotePage({
 export default NotePage;
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
-  const notesPaths = await listNotes();
+  const notesPaths = await listPublicNotes();
   const notes = [
     ...new Set(
       notesPaths.map((path) => {

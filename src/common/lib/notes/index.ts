@@ -8,7 +8,7 @@ import {
 import contentConfig from '../../../../content.config';
 import { NoteFrontmatter, Language, Note, NoteCard } from './types';
 
-export async function listNotes() {
+export async function listPublicNotes() {
   const notesList = await getFilePathsFromDirectory(
     contentConfig.notesDirectory,
   );
