@@ -69,21 +69,10 @@ export async function getNote(slug: string, locale?: string): Promise<Note> {
 export async function getNotesCards(): Promise<
   (NoteCard & { date?: string })[]
 > {
-  const notesList = await getFilePathsFromDirectory(
-    contentConfig.notesDirectory,
-  ).then((f) =>
-    f.filter((path) => {
-      const { data: frontmatter } = getMarkdownContents(path);
-      return !frontmatter.hideFromList;
-    }),
-  );
+  const notesList = await listPublicNotes();
 
-  const formatNotes = async (fileName: string) => {
-    const [slug, locale] = fileName
-      .replace('.md', '')
-      .split('/')
-      .filter(Boolean);
-
+  const formatNote = async (fileName: string) => {
+    const [slug, locale] = fileName.split('/').filter(Boolean);
     const note = await getNote(slug, locale);
 
     return {
@@ -121,12 +110,10 @@ export async function getNotesCards(): Promise<
     }, []);
   };
 
-  const formattedLatestNotes = removeLanguageDups(notesList)
-    .slice(0, 4)
-    .map(formatNotes);
+  const formattedLatestNotes = removeLanguageDups(notesList).map(formatNote);
 
   return Promise.all(formattedLatestNotes).then((notes) =>
-    notes.sort(sortNotesByMostRecent),
+    notes.sort(sortNotesByMostRecent).slice(0, 4),
   );
 }
 
