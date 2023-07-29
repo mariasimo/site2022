@@ -1,28 +1,36 @@
-export const languagesDictionary = {
+import { z } from 'zod';
+
+const NoteLanguageOptions = z.enum(['en', 'es']);
+
+export type Language = z.infer<typeof NoteLanguageOptions>;
+
+export const languagesDictionary: { [locale in Language]: string } = {
   en: 'English',
   es: 'Spanish',
 } as const;
 
-export type Language = keyof typeof languagesDictionary;
-
 export function isLanguage(locale?: string): locale is Language {
-  if (!locale) return false;
-  return Object.keys(languagesDictionary).includes(locale);
+  return NoteLanguageOptions.safeParse(locale).success;
 }
 
-export type NoteFrontmatter = {
-  title: string;
-  published: string;
-  lastUpdated: string;
-  tags?: string[];
-  hideFromList?: boolean;
-  status: 'draft' | 'inProgress' | 'completed';
-  language: Language | null;
-  socialImage?: string | null;
-  metaTitle?: string | null;
-  metaDescription?: string | null;
-  kudosCount?: number;
-};
+const NoteMetaData = z.object({
+  hideFromList: z.boolean().optional(),
+  language: NoteLanguageOptions,
+  lastUpdatedAt: z.string(),
+  metaDescription: z.string().max(160),
+  metaTitle: z.string().max(60),
+  publishedAt: z.string(),
+  socialImage: z.string().startsWith('/images'),
+  status: z.union([
+    z.literal('draft'),
+    z.literal('inProgress'),
+    z.literal('completed'),
+  ]),
+  tags: z.array(z.string()).nonempty().optional(),
+  title: z.string(),
+});
+
+export type NoteFrontmatter = z.infer<typeof NoteMetaData>;
 
 export type Note = NoteFrontmatter & {
   slug: string;
