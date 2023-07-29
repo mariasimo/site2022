@@ -5,8 +5,8 @@ export type Props = {
   title: string;
   summary: string;
   contentRef: MutableRefObject<HTMLDivElement | null>;
-  published: string;
-  lastUpdated: string | null;
+  publishedAt: Date;
+  lastUpdatedAt?: Date;
   status: string;
   translations: Note['translations'];
   socialImage: Note['socialImage'];

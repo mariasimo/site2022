@@ -22,7 +22,7 @@ import {
 } from './styles';
 import scrollToContent from '$/common/utils/scrollToContent';
 import type { Props } from './types';
-import { getTimeAgo, parseStringToDate } from '$/common/utils/dates';
+import { getTimeAgo } from '$/common/utils/dates';
 import RevealedText from '$/common/components/animation/RevealedText';
 import FadeInBlock from '$/common/components/animation/FadeInBlock';
 import ArrowLink from '$/common/components/ArrowLink';
@@ -46,8 +46,8 @@ export default function NoteHero({
   title,
   summary,
   contentRef,
-  published,
-  lastUpdated,
+  publishedAt,
+  lastUpdatedAt,
   translations,
   status: rawStatus,
   socialImage,
@@ -142,9 +142,9 @@ export default function NoteHero({
           <ArrowLink label="Go Home" link="/" backlink />
         </GoHomeBlock>
         <DateInfo>
-          <Text>Created {getTimeAgo(parseStringToDate(published))}</Text>{' '}
-          {lastUpdated ? (
-            <Text>Updated {getTimeAgo(parseStringToDate(lastUpdated))}</Text>
+          <Text>Created {getTimeAgo(new Date(publishedAt))}</Text>{' '}
+          {lastUpdatedAt ? (
+            <Text>Updated {getTimeAgo(new Date(publishedAt))}</Text>
           ) : null}
         </DateInfo>
         <StatusInfo>

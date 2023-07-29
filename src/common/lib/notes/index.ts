@@ -1,39 +1,31 @@
 import {
   getFilePathsFromDirectory,
-  getMarkdownContents,
+  getMarkdownContent,
   getTranslationsList,
   getSlugFromFilePath,
   selectRandomItems,
 } from '../../utils/getFiles';
 import contentConfig from '../../../../content.config';
-import { NoteFrontmatter, Language, Note, NoteCard } from './types';
+import { Language, Note, NoteCard } from './types';
 
 export async function listPublicNotes() {
   const notesList = await getFilePathsFromDirectory(
     contentConfig.notesDirectory,
   );
 
-  return notesList
-    .filter((path) => {
-      const { data: frontmatter } = getMarkdownContents(path);
-      return !frontmatter.hideFromList;
-    })
-    .map((file) => file.replace('.md', ''));
+  return notesList.map((file) => file.replace('.md', ''));
 }
 
-export async function getNote(slug: string, locale?: string): Promise<Note> {
+export async function getNote(slug: string, locale: string): Promise<Note> {
   const translationsList = (await getTranslationsList(slug)) as Language[];
 
   const path = translationsList?.length && locale ? `${slug}/${locale}` : slug;
+
   const {
-    data,
+    data: frontmatter,
     content: rawContent,
     excerpt,
-  } = getMarkdownContents(`${path}.md`);
-
-  // Right now only casting is posible to type frontmatter
-  // https://github.com/jonschlinkert/gray-matter/issues/135
-  const frontmatter = data as NoteFrontmatter;
+  } = getMarkdownContent(`${path}.md`);
 
   // Get content from excerpt to references links, excluding both
   const content = rawContent.split('---')[1].split('\n## References')[0];
@@ -44,26 +36,20 @@ export async function getNote(slug: string, locale?: string): Promise<Note> {
     ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
     : [frontmatter?.language ?? 'en'];
 
-  const note = {
+  if (frontmatter.socialImage === '') {
+    // eslint-disable-next-line no-console
+    console.warn(`Missing social image at note ${slug}/${locale}}`);
+  }
+
+  return {
+    ...frontmatter,
+    summary: excerpt,
     backlinks: backlinks ?? null,
     content,
-    hideFromList: frontmatter.hideFromList ?? false,
-    language: frontmatter.language ?? ('en' as Language),
-    lastUpdated: frontmatter?.lastUpdated ?? '',
-    metaDescription: frontmatter?.metaDescription ?? null,
-    metaTitle: frontmatter?.metaTitle ?? frontmatter.title,
-    published: frontmatter.published ?? '',
-    references: references,
+    references,
     slug,
-    socialImage: frontmatter?.socialImage ?? null,
-    status: frontmatter?.status ?? 'draft',
-    summary: excerpt ?? '',
-    tags: frontmatter.tags ?? [],
-    title: frontmatter.title,
     translations,
   };
-
-  return note;
 }
 
 export async function getNotesCards(): Promise<
@@ -76,8 +62,7 @@ export async function getNotesCards(): Promise<
     const note = await getNote(slug, locale);
 
     return {
-      date: note?.lastUpdated || note?.published,
-      hideFromList: note?.hideFromList,
+      date: note?.lastUpdatedAt || note?.publishedAt,
       language: note?.language,
       slug: slug,
       tags: note?.tags,
@@ -134,10 +119,10 @@ export async function getRecommendedLinks(
 ): Promise<string> {
   const filterFiles = (filename: string) => {
     const {
-      data: { hideFromList, language },
-    } = getMarkdownContents(filename);
+      data: { language },
+    } = getMarkdownContent(filename);
     const isCurrentPost = filename.includes(currentPostSlug);
-    return !hideFromList && !isCurrentPost && language === locale;
+    return !isCurrentPost && language === locale;
   };
 
   const fileList = (
@@ -148,7 +133,7 @@ export async function getRecommendedLinks(
 
   function formatAsMarkdownLink(filename: string) {
     const noteSlug = getSlugFromFilePath(filename);
-    const { data: noteFrontmatter } = getMarkdownContents(filename);
+    const { data: noteFrontmatter } = getMarkdownContent(filename);
 
     return typeof noteFrontmatter?.title === 'string'
       ? `- [${noteFrontmatter.title}](${noteSlug})`

@@ -34,8 +34,8 @@ function NoteView({
     content,
     references,
     backlinks,
-    published,
-    lastUpdated,
+    publishedAt,
+    lastUpdatedAt,
     translations,
     socialImage,
     status,
@@ -57,8 +57,8 @@ function NoteView({
         title={title}
         summary={summary}
         contentRef={contentRef}
-        published={published}
-        lastUpdated={lastUpdated}
+        publishedAt={new Date(publishedAt)}
+        lastUpdatedAt={lastUpdatedAt ? new Date(lastUpdatedAt) : undefined}
         translations={translations}
         status={status}
         socialImage={socialImage}

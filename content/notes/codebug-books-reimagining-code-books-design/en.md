@@ -3,7 +3,7 @@ title: 'CodeBug Books, reimagining programming book design'
 metaTitle: 'CodeBug Books, reimagining programming book design'
 metaDescription: 'These would be the covers of some of my favorite programming books if I were allowed to design them myself.'
 socialImage: '/images/codebug-books-23-03-2023/og-en.png'
-published: '27/06/2023'
+publishedAt: '06/27/2023'
 status: 'completed'
 language: 'en'
 tags:

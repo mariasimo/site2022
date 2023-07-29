@@ -3,6 +3,7 @@ import { readdir } from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import contentConfig from '../../../content.config';
+import { MarkdownFile, MarkdownFileSchema } from '../lib/notes/types';
 
 // This functions should be agnostic, util functions using fs and path modules
 
@@ -71,7 +72,7 @@ export async function getFilePathsFromDirectory(dir: string) {
   return files.map((file) => path.relative(dir, file));
 }
 
-export function getMarkdownContents(filePath: string) {
+export function getMarkdownContent(filePath: string): MarkdownFile {
   const fileName = fs.readFileSync(
     filePath.includes(contentConfig.notesDirectory)
       ? filePath
@@ -83,7 +84,13 @@ export function getMarkdownContents(filePath: string) {
     excerpt: true,
   });
 
-  return contents;
+  const result = MarkdownFileSchema.safeParse(contents);
+
+  if (!result.success) {
+    throw new Error(`Bad data shape at ${filePath}: ${result.error.message}`);
+  } else {
+    return result.data;
+  }
 }
 
 export async function getTranslationsList(filePath: string): Promise<string[]> {

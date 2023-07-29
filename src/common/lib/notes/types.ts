@@ -13,26 +13,31 @@ export function isLanguage(locale?: string): locale is Language {
   return NoteLanguageOptions.safeParse(locale).success;
 }
 
-const NoteMetaData = z.object({
-  hideFromList: z.boolean().optional(),
-  language: NoteLanguageOptions,
-  lastUpdatedAt: z.string(),
-  metaDescription: z.string().max(160),
-  metaTitle: z.string().max(60),
-  publishedAt: z.string(),
-  socialImage: z.string().startsWith('/images'),
-  status: z.union([
-    z.literal('draft'),
-    z.literal('inProgress'),
-    z.literal('completed'),
-  ]),
-  tags: z.array(z.string()).nonempty().optional(),
-  title: z.string(),
-});
+export const NoteMetadataSchema = z
+  .object({
+    // Could let language from the name of the file
+    language: NoteLanguageOptions,
+    lastUpdatedAt: z.coerce
+      .date()
+      .transform((dateString) => dateString.toString())
+      .optional(),
+    metaDescription: z.string().max(160),
+    metaTitle: z.string().max(60),
+    publishedAt: z.coerce
+      .date()
+      .transform((dateString) => dateString.toString()),
+    socialImage: z.string().startsWith('/images'),
+    status: z.union([
+      z.literal('draft'),
+      z.literal('inProgress'),
+      z.literal('completed'),
+    ]),
+    tags: z.array(z.string()).nonempty().optional(),
+    title: z.string(),
+  })
+  .strict();
 
-export type NoteFrontmatter = z.infer<typeof NoteMetaData>;
-
-export type Note = NoteFrontmatter & {
+export type Note = z.infer<typeof NoteMetadataSchema> & {
   slug: string;
   summary: string;
   content: string;
@@ -45,3 +50,12 @@ export type NoteCard = Pick<
   Note,
   'slug' | 'title' | 'tags' | 'translations' | 'language'
 >;
+
+export const MarkdownFileSchema = z.object({
+  data: NoteMetadataSchema,
+  content: z.string(),
+  excerpt: z.string(),
+  isEmpty: z.boolean(),
+});
+
+export type MarkdownFile = z.infer<typeof MarkdownFileSchema>;
