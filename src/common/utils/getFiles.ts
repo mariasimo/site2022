@@ -1,9 +1,13 @@
-import fs from 'fs';
-import { readdir } from 'fs/promises';
+import { readdir, readFile } from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import contentConfig from '../../../content.config';
-import { MarkdownFile, MarkdownFileSchema } from '../lib/notes/types';
+import {
+  Language,
+  MarkdownFile,
+  MarkdownFileSchema,
+  NoteLanguageOptions,
+} from '../lib/notes/types';
 
 // This functions should be agnostic, util functions using fs and path modules
 
@@ -72,33 +76,44 @@ export async function getFilePathsFromDirectory(dir: string) {
   return files.map((file) => path.relative(dir, file));
 }
 
-export function getMarkdownContent(filePath: string): MarkdownFile {
-  const fileName = fs.readFileSync(
-    filePath.includes(contentConfig.notesDirectory)
-      ? filePath
-      : `${contentConfig.notesDirectory}${filePath}`,
-    'utf-8',
-  );
+export async function getMarkdownContent(
+  filePath: string,
+): Promise<MarkdownFile> {
+  try {
+    const fileName = await readFile(
+      filePath.includes(contentConfig.notesDirectory)
+        ? filePath
+        : `${contentConfig.notesDirectory}${filePath}`,
+      'utf-8',
+    );
 
-  const contents = matter(fileName, {
-    excerpt: true,
-  });
+    const contents = matter(fileName, {
+      excerpt: true,
+    });
 
-  const result = MarkdownFileSchema.safeParse(contents);
+    const result = MarkdownFileSchema.safeParse(contents);
 
-  if (!result.success) {
-    throw new Error(`Bad data shape at ${filePath}: ${result.error.message}`);
-  } else {
-    return result.data;
+    if (!result.success) {
+      throw new Error(`Bad data shape at ${filePath}: ${result.error.message}`);
+    } else {
+      return result.data;
+    }
+  } catch {
+    throw new Error(`Error reading markdown file at ${filePath}}`);
   }
 }
 
-export async function getTranslationsList(filePath: string): Promise<string[]> {
+export async function getTranslationsList(
+  filePath: string,
+): Promise<Language[]> {
   const dir = path.join(contentConfig.notesDirectory, filePath);
 
   try {
     const files = await readdir(dir);
-    return files.map((f) => path.basename(f, '.md'));
+    return files.map((f) => {
+      const locale = path.basename(f, '.md');
+      return NoteLanguageOptions.parse(locale);
+    });
   } catch {
     // eslint-disable-next-line no-console
     console.error(`Could not find file at ${filePath}}`);

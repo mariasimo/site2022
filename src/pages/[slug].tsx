@@ -9,8 +9,8 @@ import {
   getRecommendedLinks,
   listPublicNotes,
 } from '../common/lib/notes';
-import { isLanguage } from '../common/lib/notes/types';
 import { getTranslationsList } from '../common/utils/getFiles';
+import { NoteLanguageOptions } from '../common/lib/notes/types';
 
 function NotePage({
   note,
@@ -52,13 +52,17 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const slug = params?.slug as string;
   const translations = await getTranslationsList(slug);
-  const checkedLocale =
-    locale && translations?.includes(locale) ? locale : translations[0];
+  const localeAsEnum = NoteLanguageOptions.parse(locale);
+
+  // If there's a translation for this locale, use it, other wise, use the first translation available
+  const checkedLocale = translations?.includes(localeAsEnum)
+    ? localeAsEnum
+    : translations[0];
 
   const note = await getNote(slug, checkedLocale);
 
-  if (isLanguage(locale) && note) {
-    const otherNotesLinks = await getRecommendedLinks(slug, locale);
+  if (note) {
+    const otherNotesLinks = await getRecommendedLinks(slug, localeAsEnum);
     return { props: { note: { ...note, otherNotesLinks } } };
   }
 

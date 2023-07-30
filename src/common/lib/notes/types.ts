@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const NoteLanguageOptions = z.enum(['en', 'es']);
+export const NoteLanguageOptions = z.enum(['en', 'es']);
 
 export type Language = z.infer<typeof NoteLanguageOptions>;
 
@@ -8,10 +8,6 @@ export const languagesDictionary: { [locale in Language]: string } = {
   en: 'English',
   es: 'Spanish',
 } as const;
-
-export function isLanguage(locale?: string): locale is Language {
-  return NoteLanguageOptions.safeParse(locale).success;
-}
 
 export const NoteMetadataSchema = z
   .object({

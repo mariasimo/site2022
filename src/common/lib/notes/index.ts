@@ -6,50 +6,58 @@ import {
   selectRandomItems,
 } from '../../utils/getFiles';
 import contentConfig from '../../../../content.config';
-import { Language, Note, NoteCard } from './types';
+import { Language, Note, NoteCard, NoteLanguageOptions } from './types';
 
 export async function listPublicNotes() {
-  const notesList = await getFilePathsFromDirectory(
-    contentConfig.notesDirectory,
-  );
+  try {
+    const notesList = await getFilePathsFromDirectory(
+      contentConfig.notesDirectory,
+    );
 
-  return notesList.map((file) => file.replace('.md', ''));
+    return notesList.map((file) => file.replace('.md', ''));
+  } catch {
+    throw new Error('Error getting the list of notes');
+  }
 }
 
-export async function getNote(slug: string, locale: string): Promise<Note> {
-  const translationsList = (await getTranslationsList(slug)) as Language[];
+export async function getNote(slug: string, locale: Language): Promise<Note> {
+  try {
+    const translationsList = await getTranslationsList(slug);
+    const path =
+      translationsList?.length && locale ? `${slug}/${locale}` : slug;
 
-  const path = translationsList?.length && locale ? `${slug}/${locale}` : slug;
+    const {
+      data: frontmatter,
+      content: rawContent,
+      excerpt,
+    } = await getMarkdownContent(`${path}.md`);
 
-  const {
-    data: frontmatter,
-    content: rawContent,
-    excerpt,
-  } = getMarkdownContent(`${path}.md`);
+    // Get content from excerpt to references links, excluding both
+    const content = rawContent.split('---')[1].split('\n## References')[0];
 
-  // Get content from excerpt to references links, excluding both
-  const content = rawContent.split('---')[1].split('\n## References')[0];
+    const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
 
-  const { references, backlinks } = extractReferencesAndBacklinks(rawContent);
+    const translations = translationsList.length
+      ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
+      : [frontmatter?.language ?? 'en'];
 
-  const translations = translationsList.length
-    ? translationsList.sort((tr) => (tr === frontmatter?.language ? -1 : 1))
-    : [frontmatter?.language ?? 'en'];
+    if (frontmatter.socialImage === '') {
+      // eslint-disable-next-line no-console
+      console.warn(`Missing social image at note ${slug}/${locale}}`);
+    }
 
-  if (frontmatter.socialImage === '') {
-    // eslint-disable-next-line no-console
-    console.warn(`Missing social image at note ${slug}/${locale}}`);
+    return {
+      ...frontmatter,
+      summary: excerpt,
+      backlinks: backlinks ?? null,
+      content,
+      references,
+      slug,
+      translations,
+    };
+  } catch {
+    throw new Error(`Could not read note contents for ${slug}/${locale}`);
   }
-
-  return {
-    ...frontmatter,
-    summary: excerpt,
-    backlinks: backlinks ?? null,
-    content,
-    references,
-    slug,
-    translations,
-  };
 }
 
 export async function getNotesCards(): Promise<
@@ -59,10 +67,11 @@ export async function getNotesCards(): Promise<
 
   const formatNote = async (fileName: string) => {
     const [slug, locale] = fileName.split('/').filter(Boolean);
-    const note = await getNote(slug, locale);
+    const localeAsEnum = NoteLanguageOptions.parse(locale);
+    const note = await getNote(slug, localeAsEnum);
 
     return {
-      date: note?.lastUpdatedAt || note?.publishedAt,
+      date: note?.lastUpdatedAt ?? note?.publishedAt,
       language: note?.language,
       slug: slug,
       tags: note?.tags,
@@ -117,30 +126,37 @@ export async function getRecommendedLinks(
   locale: Language = 'es',
   numberOfRecommendations = 3,
 ): Promise<string> {
-  const filterFiles = (filename: string) => {
-    const {
-      data: { language },
-    } = getMarkdownContent(filename);
-    const isCurrentPost = filename.includes(currentPostSlug);
-    return !isCurrentPost && language === locale;
-  };
+  try {
+    const fileList = await getFilePathsFromDirectory(
+      contentConfig.notesDirectory,
+    );
 
-  const fileList = (
-    await getFilePathsFromDirectory(contentConfig.notesDirectory)
-  ).filter(filterFiles);
+    const recommendedList = selectRandomItems(
+      fileList,
+      numberOfRecommendations,
+    );
 
-  const recommendedList = selectRandomItems(fileList, numberOfRecommendations);
+    const formatAsMarkdownLink = async (filename: string) => {
+      const noteSlug = getSlugFromFilePath(filename);
+      const { data } = await getMarkdownContent(filename);
+      const isCurrentPost = filename.includes(currentPostSlug);
 
-  function formatAsMarkdownLink(filename: string) {
-    const noteSlug = getSlugFromFilePath(filename);
-    const { data: noteFrontmatter } = getMarkdownContent(filename);
+      const linkFormat =
+        typeof data?.title === 'string'
+          ? `- [${data.title}](${noteSlug})`
+          : null;
 
-    return typeof noteFrontmatter?.title === 'string'
-      ? `- [${noteFrontmatter.title}](${noteSlug})`
-      : null;
+      return !isCurrentPost && data.language === locale ? linkFormat : null;
+    };
+
+    const linkPromises = Promise.all(recommendedList.map(formatAsMarkdownLink));
+
+    return (await linkPromises).filter(Boolean).join('\n');
+  } catch {
+    throw new Error(
+      `Error retrieving recommended links for ${currentPostSlug}}`,
+    );
   }
-
-  return recommendedList.map(formatAsMarkdownLink).join('\n');
 }
 
 /**
