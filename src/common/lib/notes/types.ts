@@ -9,6 +9,10 @@ export const languagesDictionary: { [locale in Language]: string } = {
   es: 'Spanish',
 } as const;
 
+export function getLanguage(locale?: string): Language {
+  return NoteLanguageOptions.parse(locale);
+}
+
 export const NoteMetadataSchema = z
   .object({
     // Could let language from the name of the file

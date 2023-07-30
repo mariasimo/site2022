@@ -6,7 +6,7 @@ import {
   Language,
   MarkdownFile,
   MarkdownFileSchema,
-  NoteLanguageOptions,
+  getLanguage,
 } from '../lib/notes/types';
 
 // This functions should be agnostic, util functions using fs and path modules
@@ -112,7 +112,7 @@ export async function getTranslationsList(
     const files = await readdir(dir);
     return files.map((f) => {
       const locale = path.basename(f, '.md');
-      return NoteLanguageOptions.parse(locale);
+      return getLanguage(locale);
     });
   } catch {
     // eslint-disable-next-line no-console

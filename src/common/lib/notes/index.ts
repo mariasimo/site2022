@@ -6,7 +6,7 @@ import {
   selectRandomItems,
 } from '../../utils/getFiles';
 import contentConfig from '../../../../content.config';
-import { Language, Note, NoteCard, NoteLanguageOptions } from './types';
+import { Language, Note, NoteCard, getLanguage } from './types';
 
 export async function listPublicNotes() {
   try {
@@ -67,7 +67,7 @@ export async function getNotesCards(): Promise<
 
   const formatNote = async (fileName: string) => {
     const [slug, locale] = fileName.split('/').filter(Boolean);
-    const localeAsEnum = NoteLanguageOptions.parse(locale);
+    const localeAsEnum = getLanguage(locale);
     const note = await getNote(slug, localeAsEnum);
 
     return {

@@ -10,7 +10,7 @@ import {
   listPublicNotes,
 } from '../common/lib/notes';
 import { getTranslationsList } from '../common/utils/getFiles';
-import { NoteLanguageOptions } from '../common/lib/notes/types';
+import { getLanguage } from '../common/lib/notes/types';
 
 function NotePage({
   note,
@@ -52,7 +52,7 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const slug = params?.slug as string;
   const translations = await getTranslationsList(slug);
-  const localeAsEnum = NoteLanguageOptions.parse(locale);
+  const localeAsEnum = getLanguage(locale);
 
   // If there's a translation for this locale, use it, other wise, use the first translation available
   const checkedLocale = translations?.includes(localeAsEnum)
