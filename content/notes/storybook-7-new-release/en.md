@@ -270,7 +270,7 @@ _Storybook_ features a complete section of [documentation about testing](https:/
 
 ## So, when do we start?
 
-Well, what about now? When I originally wrote [the original article in Spanish](content/notes/storybook-7-new-release/es.md), the stable version of Storybook was 6.5, and the team was polishing [the finishing details](https://github.com/orgs/storybookjs/projects/8?ref=storybook-blog) before its release.
+Well, what about now? When I originally wrote [the original article in Spanish](/es/storybook-7-new-release), the stable version of Storybook was 6.5, and the team was polishing [the finishing details](https://github.com/orgs/storybookjs/projects/8?ref=storybook-blog) before its release.
 
 Now the latest version has been launched 🎉, and we can start benefiting from all its new features. If you have a codebase that you would like to update to the new version, _Storybook_ has provided [a guide](https://storybook.js.org/docs/react/migration-guide) to help you make the necessary changes.
 

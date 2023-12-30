@@ -1,9 +1,9 @@
 ---
-title: 'Guía de EsLint, parte 2: migrar a Flat Config'
-metaTitle: 'Guía de EsLint, parte 2: migrar a Flat Config'
+title: 'Guía de EsLint, parte 2: migrando a Flat Config'
+metaTitle: 'Guía de EsLint, parte 2: migrando a Flat Config'
 metaDescription: 'El linter más popular en el ecosistema de JavaScript se actualiza con "flat config", una nueva API de configuración más simple y poderosa'
 socialImage: '/images/eslint-guide-04-2023/og.png'
-publishedAt: '19/04/2023'
+publishedAt: '11/04/2023'
 status: 'draft'
 language: 'es'
 tags:
@@ -14,313 +14,267 @@ tags:
   - 'NPM dependency'
 ---
 
+Flat config es la nueva manera de hacer las cosas con ESLint. Aprende como migrar a la nueva versión.
 El linter más popular del ecosistema de Javascript se renueva con una nueva API de configuración más simple y potente. Aprende antes que nadie a adoptarla para tus proyectos.
 
 ---
 
 ## Introducción
 
-El objetivo inicial para esta serie de artículos era contar **cómo disponibilizar nuestra configuración de EsLint como una dependencia externa** para que todo el equipo de [Z1 Digital Studio](https://z1.digital/) pueda importarla directamente en sus proyectos. Esto nos va a permitir dar un paso más en la automatización de nuestros estándares de código.
+El primer artículo de esta serie era una introducción detallada sobre ESLint. Vimos cómo funciona y cuál es el valor que aporta a nuestros proyectos. Revisamos los distintos conceptos que le son propios: reglas, _overrides_, _plugins_, _shareable configs_, plugins, etc.
 
-Sin embargo, al empezar a investigar, descubrí que EsLint está en el proceso de lanzar un nuevo sistema de configuración llamado **flat config** (que traduciría en algo así como "configuración plana"). Este sistema ya es funcional, tiene soporte en la CLI y documentación oficial disponible desde la versión 8.23.0. El nuevo sistema viene a sustituir al tradicional, que perderá soporte con la versión 9.
+Este artículo avanza sobre el anterior y asume que ya manejamos esos conceptos. Si necesitas refrescar la memoria, aquí tienes un enlace a la primera parte.
 
-En el [roadmap disponible en Github](https://github.com/eslint/eslint/issues/13481), vemos que el equipo de EsLint está a punto de abordar una tercera fase de desarrollo encargada de asegurar el buen funcionamiento de los plugins más populares. Después de eso, se iniciará una fase de disponibilización general y, finalmente, una fase de retirada de soporte para **eslintrc**.
+Ahora nos centramos en la _flat config_. _Flat Config_ es el nuevo sistema de configuración de ESLint, y está en funcionamiento desde su version 8.23.0 de ESLint. De momento, convive con el sistema legacy, el que hemos usado siempre, que será deprecado a partir de la versión 9.0.0.
 
-_Flat config_ presenta cambios drásticos en la manera en la que configuramos EsLint en los proyectos. Así que merece la pena hacer una pequeña disgresión para aprender sobre la nueva configuración antes de lanzarnos a crear nuestra dependencia externa. Así podemos liderar su adopción y evitamos refactorizar la dependencia cuando **eslintrc** pierda soporte.
+Aunque todavía puede pasar tiempo hasta que eso pase, vamos a adelantarnos al cambio y aprender qué cambios propone la _Flat Config_.
 
-El esquema para esta serie de artículos, por tanto, es el siguiente:
+**Nota de la autora**.
+La primera parte de esta guía se publicó en abril de 2023, aunque seguramente llevaba escribiendo y aprendiendo sobre ESLint algún tiempo antes. Ya estamos en noviembre de 2023, y siento como si llevara un año (de buenos propósitos en buenos propósitos) gestando esta guía. Aunque no ha sido lo único que he estado gestando este año, claro. En mayo, dijimos [hola](https://twitter.com/mariasimocodes/status/1659184290607910913) a nuestra pequeña Greta. Y todas nuestras prioridades cambiaron para siempre ❤️.
 
-**Parte 1. Flat config: cómo migrar al nuevo sistema de EsLint**
+## Contenidos
 
-- Qué es EsLint, y porqué es importante
-- Introducción al nuevo sistema de EsLint, flat config
-- Actualización de nuestra configuración actual a flat config
+Esta serie de artículos es una guía en profundidad sobre ESLint, y tiene por objetivo final crear una dependencia externa con la configuración de ESLint que podamos reusar en nuestros proyectos.
 
-**Parte 2. Creando una shareable config de EsLint**
+[**Parte 1. Dominando _ESLint_**](/guide-eslint-part-1-eslint-legacy). Aprendemos todo lo necesario del sistema legacy para sacar el mayor partido del proceso de migración. Así podemos usar _ESLint_ con confianza y control.
 
-- Qué es una shareable config
-- El problema de las peer dependencies
-- Cómo compartir configuraciones de ESLint como dependencia externa
-  - Organización del código
-- Cómo proporcionar flexibilidad al equipo para configurar esta dependencia de acuerdo a las necesidades del proyecto a través de la opción de múltiples exports
-- Incorporación de otros linters, como Prettier y Stylelint, Commitlint.
+📍**Parte 2. Migrando a flat config**. Descubrimos los cambios esenciales que propone la flat config, y migramos nuestro caso práctico al nuevo sistema.
 
-**Parte 3. Mejorar la experiencia con herramientas adicionales**
+**Parte 3. Creando una shareable config de _ESLint_**. Profundizamos en las _shareable configs_ y el ecosistema de dependencias de _ESLint_. Incorporamos otras herramientas de análisis estático. Empezamos a configurar nuestro repositorio como dependencia NPM.
 
-- Creación de un archivo README para documentar nuestro trabajo y facilitar su uso
-- Añadimos utilidades para asegurar la mantenibilidad de nuestra dependencia
-- Creación de una CLI para instalar nuestra dependencia con configuraciones.
+**Parte 4. Mejorando la experiencia con herramientas adicionales**. Añadimos gestión de versiones y de dependencias. Creamos un README para documentar y facilitar el uso de nuestra dependencia. Exploramos la creación de una CLI para complementarla.
 
-## EsLint en 2023. ¡Hola, Flat Config!
+## EsLint en 2023
 
-A mediados del pasado año, el equipo de ESLint publicó [una serie de artículos](https://eslint.org/blog/2022/08/new-config-system-part-1/) con los que anunciaba la llegada de la **flat config**.
+ESLint apareció en 2013. Desde entonces ha ido evolucionando de manera orgánica, respondiendo a las distintas necesidades de los usuarios y en un ecosistema, el del desarrollo web con Javascript, en plena ebullición.
 
-EsLint ha ido creciendo de manera orgánica durante su ciclo de vida — est. 2013, y algunas de las decisiones tomadas han aumentado su complejidad de manera innecesaria. Hasta tal punto que había partes del código que nadie sabía como funcionaban, o que era imposible implementar nuevas features con facilidad.
+Nicholas Zakas, su creador, ha reflexionado sobre el proyecto y sobre como algunas de las decisiones que tomaron han aumentado su complejidad de forma innecesaria y se han convertido en obstáculos para seguir avanzando:
 
 > "(...) the team was collectively becoming afraid of touching anything to do with the config system. No one really understood all of the different permutations around calculating the final config for any given file. **We had fallen into the trap that many software projects do: we kept adding new features without taking a a step back to look at the problem** (and solution) holistically. This had led to an almost unmaintainable part of our codebase."
 
-Seguro que es una sensación familiar para muchos. Esto da cuenta de que de que cualquier proyecto, por popular que sea, sufre cuando no se detiene a pensar en su diseño a alto nivel.
+["ESLint's new config system, Part 1: Background"](https://eslint.org/blog/2022/08/new-config-system-part-1/)
 
-Finalmente fue necesario tomar perspectiva y re-pensar _EsLint_ desde el momento actual. El nuevo sistema se empieza a concebir en 2019. Cuatro años más tarde está en la fase final de su implementación, lo cual ofrece una idea de la magnitud de la iniciativa.
+Llegados a este punto, el equipo decidió que lo mejor era repensar ESLint desde el momento actual y rediseñar su API, tratando de eliminar inconsistencias, vestigios y duplicidades.
 
-### Eslintrc vs Flat config
+Esta decisión se toma en 2019. Cuatro años más tarde, la _Flat config_ está en la fase final de su implementación, lo cual ofrece una idea de la magnitud de la iniciativa.
 
-Vamos a hacer una comparativa entre el sistema todavía vigente, **Eslintrc**, y el nuevo sistema, **Flat config**, que nos permitirá revisar los principales problemas actuales frente a las soluciones que se proponen:
+## Entonces, ¿qué trae la flat config?
 
-#### Un único archivo de configuración: eslint.config.js
+Revisamos las principales características de la flat config, y que problemas del sistema anterior (al que vamos a referirnos como eslintrc) resuelven.
 
-Empecemos por algo evidente. Para poner _EsLint_ a funcionar tenemos que crear un archivo de configuración en nuestro proyecto.
+### Un único archivo de configuración
 
-**Eslintrc** permite muchos formatos y extensiones para el archivo de configuración: `.eslintrc`, `.eslintrc.js`, `.eslintrc.json`, `.eslintrc.yaml`.
+Para poner _EsLint_ a funcionar tenemos que crear un archivo de configuración en nuestro proyecto. **Eslintrc** reconoce muchos formatos y extensiones para el archivo de configuración: `.eslintrc`, `.eslintrc.js`, `.eslintrc.json`, `.eslintrc.yaml`.
 
-Para una persona que empieza con _EsLint_ puede ser confuso entender que todos los formatos permitidos son equivalentes, y que usar uno u otro es una cuestión de preferencia.
+Más allá de las preferencias particulares, esta _feature_ no añade mucho valor. De hecho, para una persona que empieza con _EsLint_ puede ser confuso entender que todos los formatos permitidos son equivalentes, y que usar uno u otro es una cuestión de preferencia.
 
-**Flat config** permite una única forma de declarar el archivo de configuración: `eslint.config.js`. Lo que no sólo simplifica la API si no que viene a resolver importantes problemas que existían en cuanto a la resolución de dependencias, como veremos adelante.
+En la **flat config** solo existe una forma de declarar el archivo de configuración: `eslint.config.js`. Lo que no sólo simplifica la API si no que viene a resolver importantes problemas que existían en cuanto a la resolución de dependencias, como veremos adelante.
 
 -> IGUAL METO AQUI UNA REFERENCIA RÁPIDA A LA RESOLUCÓN DE DEPENDENCIAS Y LUEGO EXPLICO EN LA PARTE DOS
 
-#### Adiós a la configuración en cascada
+### Adiós a la configuración en cascada
 
-Una de las características del diseño de **Eslintrc** es su configuración en cascada: es posible tener múltiples archivos de configuración mediante los que sobreescribir una configuración más general por otra más específica para un directorio concreto.
+Una de las características del diseño de **eslintrc** es [su configuración en cascada](https://eslint.org/docs/latest/use/configure/configuration-files#cascading-and-hierarchy). Es posible tener múltiples archivos de configuración y sobreescribir una configuración más general por otra más específica para un directorio concreto.
 
 Por ejemplo, podemos tener un `.eslintrc` en la raíz del proyecto y otro en nuestra carpeta de tests _e2e_, con reglas específicas para esos archivos.
 
-A alto nivel: lo que hace _EsLint_ a la hora de analizar un archivo en particular es partir de la ubicación este archivo e ir recolectando las diferentes configuraciones que encuentra desde ese punto hasta la raíz del proyecto. Una vez encontradas, las mezcla, otorgando precedencia en caso de conflicto a las configuraciónes más cercanas a la ubicación del archivo. Finalmente, usa la combinación resultante para revisar el archivo.
+Lo que hace _EsLint_ a la hora de analizar un archivo en particular, a alto nivel, es partir de la ubicación este archivo e ir recolectando las diferentes configuraciones que encuentra desde ese punto hasta la raíz del proyecto. Una vez encontradas, las mezcla, otorgando precedencia en caso de conflicto a las configuraciones más cercanas a la ubicación del archivo. Finalmente, usa la combinación resultante para revisar el archivo.
 
-Para más información sobre el comportamiento de la cascada, puedes revisar [la documentación oficial](https://eslint.org/docs/latest/use/configure/configuration-files#cascading-and-hierarchy).
+Pero la configuración de cascada tiene algunos problemas:
 
-La configuración de cascada tiene algunos problemas:
+- **Ofrece poca visibilidad**. Genera confusión porque olvidamos, o directamente desconocemos, que existen diferentes archivos de configuración en el proyecto interfiriendo entre sí. Otras veces, simplemente es difícil que las diferentes configuraciones trabajen juntas como es debido. Para solucionar esto, se añadió propiedad `root` al objeto de configuración. Si pasamos `root: true` al cualquiera de los archivos de configuración, EsLint se detendrá y dejará de buscar en los directorios superiores.
 
-- **Ofrece poca visibilidad**. Genera confusión porque se puede olvidar, o directamente desconocer, que existen diferentes archivos de configuración en el proyecto interfiriendo entre sí. Otras veces, simplemente es difícil que las diferentes configuraciones trabajen juntas como es debido. Para solucionar esto, se añadió propiedad `root` al objeto de configuración. Si pasamos `root: true` al cualquiera de los archivos de configuración, EsLint se detendrá y dejará de buscar en los directorios superiores.
 - **No es muy eficiente**. Cada vez que queremos analizar un archivo, EsLint tiene que recorrer la estructura de ficheros desde el punto actual para poder realizar la operación.
 
-- **Aumenta la complejidad de la API**. Posteriormente a la configuración en cascada, se añadieron nuevas propiedades al objeto de configuración, como `overrides`, que cumplen con un objetivo similar, especificar reglas para un conjunto de archivos. Tener varias estrategias para solucionar el mismo problema resulta confuso y aumenta la complejidad de tanto de la interfaz como de la implementación.
+- **Aumenta la complejidad de la API**. Posteriormente a la configuración en cascada, se añadieron nuevas propiedades al objeto de configuración, como `overrides`, que cumplen con un objetivo similar, especificar reglas para un conjunto de archivos. Tener varias estrategias para solucionar el mismo problema resulta confuso. Aumenta la complejidad de tanto de la interfaz como de la implementación.
+
+Todo esto acaba por aumentar la carga cognitiva, porque es necesario (al menos, si queremos saber qué estamos haciendo) tener en cuenta todas las diferentes localizaciones y propiedades que afectan la jerarquía. Con el tiempo, se van añadiendo funcionalidades, y distintas personas editan estos archivos de configuración, la entropía vinculada a la configuración de ESLint aumenta hasta hacerse insostenible.
 
 ![EsLint solo usará la configuración de /cypress para los archivos de este directorio, porque hemos añadido `root: true` en la línea 2](/images/eslint-guide-04-2023/cascade-file-tree.png 'EsLint solo usará la configuración de /cypress para los archivos de este directorio, porque hemos añadido `root: true` en la línea 2')
 
-También en este caso la **flat config** opta por la simplificación. Con dos cambios principales:
+La flat config repiensa el diseño en cascada para conservar toda su funcionalidad con una forma mucho más simple de uso.
 
-- **Una única localización**. En lugar de permitir multiples archivos de configuración, sólo tendremos un único archivo con toda la configuración necesaria, que podemos colocar donde queramos. _EsLint_ lo buscará desde nuestro directorio actual hacia la raíz del proyecto hasta dar con él, momento en el que parará porque ya no necesita buscar posibles archivos de configuración adicionales.
+**Una única localización**. Sólo tendremos un único archivo con toda la configuración necesaria, que podemos colocar donde queramos. _EsLint_ lo buscará desde nuestro directorio actual hacia la raíz del proyecto hasta dar con él, momento en el que parará porque ya no necesita buscar posibles archivos de configuración adicionales.
 
-- **Un sustituto más ergonómico de la cascada**. Con una único archivo de configuración, la cascada dejar de ser posible tal y como estaba implementada. Flat config va a usar la misma mécanica de `overrides` para hacer posible la misma funcionalidad. La propiedad `overrides` es un array que acepta una serie de objetos que nos sirven para definir reglas específicas para determinados conjuntos de archivos que especificamos con las propiedades `files` y `excludeFiles`. Estas propiedades toman como valor expresiones globs **relativas al directorio** donde se localiza el archivo de configuración.
+**Un sustituto más ergonómico de la cascada**. Con una único archivo de configuración, la cascada dejar de ser posible tal y como está implementada. La nueva funcionalidad está inspirada en la propiedad overrides del sistema legacy, que describimos en la [parte 1](/guide-eslint-part-1-eslint-legacy#anatomy-of-eslint-configuration). Todo el archivo **flat config** es un un array donde definimos reglas para subconjuntos de archivos.
 
-  De manera similar a `overrides`, todo el archivo **flat config** es un un array donde definimos conjuntos de reglas para subconjuntos de archivos.
-
-  La ventaja de esto es que la visibilidad es muy superior, al estar todas las configuraciones contenidas en un único archivo. En caso de conflicto, la precedencia es para las reglas definidas con posterioridad, lo cual es fácil de entender.
+La ventaja de esto es que la visibilidad es muy superior, al estar todas las configuraciones contenidas en un único archivo. En caso de conflicto, la precedencia es para las reglas definidas con posterioridad, lo cual es fácil de entender.
 
 ![La estructura de la Flat config es un array donde definimos reglas especificas para distintos conjuntos de archivos](/images/eslint-guide-04-2023/glob-pattern-system.png 'La estructura de la Flat config es un array donde definimos reglas especificas para distintos conjuntos de archivos')
 
+### El fix más esperado de la historia de ESLint
+
+Una de las cosas que más "asustan" cuando empezamos a usar ESLint es la cantidad de dependencias que tenemos que instalar cuando empezamos a usarlo.
+
+Esto, hasta cierto punto, es lo esperado: ESLint es un sistema modular, pensado para usarse con plugins. El problema viene cuando quieres instalar una configuración como dependencia (por ejemplo, la popular _eslint-config-airbnb_), y esa configuración te pide que instales adicionalmente un buen número de plugins para poder funcionar. Algo como:
+
+```bash
+eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
+```
+
+¿Por qué no puede `eslint-config-airbnb` comportarse como una dependencia normal? ¿Por qué no puede gestionar por sí misma sus dependencias, e instalarlas en _node_modules_ sin nuestra intervención?
+
+Si te preguntas esto, no estás sola. Existe [un issue en el Github de ESLint](https://github.com/eslint/eslint/issues/3458) donde, durante años (lleva abierto desde 2015), la gente ha pedido que esto pudiera cambiarse. Pero el diseño del sistema legacy no lo permitía. Veamos porque:
+
+dependencias adicionales, que no sabes qué son. Idealmente debería ser la propia configuración la que pudiera resolver las dependencias por si misma, como un node module normal, sin pedirnos instalar nada a parte.
+
+Porqué ocurre esto?
+
+- peer dependencies / son para plugins
+- problema de diseño
+
+En el sistema tradicional se añadió una nueva clave, `extends`, que permitió importar otras configuraciones para extender la nuestra. Esto fue un paso importante porque hizo posible que las configuraciones de EsLint se pudieran distribuir como paquetes de npm, lo que EsLint llama "shareable configs", y es una forma muy popular en la que usamos hoy EsLint.
+El equipo de eslint creo `eslint:recommend` una serie de normas que consideraban necesarias para todos los proyectos y que originalmente venían incluidas por defecto en EsLint. Esto permitió separarlas y usarlas de manera específica.
+Pero pronto las shareable configs presentaron un problema de resolución de dependencias. Esto obligaba a los usuarios que creaban shareable configs para compartir públicamente o dentro de sus compañías, a tener que listar todas las peerDependencies de las que dependía la config y que los usuarios las tuvieran que instalar de manera independiente. Tener que instalar 10 plugins además de la config, no es ideal porque hace que tener una configuración instalable pierda un poco el sentido.
+Los usuarios de EsLint empezaron a quejarse de esto en una issue enorme que podéis ver aquí, pidiendo que las configs pudieran comportarse como un node module normal y resolver las dependencias por si mismas sin tener que instalar nada aparte.
+
+Además, la fijar la extensión del archivo a .js como única posibilidad, permite que ahora los usuarios de EsLint podamos usar `import` o `require` en el archivo de configuración, resolviendo bastantes de los problemas previos que existían con las shareable configs y la resolución custom de dependencias que EsLint tenía que hacer por diseño.
+
+## Añadir IDE recomendations
+
+#### Más idiomático
+
+Podemos usar js spread
+property shorthand
+
+#### Dependencias, importamos
+
 -> ESTOS SON LOS CAMBIOS EVIDENTES O FUNDAMENTALES. OTROS SE PUEDEN CONSULTAR EN EL ARTICULO Y LA DOC. OTROS LOS IREMOS VIENDO AL MIGRAR LA CONFIGURACIÓN
 
-## Profundizando en la configuración de EsLint
+## Un caso práctico
 
-¡Pasemos a la acción! Este artículo asume que has usado EsLint con anterioridad, aunque quizás no hayas entrado en el detalle de cómo funciona o todo lo que puede ofrecer. En esta sección, vamos a partir de una configuración de EsLint real, aunque simplificada para fines de ejemplo, que usamos para proyectos en producción con el siguiente _stack_:
-
-- React
-- Typescript
-- Storybook
-- Testing
-
-Si estás acostumbrado a lidiar con configuraciones de EsLint, puede que quieras saltarte esta sección, y pasar directamente a la migración a **flat config**, aunque esta revisión puede ser de utilidad para entender todos los detalles de la siguiente parte.
-
-Si nunca has usado EsLint antes, aún serás capaz de seguir el hilo porque todo está explicado en detalle, puede ser recomendable que empieces por algo más básico.
-
-Vamos a ir poco a poco desglosando todas las piezas que hay aquí:
+En el articulo anterior, compartimos una configuración para un proyecto con React, Typescript, Storybook y testing. Vamos a migrarla a Flat config. Nos quedaría así:
 
 ```js
-//.eslintrc.js
-module.exports = {
-  root: true,
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:storybook/recommended',
-    'plugin:import/recommended',
-    'plugin:jsx-a11y/recommended',
-    'prettier',
-  ],
-  plugins: ['react', 'react-hooks', 'storybook', 'import', 'jsx-a11y'],
-  env: {
-    node: true,
-    browser: true,
-  },
-  settings: {
-    react: {
-      version: 'detect',
-    },
-    ecmaVersion: 'latest',
-    'import/resolver': {
-      node: true,
-      typescript: true,
-    },
-  },
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-  ignorePatterns: [
-    '.*.js',
-    '*.json',
-    '!*.js',
-    '!.storybook',
-    'src/graphql/generated/*',
-  ],
-  rules: {
-    'import/order': [
-      'error',
-      {
-        'newlines-between': 'always',
-        pathGroups: [
-          {
-            pattern: '$/**',
-            group: 'internal',
-          },
-        ],
-        pathGroupsExcludedImportTypes: ['builtin'],
-        groups: [
-          ['builtin', 'external'],
-          ['internal'],
-          ['parent', 'sibling', 'index'],
-          'unknown',
-        ],
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-      },
-    ],
-    'import/no-default-export': 'error',
-    'import/no-extraneous-dependencies': 'error',
-  },
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx'],
-      extends: [
-        'plugin:@typescript-eslint/eslint-recommended',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
-        'plugin:import/typescript',
-      ],
-      plugins: ['@typescript-eslint/eslint-plugin'],
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        project: ['./tsconfig.json', './cypress/tsconfig.json'],
-      },
-    },
-    {
-      files: [
-        '*stories.*',
-        'src/pages/**/*.tsx',
-        'additional.d.ts',
-        '**/__mocks__/**',
-        'cypress.config.ts',
-      ],
-      rules: {
-        'import/no-anonymous-default-export': 'off',
-        'import/no-default-export': 'off',
-      },
-    },
-    {
-      files: ['.storybook/*.js'],
-      parserOptions: {
-        sourceType: 'module',
-        ecmaVersion: 2022,
-        ecmaFeatures: { jsx: true },
-      },
-    },
-    {
-      files: ['**/__tests__/**', '**/__mocks__/**'],
-      env: {
-        jest: true,
-      },
-      extends: ['plugin:testing-library/react', 'plugin:jest-dom/recommended'],
-    },
-    {
-      files: ['**/cypress/**'],
-      plugins: ['cypress'],
-      extends: ['plugin:cypress/recommended'],
-      env: {
-        'cypress/globals': true,
-      },
-    },
-  ],
-};
+//eslint.config.js
+const js = require("@eslint/js");
+const typescript = require("@typescript-eslint/eslint-plugin");
+const typescriptParser = require("@typescript-eslint/parser");
+const imports = require("eslint-plugin-import");
+const jsxAlly = require("eslint-plugin-jsx-a11y");
+const prettier = require("eslint-config-prettier");
+const reactJSXRuntime = require("eslint-plugin-react/configs/jsx-runtime");
+const reactRecommended = require("eslint-plugin-react/configs/recommended");
+const reactHooks = require("eslint-plugin-react-hooks");
+const storybook = require("eslint-plugin-storybook");
+const globals = require("globals");
+
+
+module.exports = [
+	reactRecommended,
+	reactJSXRuntime,
+	{
+		settings: {
+		react: {
+			version: "detect",
+		},
+	},
+	languageOptions: {
+		ecmaVersion: "latest",
+		globals: {
+			JSX: true,
+			...globals.browser,
+			...globals.node,
+			...globals.jest,
+		},
+		parserOptions: {
+			sourceType: "module",
+			ecmaFeatures: {
+				jsx: true,
+			},
+		},
+	},
+	ignores: [
+		"!.*.js",
+		"!.storybook",
+		"package.json",
+	],
+	plugins: {
+		"react-hooks": reactHooks,
+		"jsx-a11y": jsxAlly,
+		import: imports,
+		prettier,
+	},
+	rules: {
+		...js.configs.recommended.rules,
+		...jsxAlly.configs.recommended.rules,
+		...reactHooks.configs.recommended.rules,
+		"react/prop-types": "off",
+		"no-console": "warn",
+		"no-debugger": "warn",
+		"no-useless-concat": "error",
+		"no-nested-ternary": "error",
+		"no-useless-return": "error",
+		"object-shorthand": ["error", "always"],
+		"import/no-default-export": "error",
+		...prettier.configs.recommended.rules,
+	},
+	{
+		files: ["src/**/*.@(ts|tsx)"],
+		languageOptions: {
+			parser: typescriptParser,
+			parserOptions: {
+				project: "./tsconfig.json",
+			},
+		},
+		plugins: {
+			"@typescript-eslint": typescript,
+			typescript,
+		},
+		rules: {
+			...typescript.configs["eslint-recommended"].rules,
+			...typescript.configs["recommended"].rules,
+			...typescript.configs["recommended-requiring-type-checking"].rules,
+			"@typescript-eslint/no-unused-vars": "warn",
+			"import/no-unresolved": "off",
+		},
+	},
+	{
+		files: ["src/**/stories.@(ts|tsx)"],
+		plugins: {
+			storybook,
+		},
+		rules: {
+		...storybook.configs.recommended.overrides[0].rules,
+		},
+	},
+	{
+		files: [".storybook/main.js"],
+		plugins: {
+			storybook,
+		},
+		rules: {
+		...storybook.configs.recommended.overrides[1].rules,
+		},
+	},
+	{
+		// Files which requires a default export
+		files: [
+			"**/stories.*",
+			"src/storybook/**/*.*",
+			"src/pages/**/*.tsx",
+			"additional.d.ts",
+			"src/test-utils/**/*",
+			"**/introspection.ts",
+		],
+		rules: {
+			"import/no-anonymous-default-export": "off",
+			"import/no-default-export": "off",
+		},
+	},
+];
 ```
 
-### Las reglas
+- EsLint es un sistema modular, con un ecosistema de plugins. Las reglas que el propio ESLint recomienda están en el paquete `eslint:recomended`. En eslintrc bastaba con incluir el string `eslint:recommended` en la lista de plugins. En flat config, las reglas de ESLint se han movido a una dependencia independiente, que debemos instalar: `@eslint/js`
 
-Las [reglas de EsLint](https://eslint.org/docs/latest/use/configure/rules) (`rules`) están pensadas para ser completamente independientes las unas de las otras, y activarse y desactivarse de forma individual. EsLint es una herramienta con la que imponer automáticamente nuestras opiniones sobre el código, así que no hay regla que no podamos desactivar. Todo dependerá de nuestras necesidades. Las reglas adminten tres posibles grados de severidad: "error", "warn" y "off". Ocasionalmente, pueden aceptar un array para configurar algunas opciones de forma más granular.
+Crear un repo con la configuracion completa que quiero usar
 
-### Root keys
+- Más o menos opinionada?
+  - Siempre se puede sobreescribir
 
-Además de las reglas, los extends y los plugins, la configuración de EsLint incluye otras propiedades, como `env`, `settings`, `parser`, `parserOptions`, etc., además del ya mencionado `overrides`, que son esenciales para la funcionalidad de EsLint, para definir el comportamiento de plugins, hacer que EsLint sea capaz de interpretar diferentes sintaxis, entornos, etc. Nuestro archivo de `.eslintrc` incluye algunas de ellas. Podemos fijarnos en su configuración, porque en la **flat config** se van a transformar y reorganizar.
+---
 
-### Extends key vs plugins key
-
-Hay una cosa que me parece muy confusa de EsLint, y es porque tenemos dependencias llamas `eslint-plugin-foo` y otras llamadas `eslint-config-foo`, y porque en unas ocasiones se indica que tenemos que usarlas con `extends`, y otras con `plugins`. Vamos a a intentar aclararlo.
-
-Como hemos dicho, EsLint es un sistema modular y configurable. Podemos instalar reglas adicionales para configurar nuestro caso de uso perfecto. Estas reglas vienen empaquetadas en dependencias NPM con el nombre de `eslint-plugin-<my-plugin>`. Para usarlas, las instalamos y pasamos el nombre al array de plugins: `plugins: ["my-plugin"]`.
-
-Pero esto no va a hacer que nuestras reglas estén activas automáticamente. Cuando pasamos el plugin al array de `plugins` simplemente las estamos haciendo disponibles al sistema para su uso. Entonces podemos activar las que queramos en la propiedad `rules`:
-
-```js
-// .eslintrc.js
-
-module.exports = {
-  // notice my-plugin does not need to be preceded by "eslint-plugin"
-  plugins: ['my-plugin'],
-  rules: {
-    'my-plugin/some-available-rule': 'error',
-  },
-};
-```
-
-Aquí es donde entran en juego las `shareable configs`. Para ahorrarnos el trabajo tedioso de tener que activar reglas una a una, existen otras dependencias de NPM con el nombre de `eslint-config-<my-config>`. En este caso, si pasamos el nombre de la dependencia a `extends`, esta se encarga por nosotros de habilitar el plugin y activar directamente un conjunto de reglas pre-definidas. Ésta es una manera en la que EsLint nos permite compartir y reusar nuestras configuraciones entre proyectos. Las config suelen usar uno o varios plugins por debajo, pueden extenderse de otras configuraciones y configurar por nosotros, además de reglas, otras root keys que sean necesarias para su buen funcionamiento. En resumen, es una manera de cargar en nuestro proyecto una configuración completa, _lista para consumir_, y ahorrarnos el trabajo de hacerlo nosotros.
-
-```js
-module.exports = {
-  // the plugin is enabled under the hood and some recommended rules are applied
-  extends: ['my-config/recommended'],
-};
-```
-
-Como siempre en EsLint se sigue una regla de precedencia: si extendemos diferentes configuraciones, en caso de conflicto entre reglas, aplica la última especificada.
-
-```js
-module.exports = {
-  // both configs activate the same rule with different degress of severity
-  extends: ['my-config/recommended', 'other-config/recommended'],
-};
-```
-
-Lo que puede acabar resultando confuso, es que lo habitual es que los plugins como dependencias traigan también consigo un set de configs que los autores han considerado de utilidad y podemos usar en `extends`. Por ejemplo, `eslint-plugin-react` incluir como configs `recommended`, `typescript`, `jsx-runtime`, etc. De tal manera que los plugins como dependencias nos permiten extender de una configuración pre-definida, pero también aplicar reglas individuales:
-
-```js
-module.exports = {
-  // syntax change in this case, we need to use the prefix "plugin:"
-  extends: ['plugin:my-plugin/recommended', 'plugin:my-plugin/strict'],
-  plugin: ['my-plugin'],
-  rules: {
-    'my-plugin/some-additional-rule': 'error',
-  },
-};
-```
-
-En resumen:
-
-- Las configs pueden contener todo lo que se pueda añadir a un archivo de configuración de _EsLint_, vienen paquetizadas como `eslint-config-<my-config>` y se pasan a la propiedad extends.
-- Los plugins añaden nuevas reglas al sistema y además pueden exportar configs para activar conjuntos de esas reglas por defecto. Vienen paquetizados como `eslint-plugin-<my-plugin>` y se pasan a la propiedad `plugins` para poder activar reglas de forma individual en `rules`. Si además el plugin contiene `configs`, se pasan a `extends` con el formato "plugin:nombre-plugin/nombre-config", ej: `plugin:react/recommended`.
-
-### Plugins (dependencias)
-
-Una de las principales características (y motivos de éxito) de _EsLint_ es que es un sistema modular. En ocasiones puede abrumar la cantidad de dependencias que tenemos que instalar[^1]. Como contrapartida, la ventaja es que podemos instalar únicamente lo que necesitamos cada vez en función del proyecto.
-
-Estas son las dependencias incluidas en el proyecto:
-
-- **Recomendaciones de EsLint**: `eslint:recommended` (línea 5) contiene una serie de reglas que el equipo de EsLint, después de analizar muchísimos proyectos, considera de utilidad en la mayoría de casos. En el sistema tradicional, están incluidas dentro de EsLint. Así que lo primero que hacemos es incluir estas reglas.
+- **Recomendaciones de EsLint**: `eslint:recommended` (línea 5) contiene una serie de reglas que el equipo de EsLint, después de analizar muchísimos proyectos, considera de utilidad en la mayoría de casos. En el sistema legacy, están incluidas dentro de EsLint. Así que lo primero que hacemos es incluir estas reglas.
 
 - **Prettier**: `eslint-config-prettier` (línea 6). Prettier es un formateador, EsLint es un linter. Los formateadores son más rápidos y menos "inteligentes" que los linters, porque no entran a valorar la lógica del código. Se encargan reescribir nuestro código siguiendo reglas de formateo puramente visual del código (tabs, espacios, puntos y comas, largos de línea...), mientras que los linters, como hemos mencionado antes, entienden la lógica y la sintáxis del código y nos dan indicaciones al respecto de acuerdo a cada una de las reglas activadas. **Cuando usamos Prettier y EsLint juntos, es importante que respetemos dejemos que cada herramienta realice la tarea que mejor sabe hacer**. EsLint contiene reglas de estilo, por eso necesitamos instalar algo como `eslint-config-prettier`, para desactivar esas reglas e indicar a EsLint que Prettier va a ser el encargado de formatear el código. `eslint-plugin-prettier` no está recomendando en la gran mayoría de casos porque hace que Prettier se comporte como una regla del linter, lo que es mucho más lento. No hay necesidad de hacerlo así porque tenemos configurado Prettier como herramienta independiente. Más información:
 
