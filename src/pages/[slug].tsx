@@ -4,7 +4,13 @@ import type {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next';
-import { getNote, getRecommendedLinks, listNotes } from '../common/utils/notes';
+import {
+  getNote,
+  getRecommendedLinks,
+  listPublicNotes,
+} from '../common/lib/notes';
+import { getTranslationsList } from '../common/utils/getFiles';
+import { getLanguage } from '../common/lib/notes/types';
 
 function NotePage({
   note,
@@ -14,13 +20,19 @@ function NotePage({
 
 export default NotePage;
 
-export function getStaticPaths({ locales }: GetStaticPathsContext) {
-  const notes = listNotes();
+export async function getStaticPaths({ locales }: GetStaticPathsContext) {
+  const notesPaths = await listPublicNotes();
+  const notes = [
+    ...new Set(
+      notesPaths.map((path) => {
+        const [slug, locale] = path.split('/').filter(Boolean);
+        return { slug, locale };
+      }),
+    ),
+  ];
 
   return {
-    paths: notes.flatMap((note) => {
-      const [slug] = note.split('/').filter(Boolean);
-
+    paths: notes.flatMap(({ slug }) => {
       return locales?.map((locale) => {
         return {
           params: {
@@ -34,12 +46,23 @@ export function getStaticPaths({ locales }: GetStaticPathsContext) {
   };
 }
 
-export function getStaticProps({ params, locale }: GetStaticPropsContext) {
+export async function getStaticProps({
+  params,
+  locale,
+}: GetStaticPropsContext) {
   const slug = params?.slug as string;
-  const note = getNote(slug, locale);
-  const otherNotesLinks = getRecommendedLinks(slug);
+  const translations = await getTranslationsList(slug);
+  const localeAsEnum = getLanguage(locale);
+
+  // If there's a translation for this locale, use it, other wise, use the first translation available
+  const checkedLocale = translations?.includes(localeAsEnum)
+    ? localeAsEnum
+    : translations[0];
+
+  const note = await getNote(slug, checkedLocale);
 
   if (note) {
+    const otherNotesLinks = await getRecommendedLinks(slug, localeAsEnum);
     return { props: { note: { ...note, otherNotesLinks } } };
   }
 

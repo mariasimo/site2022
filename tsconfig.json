@@ -28,7 +28,7 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "es5",
+    "target": "es6",
     "incremental": true
   },
   "include": ["next-env.d.ts", "additional.d.ts", "**/*.tsx", "**/*.ts"],

@@ -1,9 +1,9 @@
 ---
 title: 'ESLint Guide, part 1: how to use ESLint with confidence'
 metaTitle: 'ESLint Guide, part 1: how to use ESLint with confidence'
-metaDescription: 'The most popular linter in the Javascript ecosystem is being updated with flat config, a new, simpler, and more powerful configuration API. In this article, we review the legacy system to get the most out of migrating to flat config.'
+metaDescription: 'The Ultimate Guide to Stop Hating ESLint and Make ESLint Stop Hating You'
 socialImage: '/images/eslint-guide-04-2023/og-1-en.png'
-published: '26/06/2023'
+publishedAt: '06/26/2023'
 status: 'draft'
 language: 'en'
 tags:

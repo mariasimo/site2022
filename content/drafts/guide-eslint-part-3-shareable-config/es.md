@@ -3,10 +3,9 @@ title: 'Guía de Eslint, parte 3: creando una shareable config'
 metaTitle: 'Guía de Eslint, parte 3: creando una shareable config'
 metaDescription: 'Creando una NPM dependency'
 socialImage: '/images/eslint-flat-config-19-04-2023/og.png'
-published: '24/04/2023'
+publishedAt: '24/04/2023'
 status: 'draft'
 language: 'es'
-hideFromList: true
 tags:
   - 'Tools'
   - 'DX'

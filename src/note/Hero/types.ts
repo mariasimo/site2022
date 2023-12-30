@@ -1,15 +1,15 @@
 import type { MutableRefObject } from 'react';
-import type { Note } from '../../common/utils/notes';
+import type { Note } from '../../common/lib/notes/types';
 
 export type Props = {
-  title: string;
-  summary: string;
   contentRef: MutableRefObject<HTMLDivElement | null>;
-  published: string;
-  lastUpdated: string | null;
-  status: string;
-  translations: Note['translations'];
-  socialImage: Note['socialImage'];
-  metaTitle: Note['metaTitle'];
+  lastUpdatedAt?: Date;
   metaDescription: Note['metaDescription'];
+  metaTitle: Note['metaTitle'];
+  publishedAt: Date;
+  socialImage: Note['socialImage'];
+  status: Note['status'];
+  summary: Note['summary'];
+  title: Note['title'];
+  translations: Note['translations'];
 };

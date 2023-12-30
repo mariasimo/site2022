@@ -1,9 +1,9 @@
 ---
-title: 'Reimaginando el diseño de los libros de programación'
-metaTitle: 'CodeBug Books. Reimaginando el diseño de los libros de programación'
-metaDescription: 'Así serían las cubiertas de algunos de mis libros favoritos de programación si me dejaran diseñarlos a mí.'
+title: 'CodeBug Books. Reimaginando el diseño de los libros de programación'
+metaTitle: 'CodeBug Books'
+metaDescription: 'Reimaginando el diseño de los libros de programación'
 socialImage: '/images/codebug-books-23-03-2023/og.png'
-published: '23/03/2023'
+publishedAt: '03/23/2023'
 status: 'completed'
 language: 'es'
 tags:

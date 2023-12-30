@@ -1,122 +1,124 @@
-import fs from 'fs';
+import { readdir, readFile } from 'fs/promises';
+import path from 'path';
 import matter from 'gray-matter';
 import contentConfig from '../../../content.config';
+import {
+  Language,
+  MarkdownFile,
+  MarkdownFileSchema,
+  getLanguage,
+} from '../lib/notes/types';
 
-function isDirectory(pathOrDir: string) {
-  return fs.lstatSync(pathOrDir).isDirectory();
+// This functions should be agnostic, util functions using fs and path modules
+
+async function isDirectory(pathOrDir: string) {
+  try {
+    const file = await readdir(pathOrDir);
+    return !!file;
+  } catch {
+    return false;
+  }
 }
 
 function createRandomIndex(max: number) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max + 1);
 }
 
-function createUniqueRandomNumbers(
-  arr: number[],
-  length: number,
-  highestNum: number,
-) {
-  if (highestNum < length) {
-    throw new Error(
-      `highest number needs to be greater or equal to length: (${length})`,
-    );
+export function selectRandomItems<T>(list: T[], numberOfItems: number) {
+  if (list.length <= numberOfItems) {
+    return list;
   }
 
-  const randomNum = createRandomIndex(highestNum);
+  const result = <typeof list>[];
+  let i = 0;
 
-  if (!arr.includes(randomNum)) {
-    arr.push(randomNum);
-  }
+  while (i < numberOfItems) {
+    const randomNum = createRandomIndex(numberOfItems);
 
-  if (arr.length < length) {
-    createUniqueRandomNumbers(arr, length, highestNum);
-  }
-
-  return arr;
-}
-
-const readSubDirsRecursive = function (path: string, files: string[] = []) {
-  const filesInNotesDir = fs.readdirSync(path);
-
-  filesInNotesDir.forEach(function (file) {
-    const subpath = path + '/' + file;
-
-    if (isDirectory(subpath)) {
-      readSubDirsRecursive(subpath, files);
-    } else {
-      if (typeof file === 'string') {
-        files.push(subpath.replace('//', '/'));
-      }
+    if (!result.includes(list[randomNum])) {
+      result.push(list[randomNum]);
+      i++;
     }
-  });
+  }
+
+  return result;
+}
+
+async function readSubDirsRecursive(dir: string, files: string[] = []) {
+  const filesInDir = await readdir(dir);
+
+  await Promise.all(
+    filesInDir.map(async function (file) {
+      const subpath = path.join(dir, file);
+      const isDir = await isDirectory(subpath);
+
+      if (isDir) {
+        try {
+          await readSubDirsRecursive(subpath, files);
+        } catch {
+          // eslint-disable-next-line no-console
+          console.error(`Cannot read file or directory at ${subpath}`);
+          process.exit(1);
+        }
+      } else {
+        files.push(subpath);
+      }
+    }),
+  );
 
   return files;
-};
-
-const readDir = function (
-  path: string,
-  files: string[] = [],
-  filterFunction?: (value: string, index: number, array: string[]) => boolean,
-) {
-  const filesInNotesDir = fs.readdirSync(path);
-
-  return filterFunction ? filesInNotesDir.filter(filterFunction) : files;
-};
-
-export const getRandomFilesFromDirectory = function (
-  dir: string,
-  maxFiles: number,
-  currentSlug: string,
-) {
-  const filterFunction = (filename: string) => {
-    const path = filename.includes('.md') ? filename : `${filename}/en.md`;
-    const { data: noteFrontmatter } = getMarkdownContents(path);
-    return !noteFrontmatter.hideFromList && !filename.includes(currentSlug);
-  };
-
-  const filesInNotesDir = readDir(dir, [], filterFunction);
-
-  const indexes = createUniqueRandomNumbers(
-    [],
-    maxFiles,
-    filesInNotesDir.length,
-  );
-
-  return indexes.map((i) => {
-    return filesInNotesDir[i].includes('.md')
-      ? filesInNotesDir[i]
-      : `${filesInNotesDir[i]}/en.md`;
-  });
-};
-
-export function getFilesFromDirectory(dir: string) {
-  return readSubDirsRecursive(dir, []).map((file) => file.replace(dir, ''));
 }
 
-export function getMarkdownContents(path: string) {
-  const fileName = fs.readFileSync(
-    path.includes(contentConfig.notesDirectory)
-      ? path
-      : `${contentConfig.notesDirectory}${path}`,
-    'utf-8',
-  );
-
-  const contents = matter(fileName, {
-    excerpt: true,
-  });
-
-  return contents;
+export async function getFilePathsFromDirectory(dir: string) {
+  const files = await readSubDirsRecursive(dir, []);
+  // path.relative returns the part of the path relative to the dir
+  // dir: /content, filePath: /content/myFile.md -> result: myFile.md
+  return files.map((file) => path.relative(dir, file));
 }
 
-export function getTranslationsList(path: string): string[] {
-  const dir = `${contentConfig.notesDirectory}${path.replace('/', '')}`;
+export async function getMarkdownContent(
+  filePath: string,
+): Promise<MarkdownFile> {
+  try {
+    const fileName = await readFile(
+      filePath.includes(contentConfig.notesDirectory)
+        ? filePath
+        : `${contentConfig.notesDirectory}${filePath}`,
+      'utf-8',
+    );
 
-  if (
-    !fs.existsSync(dir) ||
-    (fs.existsSync(dir) && !fs.lstatSync(dir).isDirectory())
-  )
-    return [];
+    const contents = matter(fileName, {
+      excerpt: true,
+    });
 
-  return fs.readdirSync(dir).map((item) => item.replace('.md', ''));
+    const result = MarkdownFileSchema.safeParse(contents);
+
+    if (!result.success) {
+      throw new Error(`Bad data shape at ${filePath}: ${result.error.message}`);
+    } else {
+      return result.data;
+    }
+  } catch {
+    throw new Error(`Error reading markdown file at ${filePath}}`);
+  }
+}
+
+export async function getTranslationsList(
+  filePath: string,
+): Promise<Language[]> {
+  const dir = path.join(contentConfig.notesDirectory, filePath);
+
+  try {
+    const files = await readdir(dir);
+    return files.map((f) => {
+      const locale = path.basename(f, '.md');
+      return getLanguage(locale);
+    });
+  } catch {
+    // eslint-disable-next-line no-console
+    console.error(`Could not find file at ${filePath}}`);
+    process.exit(1);
+  }
 }
 
 /**
@@ -124,11 +126,11 @@ export function getTranslationsList(path: string): string[] {
  * /content/notes/[filename]/[lang?].md -> /[filename]
  */
 export function getSlugFromFilePath(fileName: string): string {
-  const path = fileName
+  const filePath = fileName
     .replace(contentConfig.notesDirectory, '')
     .replace('.md', '');
 
-  const hasLanguage = path.includes('/');
+  const hasLanguage = filePath.includes('/');
 
-  return hasLanguage ? path.split('/').slice(0, -1).join('/') : path;
+  return hasLanguage ? filePath.split('/').slice(0, -1).join('/') : filePath;
 }

@@ -33,6 +33,7 @@ export function getTimeAgo(date: Date) {
   });
 
   const timeEntry = Object.entries(TIME_UNITS).find(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ([_, seconds]) => timeAgoInSeconds >= seconds,
   ) ?? ['second', 1];
 
@@ -42,11 +43,6 @@ export function getTimeAgo(date: Date) {
   };
 
   return formatter.format(value, unit as RelativeTimeFormatUnit);
-}
-
-export function parseStringToDate(date: string): Date {
-  const parts = date.split('/');
-  return new Date(+parts[2], +parts[1] - 1, +parts[0]);
 }
 
 export function getSecondsDiff(date: Date): number {

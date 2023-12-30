@@ -25,7 +25,8 @@
     "remark-gfm": "^3.0.1",
     "remark-unwrap-images": "^3.0.1",
     "styled-components": "^5.3.3",
-    "styled-normalize": "^8.0.7"
+    "styled-normalize": "^8.0.7",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",

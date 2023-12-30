@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Container,
   Info,
@@ -9,7 +8,7 @@ import {
   BookOpen,
 } from './styles';
 import NoteCard from './NoteCard';
-import type { NoteCard as NoteCardType } from '$/common/utils/notes';
+import type { NoteCard as NoteCardType } from '$/common/lib/notes/types';
 
 export default function Blog({
   notes,

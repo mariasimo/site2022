@@ -3,10 +3,9 @@ title: 'Guía de Eslint, parte 4: mejorando nuestra NPM dependency'
 metaTitle: 'Guía de Eslint, parte 4: mejorando nuestra NPM dependency'
 metaDescription: 'Creando una NPM dependency'
 socialImage: '/images/eslint-flat-config-19-04-2023/og.png'
-published: '25/04/2023'
+publishedAt: '25/04/2023'
 status: 'draft'
 language: 'es'
-hideFromList: true
 tags:
   - 'Tools'
   - 'DX'
